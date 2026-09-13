@@ -1,0 +1,17 @@
+# Environment / secrets
+.env
+.env.*
+
+# Editor settings
+.vscode/
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.temp
+
+# OS metadata
+.DS_Store
+Thumbs.db
