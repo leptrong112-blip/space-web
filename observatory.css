@@ -62,7 +62,7 @@ button, a, input { touch-action: manipulation; }
 .journey-paths a:hover { background: #a5cfd507; }
 .journey-paths span { display: block; font: 9px Consolas, monospace; color: var(--gold); letter-spacing: 2px; margin-bottom: 12px; }
 .journey-paths strong { color: #c2cbd0; font-size: .85rem; font-weight: 400; line-height: 1.6; }
-.section { max-width: 1440px; margin-left: auto !important; margin-right: auto !important; padding: 60px 6%; }
+.section { max-width: 1440px; margin-left: auto; margin-right: auto; padding: 60px 6%; }
 .section-title { font-family: var(--font-sans); font-weight: 700; font-size: clamp(1.8rem, 2.5vw, 2.4rem); line-height: 1.3; letter-spacing: 0.5px; text-shadow: none; border-bottom: 1px solid var(--line); padding-bottom: 18px; margin-bottom: 28px; color: #fff; }
 .glass-card { background: #10192388; border-color: var(--line); box-shadow: none; }
 .info-box-glow { box-shadow: none !important; }
@@ -72,7 +72,8 @@ button, a, input { touch-action: manipulation; }
 .planet-card { border: 1px solid var(--line); background: #10192380; border-radius: 8px; overflow: hidden; box-shadow: none !important; transition: transform .2s, border-color .2s; }
 .planet-card:hover { border-color: #dec19570; transform: translateY(-4px); }
 .planet-card h3 { font-family: var(--font-sans); font-weight: 600; font-size: 1.2rem; letter-spacing: 0.3px; color: #fff; }
-.planet-card button { color: var(--ice); border: 1px solid var(--line); background: #a5cfd508; border-radius: 4px; padding: 10px 16px; cursor: pointer; font-size: .8rem; }
+.planet-card button { color: var(--ice); border: 1px solid var(--line); background: #a5cfd508; border-radius: 4px; padding: 10px 16px; cursor: pointer; font-size: .8rem; transition: all .2s ease; }
+.planet-card button:hover { color: var(--gold); border-color: var(--gold); background: rgba(222, 193, 149, 0.08); }
 .three-container-wrapper { padding: 28px; border-color: var(--line); box-shadow: none; border-radius: 12px; }
 .observatory-heading { display: flex; align-items: center; justify-content: space-between; gap: 24px; }
 .eyebrow { color: var(--gold); font: 10px/1.7 Consolas, monospace; letter-spacing: 2px; margin-bottom: 16px; }
@@ -181,4 +182,29 @@ body .grid { padding: 0 !important; gap: 18px !important; grid-template-columns:
   *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
   .light-beam { left: 50%; }
   [data-aos] { opacity: 1 !important; transform: none !important; }
+}
+
+/* Simulation Orbit Reset Button (Observatory Style) */
+.orbit-reset-btn {
+  width: 100%;
+  margin-top: 20px;
+  padding: 13px 28px;
+  font-family: var(--font-sans);
+  font-size: 0.88rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  color: var(--space);
+  background: var(--gold);
+  border: 1px solid var(--gold);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+}
+.orbit-reset-btn:hover {
+  background: #eed4af;
+  box-shadow: 0 4px 20px rgba(222, 193, 149, 0.25);
+  transform: translateY(-1px);
+}
+.orbit-reset-btn:active {
+  transform: translateY(0);
 }

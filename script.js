@@ -851,13 +851,13 @@ window.transitionToVR = function(e) {
     const overlayText = document.querySelector('.transition-text');
 
     if (overlay && overlayText) {
-        // Giao diện Song ngữ cực chất
+        // Giao diện Song ngữ chuyển tiếp vào Biển Sao 3D
         overlayText.innerHTML = `
-            INITIATING VR SIMULATION...<br>
-            <span style='font-size: 1rem; color: #888; font-style: italic; display: block; margin-top: 5px;'>Đang khởi động giả lập VR...</span>
+            INITIATING STARFIELD SEQUENCE...<br>
+            <span style='font-size: 1rem; color: #888; font-style: italic; display: block; margin-top: 5px;'>Đang mở không gian Biển Sao 3D...</span>
             <br>
-            <span style='color: #00ffcc; display: block; margin-top: 15px;'>CALIBRATING HEADSET MODULE...</span>
-            <span style='font-size: 0.9rem; color: #00aa88; font-style: italic; display: block; margin-top: 5px;'>Đang đồng bộ kính thực tế ảo...</span>
+            <span style='color: #00ffcc; display: block; margin-top: 15px;'>CALIBRATING STARFIELD...</span>
+            <span style='font-size: 0.9rem; color: #00aa88; font-style: italic; display: block; margin-top: 5px;'>Đang hiệu chỉnh trường sao...</span>
         `;
         
         overlayText.style.color = "#00ffcc"; 
