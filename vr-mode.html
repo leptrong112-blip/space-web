@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Biển Sao — Khám Phá Vũ Trụ</title>
+    <link rel="stylesheet" href="journey.css">
+    <script src="space-audio.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <style>
+        body, html { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background-color: #000; font-family: 'Montserrat', sans-serif; }
+        #vr-canvas-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; }
+        #vr-ui-layer { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10; pointer-events: none; }
+        
+        .vr-warning {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            text-align: center; color: #00ffcc; text-shadow: 0 0 20px rgba(0, 255, 204, 0.8);
+            animation: fadeOutWarning 4s forwards; pointer-events: none;
+        }
+        .vr-warning h1 { font-family: 'Share Tech Mono', monospace; font-size: 2.5rem; letter-spacing: 5px; margin-bottom: 10px; }
+        .vr-warning p { font-size: 1rem; color: #fff; font-style: italic; }
+        @keyframes fadeOutWarning {
+            0% { opacity: 0; transform: translate(-50%, -40%); }
+            20% { opacity: 1; transform: translate(-50%, -50%); }
+            80% { opacity: 1; transform: translate(-50%, -50%); }
+            100% { opacity: 0; transform: translate(-50%, -60%); display: none;}
+        }
+
+        .btn-exit-vr {
+            position: absolute; top: 20px; left: 20px; pointer-events: auto;
+            background: rgba(255, 0, 85, 0.1); border: 1px solid #ff0055;
+            color: #ff0055; padding: 10px 20px; font-family: 'Share Tech Mono', monospace;
+            font-size: 1rem; cursor: pointer; text-decoration: none; border-radius: 5px;
+            transition: all 0.3s ease; text-transform: uppercase; letter-spacing: 2px;
+            box-shadow: 0 0 10px rgba(255, 0, 85, 0.2);
+        }
+        .btn-exit-vr:hover { background: rgba(255, 0, 85, 0.3); box-shadow: 0 0 20px rgba(255, 0, 85, 0.6); color: #fff; }
+
+        .hud-coordinates {
+            position: absolute; bottom: 20px; right: 20px; color: rgba(0, 255, 204, 0.5);
+            font-family: 'Share Tech Mono', monospace; font-size: 0.8rem; text-align: right;
+            pointer-events: none;
+        }
+
+        .settings-panel {
+            position: absolute; top: 80px; left: 20px;
+            background: rgba(10, 15, 30, 0.7); backdrop-filter: blur(5px);
+            border: 1px solid rgba(0, 255, 204, 0.4); border-left: 4px solid #00ffcc;
+            padding: 20px; border-radius: 4px; box-shadow: 0 0 20px rgba(0, 255, 204, 0.15);
+            pointer-events: auto; width: 250px; font-family: 'Share Tech Mono', monospace;
+        }
+        .settings-panel h3 { margin: 0 0 15px 0; color: #fff; font-size: 1.1rem; letter-spacing: 2px; }
+        .settings-panel label { display: flex; justify-content: space-between; color: #00ffcc; font-size: 0.85rem; margin-bottom: 5px; }
+        .settings-panel input[type=range] { width: 100%; margin-bottom: 15px; accent-color: #00ffcc; cursor: pointer; }
+        
+        .btn-warp {
+            width: 100%; padding: 12px; background: transparent;
+            border: 1px solid #ffaa00; color: #ffaa00;
+            font-family: 'Share Tech Mono', monospace; font-size: 0.9rem; font-weight: bold;
+            cursor: pointer; transition: all 0.3s; letter-spacing: 1px;
+            box-shadow: inset 0 0 10px rgba(255, 170, 0, 0.1); border-radius: 4px;
+        }
+        .btn-warp:hover { background: #ffaa00; color: #000; box-shadow: 0 0 20px #ffaa00; transform: scale(1.02); }
+        .btn-warp:active { transform: scale(0.95); }
+
+        .crosshair {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            width: 20px; height: 20px; border: 1px solid rgba(0, 255, 204, 0.3); border-radius: 50%;
+            pointer-events: none; display: flex; justify-content: center; align-items: center;
+        }
+        .crosshair::after { content: ''; width: 2px; height: 2px; background: rgba(0, 255, 204, 0.8); border-radius: 50%; }
+    </style>
+</head>
+<body class="space-page">
+    <div class="journey-tools"><button id="space-sound" type="button" aria-pressed="false">Âm thanh: tắt</button></div>
+
+    <div id="vr-canvas-container"></div>
+
+    <div id="vr-ui-layer">
+        <a href="index.html" class="btn-exit-vr">❮ THOÁT</a>
+        
+        <div class="settings-panel">
+            <h3>⚙️ HỆ THỐNG LÕI</h3>
+            <label>TỐC ĐỘ: <span id="speed-val">1.0x</span></label>
+            <input type="range" id="slider-speed" min="0" max="5" step="0.1" value="1">
+            <label>MẬT ĐỘ SAO: <span id="star-val">8000</span></label>
+            <input type="range" id="slider-stars" min="1000" max="15000" step="1000" value="8000">
+            <button id="btn-warp" class="btn-warp">🚀 BƯỚC NHẢY WARP</button>
+        </div>
+
+        <div class="vr-warning">
+            <h1>Trôi giữa biển sao.</h1>
+            <p>Một khoảng lặng cho sự tò mò. Kéo chuột hoặc vuốt để nhìn quanh.<br>Trải nghiệm không gian 3D trên màn hình.</p>
+        </div>
+
+        <div class="crosshair"></div>
+        <div class="hud-coordinates">
+            SYS: <span id="sys-status" style="color: #00ffcc;">STABLE</span><br>
+            <span id="coord-display">X: 0.00 | Y: 0.00 | Z: 0.00</span>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+
+    <script>
+        const container = document.getElementById('vr-canvas-container');
+        const coordDisplay = document.getElementById('coord-display');
+        
+        let globalSpeed = 1;
+        let targetSpeed = 1;
+        let baseFov = 75;
+        let targetFov = 75;
+        let maxStars = 15000;
+        let currentDrawStars = 8000;
+
+        const scene = new THREE.Scene();
+        scene.fog = new THREE.FogExp2(0x000510, 0.001); // Đổi sương mù sang ánh xanh đen sâu thẳm
+
+        // ==========================================
+        // 💡 BƯỚC ĐỘT PHÁ ĐỒ HỌA: THÊM ÁNH SÁNG (LIGHTING)
+        // ==========================================
+        // Ánh sáng môi trường nhè nhẹ
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.3);
+        scene.add(ambientLight);
+
+        // Ánh sáng mặt trời chiếu từ trung tâm
+        const pointLight = new THREE.PointLight(0xffffff, 1.5, 4000);
+        pointLight.position.set(0, 0, 0);
+        scene.add(pointLight);
+
+        const camera = new THREE.PerspectiveCamera(baseFov, window.innerWidth / window.innerHeight, 0.1, 3000);
+        camera.position.set(0, 0, 0.1); 
+
+        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(window.devicePixelRatio);
+        container.appendChild(renderer.domElement);
+
+        const controls = new THREE.OrbitControls(camera, renderer.domElement);
+        controls.target.set(0, 0, 0);
+        controls.rotateSpeed = -0.6; 
+        controls.enableZoom = false; 
+        controls.enablePan = false;
+        controls.enableDamping = true;
+        controls.dampingFactor = 0.05;
+
+        // ==========================================
+        // 🌟 BẢN VÁ: VẼ QUẦNG SÁNG CHO SAO BẰNG THUẬT TOÁN (Glow Texture)
+        // ==========================================
+        function createStarTexture() {
+            let canvas = document.createElement('canvas');
+            canvas.width = 32; canvas.height = 32;
+            let ctx = canvas.getContext('2d');
+            
+            // Vẽ quầng sáng tỏa ra từ tâm tròn
+            let gradient = ctx.createRadialGradient(16, 16, 0, 16, 16, 16);
+            gradient.addColorStop(0, 'rgba(255,255,255,1)');
+            gradient.addColorStop(0.2, 'rgba(255,255,255,0.8)');
+            gradient.addColorStop(0.5, 'rgba(255,255,255,0.2)');
+            gradient.addColorStop(1, 'rgba(0,0,0,0)');
+            
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, 32, 32);
+            return new THREE.CanvasTexture(canvas);
+        }
+
+        const starGeometry = new THREE.BufferGeometry();
+        const starMaterial = new THREE.PointsMaterial({
+            size: 4.5, // Tăng size lên xíu để thấy độ tròn
+            transparent: true, 
+            opacity: 0.9, 
+            vertexColors: true, 
+            map: createStarTexture(), // Ốp cái texture tròn vào
+            depthWrite: false, // Tránh sao cắt nhau bị lỗi viền đen
+            blending: THREE.AdditiveBlending // Hiệu ứng cộng dồn ánh sáng rực rỡ
+        });
+
+        const starVertices = [];
+        const starColors = [];
+        const starVelocities = [];
+        const palette = [0xffffff, 0x9db4ff, 0xfff4e8, 0xffd2a1, 0xffa371].map(c => new THREE.Color(c));
+
+        for(let i=0; i<maxStars; i++) {
+            starVertices.push((Math.random() - 0.5) * 2500, (Math.random() - 0.5) * 2500, (Math.random() - 0.5) * 2500);
+            starVelocities.push(Math.random() * 2 + 0.5); 
+            const c = palette[Math.floor(Math.random() * palette.length)];
+            starColors.push(c.r, c.g, c.b);
+        }
+
+        starGeometry.setAttribute('position', new THREE.Float32BufferAttribute(starVertices, 3));
+        starGeometry.setAttribute('color', new THREE.Float32BufferAttribute(starColors, 3));
+        starGeometry.setDrawRange(0, currentDrawStars);
+        const stars = new THREE.Points(starGeometry, starMaterial);
+        scene.add(stars);
+
+        // ==========================================
+        // 🌍 BẢN VÁ: VẬT LIỆU HÀNH TINH CHÂN THỰC (Standard Material)
+        // ==========================================
+        const planets = [];
+        const planetColors = [0x00ffcc, 0xff5555, 0xaa55ff, 0xffaa00, 0x4488ff];
+        
+        for(let i=0; i<15; i++) {
+            const pGeo = new THREE.SphereGeometry(Math.random() * 12 + 4, 32, 32);
+            // Đổi từ MeshBasicMaterial sang MeshStandardMaterial
+            const pMat = new THREE.MeshStandardMaterial({ 
+                color: planetColors[i % planetColors.length], 
+                roughness: 0.4, // Độ nhám bề mặt
+                metalness: 0.1, // Cảm giác kim loại/đá
+                transparent: true, 
+                opacity: 0.95 
+            });
+            const planet = new THREE.Mesh(pGeo, pMat);
+            planet.position.set((Math.random() - 0.5) * 1500, (Math.random() - 0.5) * 1500, (Math.random() - 0.5) * 2000);
+            scene.add(planet);
+            planets.push({ mesh: planet, speed: Math.random() * 4 + 1 });
+        }
+
+        // ==========================================
+        // 🌠 HIỆU ỨNG SAO BĂNG NÂNG CẤP
+        // ==========================================
+        const ssGeo = new THREE.CylinderGeometry(0, 1.5, 120, 8);
+        ssGeo.rotateX(Math.PI / 2);
+        const ssMat = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0, blending: THREE.AdditiveBlending });
+        const shootingStar = new THREE.Mesh(ssGeo, ssMat);
+        scene.add(shootingStar);
+
+        let ssActive = false;
+        function triggerShootingStar() {
+            if (ssActive) return;
+            ssActive = true;
+            shootingStar.position.set((Math.random() - 0.5) * 800, (Math.random() - 0.5) * 500, -800);
+            shootingStar.rotation.set(Math.random() * Math.PI, Math.random() * Math.PI, 0);
+            shootingStar.material.opacity = 1;
+
+            let flyTime = 0;
+            const flyInterval = setInterval(() => {
+                shootingStar.translateZ(80); 
+                flyTime += 16;
+                if (flyTime > 800) shootingStar.material.opacity -= 0.05; 
+                if (flyTime > 1200) {
+                    clearInterval(flyInterval);
+                    shootingStar.material.opacity = 0;
+                    ssActive = false;
+                }
+            }, 16);
+        }
+
+        setInterval(() => { if (Math.random() > 0.4) triggerShootingStar(); }, 2500);
+
+        // UI Listeners
+        document.getElementById('slider-speed').addEventListener('input', (e) => {
+            targetSpeed = parseFloat(e.target.value);
+            document.getElementById('speed-val').innerText = targetSpeed.toFixed(1) + 'x';
+        });
+
+        document.getElementById('slider-stars').addEventListener('input', (e) => {
+            currentDrawStars = parseInt(e.target.value);
+            starGeometry.setDrawRange(0, currentDrawStars);
+            document.getElementById('star-val').innerText = currentDrawStars;
+        });
+
+        document.getElementById('btn-warp').addEventListener('click', () => {
+            const sysText = document.getElementById('sys-status');
+            sysText.innerText = "OVERLOAD - WARPING...";
+            sysText.style.color = "#ffaa00";
+            targetSpeed = 25; targetFov = 130; 
+            if (window.SpaceAudio) {
+                window.SpaceAudio.playWarp();
+            } else {
+                const warpSfx = new Audio('Audio/soundreality-riser-hole.m4a');
+                warpSfx.volume = 0.7; if (spaceSoundEnabled) warpSfx.play().catch(()=>{});
+            }
+            setTimeout(() => {
+                targetSpeed = parseFloat(document.getElementById('slider-speed').value);
+                targetFov = baseFov;
+                sysText.innerText = "STABLE";
+                sysText.style.color = "#00ffcc";
+            }, 2500);
+        });
+
+        // Nhạc nền (Web Audio API Synthesizer + Local fallback)
+        let spaceSoundEnabled = false;
+        const vrAudio = new Audio('Audio/daviddumaisaudio-high-tech-spectral-creature-194036.mp3');
+        vrAudio.loop = true; vrAudio.volume = 0.4;
+        document.getElementById('space-sound').addEventListener('click', async event => {
+            spaceSoundEnabled = !spaceSoundEnabled;
+            if (spaceSoundEnabled) {
+                if (window.SpaceAudio) {
+                    window.SpaceAudio.startAmbient(0.3);
+                } else {
+                    try { await vrAudio.play(); } catch { spaceSoundEnabled = false; }
+                }
+            } else {
+                if (window.SpaceAudio) window.SpaceAudio.stopAmbient();
+                vrAudio.pause();
+            }
+            event.target.textContent = spaceSoundEnabled ? 'Âm thanh: bật' : 'Âm thanh: tắt';
+            event.target.setAttribute('aria-pressed', String(spaceSoundEnabled));
+        });
+
+        // Render Loop
+        const positions = starGeometry.attributes.position.array;
+        function animate() {
+            requestAnimationFrame(animate);
+            globalSpeed += (targetSpeed - globalSpeed) * 0.05;
+            camera.fov += (targetFov - camera.fov) * 0.05;
+            camera.updateProjectionMatrix();
+
+            for(let i=0; i<maxStars; i++) {
+                let zIndex = i * 3 + 2; 
+                positions[zIndex] += starVelocities[i] * globalSpeed; 
+                if(positions[zIndex] > 200) positions[zIndex] = -2000; 
+            }
+            starGeometry.attributes.position.needsUpdate = true;
+
+            planets.forEach(p => {
+                p.mesh.position.z += p.speed * globalSpeed;
+                // Xoay nhẹ hành tinh cho nó sống động
+                p.mesh.rotation.y += 0.01;
+                p.mesh.rotation.x += 0.005;
+
+                if(p.mesh.position.z > 200) {
+                    p.mesh.position.z = -2000;
+                    p.mesh.position.x = (Math.random() - 0.5) * 1500;
+                    p.mesh.position.y = (Math.random() - 0.5) * 1500;
+                }
+            });
+
+            coordDisplay.innerText = `X: ${(camera.rotation.x).toFixed(2)} | Y: ${(camera.rotation.y).toFixed(2)} | Z: ${(camera.rotation.z).toFixed(2)}`;
+            controls.update();
+            renderer.render(scene, camera);
+        }
+        animate();
+
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+    </script>
+</body>
+</html>

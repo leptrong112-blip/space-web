@@ -1,0 +1,41 @@
+/* A shared visual thread for the two immersive experiences. */
+.journey-tools { position: fixed; top: 20px; right: 25px; z-index: 110; display: flex; gap: 8px; }
+.journey-tools button { cursor: pointer; color: #dec195; background: #0c1520d9; border: 1px solid #dec19555; padding: 10px 14px; border-radius: 5px; font: 12px 'Segoe UI',sans-serif; }
+:focus-visible { outline: 2px solid #dec195; outline-offset: 5px; }
+.story-page .hud-top-right { top: 80px; }
+.story-page .hud-top-left { top: 80px; left: 30px; }
+.story-page .hud-item { font-size: .75rem; color: #a5cfd5; text-shadow: none; }
+.story-page .scene { width: min(650px,calc(100% - 36px)); background: #0a1420c9; border-color: #dec19533; border-radius: 10px; }
+.story-page .scene h2 { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: clamp(1.8rem, 3.5vw, 2.6rem); line-height: 1.25; text-shadow: none; }
+.story-page .scene-number { color: #dec195; border-color: #dec19555; font-size: .7rem; }
+.story-page .scene .chapter-note { font: .75rem/1.7 'Segoe UI',sans-serif; color: #a5b4c0; min-height: 0; border-top: 1px solid #a5cfd522; margin-top: 22px; padding-top: 15px; }
+.story-page .scene p { font-size: 1rem; line-height: 1.9; }
+.story-page .nav-btn { border-color: #dec19566; color: #dec195; box-shadow: none; }
+.story-page .scene:not(.active), .story-page #story-3d-overlay:not(.active) { visibility: hidden; }
+.story-page #btn-view-3d { font-size: .75rem; box-shadow: none; }
+.space-page .settings-panel { background: #0c1520d9; border: 1px solid #dec19544; box-shadow: none; }
+.space-page .vr-warning h1 { color: #dec195; font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 2.2rem; text-shadow: none; }
+.space-page .vr-warning p { line-height: 1.8; max-width: 500px; }
+@media(max-width:650px) {
+  .journey-tools { right: 12px; top: 14px; gap: 5px; }
+  .journey-tools button { padding: 8px; font-size: 10px; }
+  .story-page .back-btn { top: 24px; left: 14px; font-size: .75rem; }
+  .story-page .hud-top-left { top: 70px; left: 14px; font-size: .6rem; letter-spacing: 1px; }
+  .story-page .hud-top-right { top: 94px; left: 14px; right: auto; font-size: .6rem; }
+  .story-page #btn-view-3d { top: 70px; right: 14px; padding: 9px; font-size: .6rem; }
+  .story-page .scene { padding: 24px; max-height: calc(100svh - 260px); overflow-y: auto; }
+  .story-page .controls { bottom: 60px; gap: 10px; padding: 0 14px; }
+  .story-page .nav-btn { padding: 10px; font-size: .68rem; }
+  .story-page .dots { gap: 6px; }
+  .story-page .dot { width: 7px; height: 7px; }
+  .story-page .hud-bottom-left, .story-page .hud-bottom-right { bottom: 20px; font-size: .6rem; letter-spacing: 0; }
+  .story-page .hint-text { font-size: .65rem; padding: 0 22px; text-align: center; }
+  .story-page #close-3d-btn { left: 14px; top: 15px; font-size: .65rem; }
+  .space-page .settings-panel { left: 12px; bottom: 14px; top: auto; width: 220px; padding: 16px; }
+  .space-page .vr-warning { top: 100px; width: calc(100% - 32px); }
+  .space-page .vr-warning h1 { font-size: 1.6rem; }
+  .space-page .hud-coordinates { display: none; }
+}
+@media(prefers-reduced-motion:reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+}

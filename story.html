@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hành Trình Vũ Trụ - Story Mode</title>
+    <link rel="stylesheet" href="story.css">
+    <link rel="stylesheet" href="journey.css">
+    <script src="space-audio.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+</head>
+<body class="story-page">
+    <div class="journey-tools"><button id="story-restart" type="button">↺ Từ đầu</button><button id="story-sound" type="button" aria-pressed="false">Âm thanh: tắt</button></div>
+
+    <div id="story-entry-overlay" style="position: fixed; inset: 0; background: #000; z-index: 999999; transition: opacity 2s ease-in-out; pointer-events: none;"></div>
+
+    <audio id="bg-music" loop>
+        <source src="Audio/daviddumaisaudio-high-tech-spectral-creature-194036.mp3" type="audio/mpeg">
+    </audio>
+
+    <a href="index.html" class="back-btn">🚀 Trở về Sa Bàn</a>
+
+    <div id="hud-overlay" style="transition: opacity 1s;">
+        <div class="hud-item hud-top-left" id="hud-loc">LOC: TRÁI ĐẤT</div>
+        <div class="hud-item hud-top-right" id="hud-speed">SPD: 0 KM/S</div>
+        <div class="hud-item hud-bottom-left" id="hud-status">SYS: ONLINE</div>
+        <div class="hud-item hud-bottom-right">O2: 100%</div>
+    </div>
+
+    <button id="btn-view-3d" style="display: none;" onclick="openStory3D()">
+        <span class="icon">👁️</span> QUAN SÁT 3D
+    </button>
+
+    <div id="story-3d-overlay">
+        <button id="close-3d-btn" onclick="closeStory3D()">&#10094; TRỞ VỀ CỐT TRUYỆN</button>
+        <div id="story-3d-container"></div>
+        <div class="hint-text">CẢM BIẾN KHÔNG GIAN KÍCH HOẠT. DÙNG CHUỘT ĐỂ XOAY MÔ HÌNH.</div>
+    </div>
+
+    <div id="bg-slider">
+        <div class="bg-slide active" style="background-image: url('https://images.openai.com/static-rsc-4/rlrZW2zXrdseQvxgPFQ-Dr7sLqho81oZEv4fy1qaORWuzbDew2u8nqm3Cv8Gs0A8WDyPsu5p27SKwlCnmlpuFFQ-pUnT-T-R7aaQCsbBI3ZSjQp16YcgDuraLaGdMplN_DiBzxBAads2NYwNg1uaDLPWI_LeBgP5ISLh64ve3lNu7rjkHkSqQ9jQKDX9_fXk?purpose=fullsize');"></div>
+        
+        <div class="bg-slide" style="background-image: url('Images/starfield bầu trời (story).jpg');"></div>
+        
+        <div class="bg-slide" style="background-image: url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=2000&q=80');"></div>
+        
+        <div class="bg-slide" id="jupiter-3d-container"></div>
+        
+        <div class="bg-slide" style="background-image: url('Images/Milky Way nhẹ.jpg');"></div>
+        
+        <div class="bg-slide" id="blackhole-bg">
+            <div class="accretion-disk"></div>
+            <div class="event-horizon"></div>
+        </div>
+    </div>
+
+    <div class="overlay"></div>
+
+    <div id="story-content" style="transition: opacity 1s;">
+        <div class="scene active">
+            <span class="scene-number">CHƯƠNG 0</span>
+            <h2>TRẠM ĐIỀU KHIỂN Pioneer</h2>
+            <p class="typewriter" data-text="Chào mừng đến với Nhật ký Hành trình Cốt truyện. Tại đây, bạn sẽ theo chân các phi hành gia tiên phong vượt qua giới hạn của loài người. Hãy chuẩn bị tinh thần."></p>
+        </div>
+
+        <div class="scene">
+            <span class="scene-number">CHƯƠNG 1</span>
+            <h2>Thức Giấc Tại Trái Đất</h2>
+            <p class="typewriter" data-text="Bạn thức dậy trên một đốm xanh mờ nhạt. Một ốc đảo nhỏ bé mang sự sống, lơ lửng giữa đại dương vũ trụ lạnh lẽo và vô tận."></p>
+        </div>
+
+        <div class="scene">
+            <span class="scene-number">CHƯƠNG 2</span>
+            <h2>Vượt Qua Khí Quyển</h2>
+            <p class="typewriter" data-text="Lực hấp dẫn buông lơi. Bầu trời xanh biếc nhường chỗ cho màn đêm vĩnh cửu. Hành trình của bạn chính thức bắt đầu."></p>
+        </div>
+
+        <div class="scene">
+            <span class="scene-number">CHƯƠNG 3</span>
+            <h2>Những Gã Khổng Lồ Khí</h2>
+            <p class="typewriter" data-text="Bên ngoài khung cửa sổ là Sao Mộc. Vết Đỏ Lớn - cơn bão kéo dài hàng thế kỷ - đang nhìn chằm chằm vào bạn."></p>
+        </div>
+
+        <div class="scene">
+            <span class="scene-number">CHƯƠNG 4</span>
+            <h2>Rìa Ngân Hà</h2>
+            <p class="typewriter" data-text="Chào mừng bạn đến với biển sao vô tận. Vẻ đẹp lộng lẫy này có thể che giấu những nguy hiểm tột cùng..."></p>
+        </div>
+
+        <div class="scene">
+            <span class="scene-number" style="color: #ff3366; border-color: #ff3366;">CẢNH BÁO ĐỎ</span>
+            <h2 style="color: #ff3366; text-shadow: 0 0 20px rgba(255,51,102,0.6);">Siêu Hố Đen</h2>
+            <p class="typewriter" data-text="Lực hấp dẫn vượt ngưỡng cho phép! Không thời gian đang bị bẻ cong. Chúng ta đã lọt vào Chân trời sự kiện..."></p>
+        </div>
+    </div>
+
+    <div class="controls" style="transition: opacity 1s;">
+        <button id="prev-btn" class="nav-btn" onclick="changeScene(-1)">&#10094; Quay lại</button>
+        <div class="dots">
+            <span class="dot active" onclick="setScene(0)"></span>
+            <span class="dot" onclick="setScene(1)"></span>
+            <span class="dot" onclick="setScene(2)"></span>
+            <span class="dot" onclick="setScene(3)"></span>
+            <span class="dot" onclick="setScene(4)"></span>
+            <span class="dot" onclick="setScene(5)"></span>
+        </div>
+        <button id="next-btn" class="nav-btn next-glow" onclick="changeScene(1)">Khởi Hành &#10095;</button>
+    </div>
+
+    <div id="end-screen">
+        <div class="end-text-container">
+            <h1 id="end-text-en"></h1>
+            <p id="end-text-vn"></p>
+        </div>
+        <button id="respawn-btn" class="nav-btn next-glow" onclick="window.location.href='index.html'">
+            REBIRTH<br><span style="font-size: 0.6em; opacity: 0.8;">Khởi Nguyên Mới</span>
+        </button>
+        
+        <footer class="personal-signature-end">
+            <p>This universe was explored by Phúc.</p>
+            <p class="vn-sig">Vũ trụ này được khám phá bởi Phúc.</p>
+        </footer>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <script src="story.js"></script>
+</body>
+</html>
