@@ -340,7 +340,8 @@ if (container3D && typeof THREE !== 'undefined') {
     if (galaxyBtn) {
         galaxyBtn.addEventListener('click', () => {
             window.zoomToGalaxy();
-            window.closeObserverMode?.();
+            if (observerHud) observerHud.classList.remove('active-hud');
+            if (scanLayer) scanLayer.classList.remove('active-scan');
         });
     }
 
@@ -653,6 +654,7 @@ document.addEventListener('keydown', function(e) {
 // 7. KHÔI PHỤC: HỆ THỐNG MODAL (MỞ HỒ SƠ)
 // ==========================================
 const modal = document.getElementById('planetModal');
+let modalTrigger = null;
 
 window.openModal = function(id) {
     const data = celestialData[id];
@@ -674,21 +676,45 @@ window.openModal = function(id) {
     if(distEl) distEl.innerText = data.dist || 'Đang cập nhật...';
     if(funEl) funEl.innerText = data.fun || 'Vũ trụ còn nhiều bí ẩn...';
     
+    modalTrigger = document.activeElement instanceof HTMLElement ? document.activeElement : null;
     modal.style.display = 'flex';
     modal.style.opacity = '0';
     modal.style.transition = 'opacity 0.3s ease-out';
-    setTimeout(() => { modal.style.opacity = '1'; }, 10);
+    setTimeout(() => {
+        modal.style.opacity = '1';
+        modal.querySelector('.close-btn')?.focus();
+    }, 10);
 };
 
 window.closeModal = function() { 
     if (modal) {
         modal.style.opacity = '0';
-        setTimeout(() => { modal.style.display = 'none'; }, 300);
+        setTimeout(() => {
+            modal.style.display = 'none';
+            modalTrigger?.focus();
+            modalTrigger = null;
+        }, 300);
     }
 };
 
 window.addEventListener('click', function (e) { 
     if (e.target === modal) window.closeModal(); 
+});
+
+modal?.addEventListener('keydown', event => {
+    if (event.key !== 'Tab') return;
+    const focusable = [...modal.querySelectorAll('button, a[href], input, textarea, select, [tabindex]:not([tabindex="-1"])')]
+        .filter(element => !element.disabled && element.offsetParent !== null);
+    if (!focusable.length) return;
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+    }
 });
 
 // ==========================================
@@ -698,16 +724,54 @@ const starsContainer = document.getElementById('stars-container');
 
 function createStarfield() {
   if (!starsContainer) return;
-  const numberOfStars = 3000; 
+  starsContainer.innerHTML = '';
+  const numberOfStars = 850;
   for (let i = 0; i < numberOfStars; i++) {
     const star = document.createElement('div');
     star.className = 'star';
-    star.style.top = Math.random() * 100 + '%';
-    star.style.left = Math.random() * 100 + '%';
-    const size = Math.random() * 2 + 0.5;
+
+    // Phân bố mật độ tự nhiên:
+    // ~65% tập trung theo một dải nghiêng nhẹ (mô phỏng mặt phẳng Ngân Hà)
+    // ~35% phân bố thưa thớt tạo các khoảng trống vũ trụ tĩnh lặng
+    let top, left;
+    if (Math.random() < 0.65) {
+      const t = Math.random();
+      const spread = (Math.random() - 0.5) * 36;
+      top = Math.max(0, Math.min(100, t * 100 + spread));
+      left = Math.max(0, Math.min(100, (1 - t) * 100 + (Math.random() - 0.5) * 45));
+    } else {
+      top = Math.random() * 100;
+      left = Math.random() * 100;
+    }
+
+    star.style.top = top.toFixed(2) + '%';
+    star.style.left = left.toFixed(2) + '%';
+
+    // Phân cấp kích thước và độ sáng:
+    const r = Math.random();
+    let size, opacity, color;
+    if (r > 0.96) {
+      // Vì sao sáng điểm xuyết (~4%)
+      size = (Math.random() * 0.7 + 2.0).toFixed(1);
+      opacity = (Math.random() * 0.2 + 0.75).toFixed(2);
+      color = Math.random() > 0.5 ? '#dec195' : '#eef1ec';
+      star.style.boxShadow = `0 0 4px ${color}`;
+    } else if (r > 0.82) {
+      // Sao trung bình (~14%)
+      size = (Math.random() * 0.5 + 1.3).toFixed(1);
+      opacity = (Math.random() * 0.25 + 0.45).toFixed(2);
+      color = '#eef1ec';
+    } else {
+      // Bụi sao li ti (~82%)
+      size = (Math.random() * 0.4 + 0.8).toFixed(1);
+      opacity = (Math.random() * 0.3 + 0.15).toFixed(2);
+      color = '#a5cfd5';
+    }
+
     star.style.width = size + 'px';
     star.style.height = size + 'px';
-    star.style.opacity = Math.random() * 0.7 + 0.3;
+    star.style.opacity = opacity;
+    star.style.backgroundColor = color;
     starsContainer.appendChild(star);
   }
 }
@@ -716,23 +780,23 @@ function createShootingStar() {
   if (!starsContainer) return;
   const star = document.createElement('div');
   star.className = 'shooting-star';
-  star.style.top = Math.random() * 50 + '%'; 
+  star.style.top = Math.random() * 40 + '%';
   star.style.left = Math.random() * 100 + '%';
-  const length = Math.random() * 150 + 80;
+  const length = Math.random() * 120 + 70;
   star.style.width = length + 'px';
-  const duration = Math.random() * 0.5 + 0.3;
+  const duration = Math.random() * 0.6 + 0.4;
   star.style.animation = `shoot ${duration}s ease-out forwards`;
   starsContainer.appendChild(star);
-  setTimeout(() => { star.remove(); }, duration * 1000 + 100); 
+  setTimeout(() => { star.remove(); }, duration * 1000 + 100);
 }
 
 function startMeteorShower() {
+  const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (prefersReduced) return;
+  // Giữ tần suất sao băng rất hiếm (~22s) để không làm xao nhãng đọc nội dung
   setInterval(() => {
     createShootingStar();
-    if (Math.random() > 0.6) { 
-      setTimeout(createShootingStar, Math.random() * 300);
-    }
-  }, Math.random() * 1500 + 1500); 
+  }, 22000);
 }
 
 createStarfield();
@@ -789,19 +853,43 @@ document.addEventListener('DOMContentLoaded', () => {
         type();
     }
 
-    timelineItems.forEach(item => {
+    function setTimelineDetailState(card, open) {
+        if (!card) return;
+        const owner = card.closest('.timeline-item');
+        const trigger = owner?.querySelector('.expand-btn');
+        card.classList.toggle('open', open);
+        card.setAttribute('aria-hidden', String(!open));
+        trigger?.setAttribute('aria-expanded', String(open));
+    }
+
+    timelineItems.forEach((item, index) => {
         const expandBtn = item.querySelector('.expand-btn');
         const detailCard = item.querySelector('.detail-card');
         const closeBtn = item.querySelector('.close-detail-btn');
+
+        if (detailCard) {
+            detailCard.id ||= `timeline-detail-${index + 1}`;
+            detailCard.setAttribute('role', 'region');
+            detailCard.setAttribute('aria-hidden', 'true');
+        }
+        if (expandBtn && detailCard) {
+            expandBtn.setAttribute('aria-controls', detailCard.id);
+            expandBtn.setAttribute('aria-expanded', 'false');
+        }
+        if (closeBtn) {
+            closeBtn.type = 'button';
+            closeBtn.setAttribute('aria-label', 'Đóng bảng thông tin');
+        }
 
         if (expandBtn && detailCard) {
             expandBtn.onclick = (e) => {
                 e.preventDefault();
                 document.querySelectorAll('.detail-card.open').forEach(card => {
-                    if (card !== detailCard) card.classList.remove('open');
+                    if (card !== detailCard) setTimelineDetailState(card, false);
                 });
-                
-                detailCard.classList.add('open');
+
+                setTimelineDetailState(detailCard, true);
+                setTimeout(() => closeBtn?.focus(), 50);
                 
                 const pTag = detailCard.querySelector('.typewriter');
                 if (pTag) {
@@ -814,10 +902,21 @@ document.addEventListener('DOMContentLoaded', () => {
         if (closeBtn && detailCard) {
             closeBtn.onclick = (e) => {
                 e.preventDefault();
-                detailCard.classList.remove('open');
+                setTimelineDetailState(detailCard, false);
                 if (timelineTypingTimeout) clearTimeout(timelineTypingTimeout);
+                expandBtn?.focus();
             };
         }
+    });
+
+    document.addEventListener('keydown', event => {
+        if (event.key !== 'Escape') return;
+        const openDetail = document.querySelector('#lich-su .detail-card.open');
+        if (!openDetail) return;
+        const trigger = openDetail.closest('.timeline-item')?.querySelector('.expand-btn');
+        setTimelineDetailState(openDetail, false);
+        if (timelineTypingTimeout) clearTimeout(timelineTypingTimeout);
+        trigger?.focus();
     });
 
     // 10.2. Hiệu ứng Timeline "sống" sáng theo scroll (Gãi đúng chỗ ngứa Mục 1)
@@ -919,8 +1018,6 @@ let simCanvas, simCtx, simAnimId;
             let initialVel = parseFloat(document.getElementById('velSlider').value);
             simSun.mass = parseFloat(document.getElementById('gravSlider').value) || 5000;
             
-            simSun.x = simCanvas.width / 2;
-            simPlanet = { x: simSun.x, y: 50, vx: initialVel, vy: 0, radius: 8 };
             simPath = [];
             document.getElementById('orbit-status').textContent = 'Đang quan sát. Đổi thanh trượt rồi bấm Làm lại để thử một quỹ đạo khác.';
             updatePhysics();
@@ -933,18 +1030,27 @@ let simCanvas, simCtx, simAnimId;
             simCtx.lineTo(toX - headlen * Math.cos(angle - Math.PI / 6), toY - headlen * Math.sin(angle - Math.PI / 6));
             simCtx.moveTo(toX, toY);
             simCtx.lineTo(toX - headlen * Math.cos(angle + Math.PI / 6), toY - headlen * Math.sin(angle + Math.PI / 6));
-            simCtx.strokeStyle = color; simCtx.lineWidth = 2.5; simCtx.stroke();
+            simCtx.strokeStyle = color; simCtx.lineWidth = 2; simCtx.stroke();
         }
 
         function updatePhysics() {
             simCtx.clearRect(0, 0, simCanvas.width, simCanvas.height);
             
+            // Draw subtle orbit coordinate grid
+            simCtx.strokeStyle = 'rgba(157, 174, 185, 0.08)';
+            simCtx.lineWidth = 1;
+            simCtx.beginPath();
+            simCtx.arc(simSun.x, simSun.y, 80, 0, Math.PI * 2);
+            simCtx.arc(simSun.x, simSun.y, 160, 0, Math.PI * 2);
+            simCtx.stroke();
+
+            // Draw trajectory path
             simCtx.beginPath();
             for(let i=0; i<simPath.length; i++) {
                 if(i===0) simCtx.moveTo(simPath[i].x, simPath[i].y);
                 else simCtx.lineTo(simPath[i].x, simPath[i].y);
             }
-            simCtx.strokeStyle = 'rgba(255, 255, 255, 0.3)'; simCtx.lineWidth = 1; simCtx.stroke();
+            simCtx.strokeStyle = 'rgba(165, 207, 213, 0.35)'; simCtx.lineWidth = 1.5; simCtx.stroke();
 
             let dx = simSun.x - simPlanet.x;
             let dy = simSun.y - simPlanet.y;
@@ -960,33 +1066,792 @@ let simCanvas, simCtx, simAnimId;
             simPlanet.x += simPlanet.vx; simPlanet.y += simPlanet.vy;
             
             simPath.push({x: simPlanet.x, y: simPlanet.y});
-            if(simPath.length > 250) simPath.shift();
+            if(simPath.length > 260) simPath.shift();
+
+            // Sun with subtle starlight gold glow
+            const sunGlow = simCtx.createRadialGradient(simSun.x, simSun.y, simSun.radius * 0.4, simSun.x, simSun.y, simSun.radius * 2.2);
+            sunGlow.addColorStop(0, 'rgba(222, 193, 149, 0.95)');
+            sunGlow.addColorStop(0.5, 'rgba(222, 193, 149, 0.35)');
+            sunGlow.addColorStop(1, 'rgba(222, 193, 149, 0)');
+            simCtx.fillStyle = sunGlow;
+            simCtx.beginPath();
+            simCtx.arc(simSun.x, simSun.y, simSun.radius * 2.2, 0, Math.PI*2);
+            simCtx.fill();
 
             simCtx.beginPath(); simCtx.arc(simSun.x, simSun.y, simSun.radius, 0, Math.PI*2);
-            simCtx.fillStyle = '#ffaa00'; simCtx.shadowBlur = 20; simCtx.shadowColor = '#ffaa00'; simCtx.fill(); simCtx.shadowBlur = 0;
+            simCtx.fillStyle = '#DEC195'; simCtx.fill();
 
+            // Planet (Ice Blue)
             simCtx.beginPath(); simCtx.arc(simPlanet.x, simPlanet.y, simPlanet.radius, 0, Math.PI*2);
-            simCtx.fillStyle = '#00d4ff'; simCtx.fill();
+            simCtx.fillStyle = '#A5CFD5'; simCtx.fill();
 
-            drawArrow(simPlanet.x, simPlanet.y, simPlanet.x + simPlanet.vx * 18, simPlanet.y + simPlanet.vy * 18, '#00ffcc');
-            drawArrow(simPlanet.x, simPlanet.y, simPlanet.x + ax * 6000, simPlanet.y + ay * 6000, '#ff4444');
+            // Velocity vector (Ice Blue #A5CFD5) & Gravitational acceleration vector (Terracotta #D48C70)
+            drawArrow(simPlanet.x, simPlanet.y, simPlanet.x + simPlanet.vx * 18, simPlanet.y + simPlanet.vy * 18, '#A5CFD5');
+            drawArrow(simPlanet.x, simPlanet.y, simPlanet.x + ax * 6000, simPlanet.y + ay * 6000, '#D48C70');
 
             if(dist < simSun.radius + simPlanet.radius) {
-                simCtx.fillStyle = "rgba(255, 68, 68, 0.8)"; simCtx.fillRect(0, 0, simCanvas.width, simCanvas.height);
-                simCtx.fillStyle = "#fff"; simCtx.font = "bold 22px sans-serif"; simCtx.textAlign = "center";
-                simCtx.fillText("💥 HÀNH TINH BỊ THIÊU RỤI!", simCanvas.width/2, simCanvas.height/2);
-                document.getElementById('orbit-status').textContent = 'Va chạm: đường đi đưa thiên thể quá gần Mặt Trời. Thử tăng vận tốc ban đầu.';
+                simCtx.fillStyle = "rgba(8, 13, 20, 0.9)"; simCtx.fillRect(0, 0, simCanvas.width, simCanvas.height);
+                simCtx.fillStyle = "#DEC195"; simCtx.font = "600 16px 'Space Grotesk', sans-serif"; simCtx.textAlign = "center";
+                simCtx.fillText("VA CHẠM TRỌNG TRƯỜNG", simCanvas.width/2, simCanvas.height/2 - 10);
+                simCtx.fillStyle = "#9DAEB9"; simCtx.font = "400 13px 'Plus Jakarta Sans', sans-serif";
+                simCtx.fillText("Thiên thể tiến vào vùng nhật quyển và bị hấp thụ.", simCanvas.width/2, simCanvas.height/2 + 14);
+                document.getElementById('orbit-status').textContent = 'Va chạm: Đường đi đưa thiên thể quá gần Mặt Trời. Hãy tăng vận tốc tiếp tuyến ban đầu.';
                 return; 
             }
             if(simPlanet.x < -100 || simPlanet.x > simCanvas.width+100 || simPlanet.y < -100 || simPlanet.y > simCanvas.height+100) {
-                simCtx.fillStyle = "rgba(255, 170, 0, 0.5)"; simCtx.fillRect(0, 0, simCanvas.width, simCanvas.height);
-                simCtx.fillStyle = "#fff"; simCtx.font = "bold 22px sans-serif"; simCtx.textAlign = "center";
-                simCtx.fillText('THIÊN THỂ RA NGOÀI KHUNG NHÌN', simCanvas.width/2, simCanvas.height/2);
+                simCtx.fillStyle = "rgba(8, 13, 20, 0.9)"; simCtx.fillRect(0, 0, simCanvas.width, simCanvas.height);
+                simCtx.fillStyle = "#A5CFD5"; simCtx.font = "600 16px 'Space Grotesk', sans-serif"; simCtx.textAlign = "center";
+                simCtx.fillText("QUỸ ĐẠO THOÁT LY (HYPERBOLIC)", simCanvas.width/2, simCanvas.height/2 - 10);
+                simCtx.fillStyle = "#9DAEB9"; simCtx.font = "400 13px 'Plus Jakarta Sans', sans-serif";
+                simCtx.fillText("Động năng vượt thắng trường hấp dẫn trung tâm.", simCanvas.width/2, simCanvas.height/2 + 14);
                 const energy = (simPlanet.vx ** 2 + simPlanet.vy ** 2) / 2 - simSun.mass * 0.05 / dist;
-                document.getElementById('orbit-status').textContent = energy >= 0 ? 'Thoát ra xa: thiên thể có đủ năng lượng để không bị giữ trên quỹ đạo kín.' : 'Thiên thể ra ngoài khung nhìn, nhưng vẫn còn trên quỹ đạo liên kết.';
+                document.getElementById('orbit-status').textContent = energy >= 0 ? 'Thoát ly: Thiên thể có đủ năng lượng để vĩnh viễn rời khỏi trường hấp dẫn kín.' : 'Thiên thể tạm thời ra ngoài khung nhìn nhưng vẫn trên quỹ đạo elip liên kết.';
                 return; 
             }
 
             simAnimId = requestAnimationFrame(updatePhysics);
         }
-   
+
+// ==========================================
+// 13. BẦU TRỜI TỐI NAY (TONIGHT'S SKY MODULE)
+// ==========================================
+function initTonightsSky() {
+    const moonNameEl = document.getElementById('moon-phase-name');
+    const moonIllumEl = document.getElementById('moon-illumination');
+    const moonAgeEl = document.getElementById('moon-age');
+    const moonAdviceEl = document.getElementById('moon-advice');
+    const moonPhaseShape = document.getElementById('moon-phase-shape');
+    const seasonTagEl = document.getElementById('sky-season-tag');
+    const skyTargetTitleEl = document.getElementById('sky-target-title');
+    const skyTargetDescEl = document.getElementById('sky-target-desc');
+    const skyTipTextEl = document.getElementById('sky-tip-text');
+
+    if (!moonNameEl) return;
+
+    const now = new Date();
+    // Reference New Moon: Jan 6, 2000, 18:14 UTC (J2000 epoch)
+    const synodicMonth = 29.53058867;
+    const epochMs = 947182440000;
+    const diffMs = now.getTime() - epochMs;
+    const cycleMs = synodicMonth * 86400000;
+    let remainderMs = diffMs % cycleMs;
+    if (remainderMs < 0) remainderMs += cycleMs;
+    
+    const ageDays = remainderMs / 86400000;
+    const phaseFraction = ageDays / synodicMonth; // 0.0 to 1.0
+    // Illumination: 0 at phase 0/1, 1 at phase 0.5
+    const illumination = Math.round((1 - Math.cos(phaseFraction * 2 * Math.PI)) / 2 * 100);
+
+    let phaseName = 'Trăng non (Sóc)';
+    let advice = 'Trời tối không trăng, điều kiện lý tưởng nhất trong tháng để ngắm dải Ngân Hà và các tinh vân sâu.';
+    let shapeStyle = '';
+
+    if (ageDays < 1.5 || ageDays >= 28.5) {
+        phaseName = 'Trăng Non (New Moon)';
+        advice = 'Mặt Trăng đi qua giữa Trái Đất và Mặt Trời; bầu trời đêm đạt độ tối hoàn hảo để quan sát tinh vân và thiên hà.';
+        shapeStyle = 'background: #0d1520;';
+    } else if (ageDays < 7.0) {
+        phaseName = 'Trăng Lưỡi Liềm Đầu Tháng (Waxing Crescent)';
+        advice = 'Mảnh trăng thanh mảnh mọc ở hướng Tây ngay sau hoàng hôn. Vùng ranh giới sáng-tối (terminator) để lộ bóng đổ kỳ vĩ của các miệng hố va chạm.';
+        shapeStyle = 'background: linear-gradient(90deg, #DEC195 20%, #0d1520 70%); border-radius: 50%;';
+    } else if (ageDays < 8.5) {
+        phaseName = 'Trăng Bán Nguyệt Đầu Tháng (First Quarter)';
+        advice = 'Nửa bề mặt được chiếu sáng, trăng đứng cao trên đỉnh đầu lúc hoàng hôn. Dùng ống nhòm có thể phân biệt rõ dãy núi Montes Apenninus.';
+        shapeStyle = 'background: linear-gradient(90deg, #DEC195 50%, #0d1520 50%); border-radius: 50%;';
+    } else if (ageDays < 14.0) {
+        phaseName = 'Trăng Trương Tròn Đầu Tháng (Waxing Gibbous)';
+        advice = 'Độ sáng tăng dần, soi rọi cảnh vật ban đêm. Các biển dung nham cổ đại (Mare Imbrium, Mare Serenitatis) hiện lên xám sẫm rõ rệt.';
+        shapeStyle = 'background: linear-gradient(90deg, #DEC195 75%, #0d1520 25%); border-radius: 50%;';
+    } else if (ageDays < 16.5) {
+        phaseName = 'Trăng Tròn (Full Moon / Vọng)';
+        advice = 'Mặt Trăng đối diện trực tiếp Mặt Trời, tỏa sáng chói chang suốt đêm. Ánh trăng sáng sẽ lấn át các thiên thể mờ, thích hợp để ngắm trăng trọn vẹn.';
+        shapeStyle = 'background: radial-gradient(circle at 35% 35%, #fff 0%, #DEC195 65%, #cbb085 100%); border-radius: 50%; box-shadow: 0 0 25px rgba(222,193,149,0.35);';
+    } else if (ageDays < 22.0) {
+        phaseName = 'Trăng Trương Tròn Cuối Tháng (Waning Gibbous)';
+        advice = 'Mặt Trăng mọc muộn hơn sau hoàng hôn, góc chiếu ánh sáng nghiêng làm nổi bật miệng hố Tycho với các vệt tia sáng phóng xạ dài hàng ngàn km.';
+        shapeStyle = 'background: linear-gradient(270deg, #DEC195 75%, #0d1520 25%); border-radius: 50%;';
+    } else if (ageDays < 23.5) {
+        phaseName = 'Trăng Bán Nguyệt Cuối Tháng (Last Quarter)';
+        advice = 'Nửa trăng mọc lúc nửa đêm và đứng cao khi trời rạng sáng. Đây là thời khắc yên tĩnh tuyệt đẹp cho các nhà quan sát cú đêm.';
+        shapeStyle = 'background: linear-gradient(270deg, #DEC195 50%, #0d1520 50%); border-radius: 50%;';
+    } else {
+        phaseName = 'Trăng Lưỡi Liềm Cuối Tháng (Waning Crescent)';
+        advice = 'Mảnh trăng cong mỏng manh xuất hiện ở chân trời phía Đông ngay trước bình minh, cùng lúc với hiện tượng "Ánh đất" (Earthshine) mờ ảo.';
+        shapeStyle = 'background: linear-gradient(270deg, #DEC195 20%, #0d1520 70%); border-radius: 50%;';
+    }
+
+    moonNameEl.textContent = phaseName;
+    moonIllumEl.textContent = `${illumination}%`;
+    moonAgeEl.textContent = `${ageDays.toFixed(1)} ngày`;
+    moonAdviceEl.textContent = advice;
+    if (moonPhaseShape) moonPhaseShape.style.cssText = shapeStyle;
+
+    // Seasonal Astronomical Targets
+    const month = now.getMonth(); // 0 to 11
+    if (month >= 2 && month <= 4) { // Spring (Tháng 3, 4, 5)
+        seasonTagEl.textContent = 'BẦU TRỜI MÙA XUÂN (XUÂN PHÂN)';
+        skyTargetTitleEl.textContent = 'Mùa Của Các Thiên Hà & Sao Kim';
+        skyTargetDescEl.textContent = 'Bầu trời đêm hướng về phía cụm thiên hà Xử Nữ (Virgo Cluster). Về phía Tây sau hoàng hôn, Sao Kim rực rỡ như ngọn hải đăng của bầu trời chiều.';
+        skyTipTextEl.textContent = 'Hãy tìm Chòm sao Gấu Lớn (Bắc Đẩu) treo ngược trên cao, dẫn đường đến ngôi sao sáng Arcturus.';
+    } else if (month >= 5 && month <= 7) { // Summer (Tháng 6, 7, 8)
+        seasonTagEl.textContent = 'BẦU TRỜI MÙA HÈ (HẠ CHÍ)';
+        skyTargetTitleEl.textContent = 'Tam Giác Mùa Hè & Dải Ngân Hà';
+        skyTargetDescEl.textContent = 'Khoảng thời gian đẹp nhất năm để quan sát Dải Ngân Hà vắt ngang bầu trời qua ba ngôi sao Vega, Deneb và Altair. Sao Thổ với vành đai lộng lẫy mọc dần từ nửa đêm.';
+        skyTipTextEl.textContent = 'Tháng 8 hàng năm chào đón mưa sao băng Anh Tiên (Perseids) với tần suất lên tới 60-100 vệt sao/giờ.';
+    } else if (month >= 8 && month <= 10) { // Autumn (Tháng 9, 10, 11)
+        seasonTagEl.textContent = 'BẦU TRỜI MÙA THU (THU PHÂN)';
+        skyTargetTitleEl.textContent = 'Sao Mộc, Sao Thổ & Thiên Hà Tiên Nữ';
+        skyTargetDescEl.textContent = 'Hai hành tinh khí khổng lồ Sao Mộc và Sao Thổ ngự trị suốt đêm. Thiên hà Tiên Nữ (Andromeda / M31) có thể nhìn thấy bằng mắt thường dưới bầu trời ngoại ô.';
+        skyTipTextEl.textContent = 'Kính thiên văn nhỏ 70-90mm sẽ dễ dàng tách biệt vành đai Sao Thổ và 4 vệ tinh Galilei của Sao Mộc.';
+    } else { // Winter (Tháng 12, 1, 2)
+        seasonTagEl.textContent = 'BẦU TRỜI MÙA ĐÔNG (ĐÔNG CHÍ)';
+        skyTargetTitleEl.textContent = 'Chòm Sao Lạp Hộ (Orion) & Tinh Vân M42';
+        skyTargetDescEl.textContent = 'Bầu trời mùa đông trong trẻo với những ngôi sao sáng rực rỡ nhất: Sirius, Betelgeuse và Rigel. Tinh vân Lạp Hộ (M42) nằm ngay bên dưới vành đai ba ngôi sao thẳng hàng.';
+        skyTipTextEl.textContent = 'Ngay cả ống nhòm thông thường cũng thấy được đám mây phát sáng mờ ảo của Tinh vân Lạp Hộ M42.';
+    }
+}
+
+// ==========================================
+// 14. CHÒM SAO CỦA TÔI (CONSTELLATION STUDIO)
+// ==========================================
+const ConstellationStudio = {
+    canvas: null,
+    ctx: null,
+    stars: [
+        { id: 1, x: 60, y: 70, r: 3.5, label: 'α' },
+        { id: 2, x: 140, y: 40, r: 2.5, label: 'β' },
+        { id: 3, x: 210, y: 85, r: 4.0, label: 'γ' },
+        { id: 4, x: 120, y: 130, r: 2.0, label: 'δ' },
+        { id: 5, x: 280, y: 55, r: 3.0, label: 'ε' },
+        { id: 6, x: 340, y: 110, r: 3.5, label: 'ζ' },
+        { id: 7, x: 230, y: 170, r: 2.5, label: 'η' },
+        { id: 8, x: 80, y: 220, r: 3.0, label: 'θ' },
+        { id: 9, x: 160, y: 240, r: 2.2, label: 'ι' },
+        { id: 10, x: 310, y: 210, r: 3.8, label: 'κ' },
+        { id: 11, x: 410, y: 80, r: 2.8, label: 'λ' },
+        { id: 12, x: 460, y: 150, r: 3.2, label: 'μ' },
+        { id: 13, x: 390, y: 220, r: 2.5, label: 'ν' },
+        { id: 14, x: 470, y: 250, r: 3.5, label: 'ξ' },
+        { id: 15, x: 200, y: 20, r: 2.0, label: 'ο' },
+        { id: 16, x: 20, y: 150, r: 2.2, label: 'π' }
+    ],
+    lines: [], // array of [starIdA, starIdB]
+    activeStar: null,
+    hoveredStar: null,
+
+    init() {
+        this.canvas = document.getElementById('constellationCanvas');
+        if (!this.canvas) return;
+        this.ctx = this.canvas.getContext('2d');
+
+        // Event listeners for drawing
+        this.canvas.addEventListener('mousemove', (e) => this.handleMouseMove(e));
+        this.canvas.addEventListener('mouseleave', () => { this.hoveredStar = null; this.render(); });
+        this.canvas.addEventListener('click', (e) => this.handleClick(e));
+
+        document.getElementById('constellation-undo')?.addEventListener('click', () => this.undo());
+        document.getElementById('constellation-clear')?.addEventListener('click', () => this.clear());
+        document.getElementById('constellation-save-btn')?.addEventListener('click', () => this.save());
+
+        this.renderSavedList();
+        this.render();
+    },
+
+    getPos(e) {
+        const rect = this.canvas.getBoundingClientRect();
+        const scaleX = this.canvas.width / rect.width;
+        const scaleY = this.canvas.height / rect.height;
+        return {
+            x: (e.clientX - rect.left) * scaleX,
+            y: (e.clientY - rect.top) * scaleY
+        };
+    },
+
+    findStarNear(x, y, radius = 18) {
+        return this.stars.find(s => {
+            const dx = s.x - x;
+            const dy = s.y - y;
+            return Math.sqrt(dx * dx + dy * dy) <= radius;
+        });
+    },
+
+    handleMouseMove(e) {
+        const pos = this.getPos(e);
+        const star = this.findStarNear(pos.x, pos.y);
+        if (star !== this.hoveredStar) {
+            this.hoveredStar = star;
+            this.canvas.style.cursor = star ? 'pointer' : 'crosshair';
+            this.render(pos);
+        } else if (this.activeStar) {
+            this.render(pos);
+        }
+    },
+
+    handleClick(e) {
+        const pos = this.getPos(e);
+        const clicked = this.findStarNear(pos.x, pos.y);
+
+        if (!clicked) {
+            this.activeStar = null;
+            this.render();
+            return;
+        }
+
+        if (!this.activeStar) {
+            this.activeStar = clicked;
+        } else {
+            if (this.activeStar.id !== clicked.id) {
+                // Check if line already exists
+                const exists = this.lines.some(([a, b]) => 
+                    (a === this.activeStar.id && b === clicked.id) || (a === clicked.id && b === this.activeStar.id)
+                );
+                if (!exists) {
+                    this.lines.push([this.activeStar.id, clicked.id]);
+                }
+            }
+            this.activeStar = clicked; // allow continuous chaining
+        }
+        this.render(pos);
+    },
+
+    undo() {
+        if (this.lines.length > 0) {
+            this.lines.pop();
+            this.render();
+        }
+    },
+
+    clear() {
+        this.lines = [];
+        this.activeStar = null;
+        this.render();
+    },
+
+    render(currentPointerPos = null) {
+        const ctx = this.ctx;
+        const w = this.canvas.width;
+        const h = this.canvas.height;
+        ctx.clearRect(0, 0, w, h);
+
+        // Background space dust
+        ctx.fillStyle = '#080d14';
+        ctx.fillRect(0, 0, w, h);
+
+        // Drawn lines
+        ctx.lineWidth = 1.6;
+        ctx.strokeStyle = '#DEC195';
+        ctx.shadowColor = 'rgba(222, 193, 149, 0.4)';
+        ctx.shadowBlur = 6;
+
+        this.lines.forEach(([idA, idB]) => {
+            const sA = this.stars.find(s => s.id === idA);
+            const sB = this.stars.find(s => s.id === idB);
+            if (sA && sB) {
+                ctx.beginPath();
+                ctx.moveTo(sA.x, sA.y);
+                ctx.lineTo(sB.x, sB.y);
+                ctx.stroke();
+            }
+        });
+
+        // Rubber-band line from activeStar to pointer
+        if (this.activeStar && currentPointerPos) {
+            ctx.strokeStyle = 'rgba(165, 207, 213, 0.5)';
+            ctx.setLineDash([4, 4]);
+            ctx.beginPath();
+            ctx.moveTo(this.activeStar.x, this.activeStar.y);
+            ctx.lineTo(currentPointerPos.x, currentPointerPos.y);
+            ctx.stroke();
+            ctx.setLineDash([]);
+        }
+
+        ctx.shadowBlur = 0;
+
+        // Draw stars
+        this.stars.forEach(s => {
+            const isHovered = this.hoveredStar && this.hoveredStar.id === s.id;
+            const isActive = this.activeStar && this.activeStar.id === s.id;
+
+            // Halo for hovered or active star
+            if (isHovered || isActive) {
+                ctx.fillStyle = isActive ? 'rgba(222, 193, 149, 0.35)' : 'rgba(165, 207, 213, 0.25)';
+                ctx.beginPath();
+                ctx.arc(s.x, s.y, s.r + 7, 0, Math.PI * 2);
+                ctx.fill();
+            }
+
+            // Core star
+            ctx.fillStyle = isActive ? '#DEC195' : (isHovered ? '#EEF1EC' : '#c9d6df');
+            ctx.beginPath();
+            ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Label
+            ctx.fillStyle = 'rgba(157, 174, 185, 0.5)';
+            ctx.font = "10px 'Share Tech Mono', monospace";
+            ctx.fillText(s.label, s.x + 6, s.y - 4);
+        });
+    },
+
+    save() {
+        const nameInput = document.getElementById('constellation-name');
+        const noteInput = document.getElementById('constellation-note');
+        const name = nameInput ? nameInput.value.trim() : '';
+        const note = noteInput ? noteInput.value.trim() : '';
+
+        if (!name) {
+            alert('Vui lòng đặt tên cho chòm sao của bạn.');
+            nameInput?.focus();
+            return;
+        }
+
+        if (this.lines.length < 1) {
+            alert('Hãy nối ít nhất 2 ngôi sao để tạo thành một chòm sao trước khi lưu.');
+            return;
+        }
+
+        let saved = [];
+        try {
+            saved = JSON.parse(localStorage.getItem('phuc.constellations.v1') || '[]');
+        } catch(e) { saved = []; }
+
+        const entry = {
+            id: 'c_' + Date.now(),
+            name: name,
+            note: note || 'Chòm sao tự phác thảo trên đài quan sát.',
+            lines: this.lines,
+            starsCount: new Set(this.lines.flat()).size,
+            date: new Date().toISOString()
+        };
+
+        saved.unshift(entry);
+        try {
+            localStorage.setItem('phuc.constellations.v1', JSON.stringify(saved));
+        } catch(e) {}
+
+        if (nameInput) nameInput.value = '';
+        if (noteInput) noteInput.value = '';
+        this.clear();
+        this.renderSavedList();
+    },
+
+    deleteSaved(id) {
+        let saved = [];
+        try {
+            saved = JSON.parse(localStorage.getItem('phuc.constellations.v1') || '[]');
+        } catch(e) { saved = []; }
+        saved = saved.filter(item => item.id !== id);
+        try {
+            localStorage.setItem('phuc.constellations.v1', JSON.stringify(saved));
+        } catch(e) {}
+        this.renderSavedList();
+    },
+
+    loadConstellation(lines) {
+        this.lines = lines || [];
+        this.activeStar = null;
+        this.render();
+    },
+
+    renderSavedList() {
+        const listEl = document.getElementById('saved-constellations-list');
+        const emptyEl = document.getElementById('constellation-empty');
+        if (!listEl) return;
+
+        let saved = [];
+        try {
+            saved = JSON.parse(localStorage.getItem('phuc.constellations.v1') || '[]');
+        } catch(e) { saved = []; }
+
+        listEl.innerHTML = '';
+        if (emptyEl) emptyEl.style.display = saved.length > 0 ? 'none' : 'block';
+
+        saved.forEach(item => {
+            const card = document.createElement('div');
+            card.className = 'saved-constellation-card';
+            
+            const dateStr = new Intl.DateTimeFormat('vi-VN', { day: '2-digit', month: '2-digit', year: 'numeric' }).format(new Date(item.date));
+
+            card.innerHTML = `
+                <div class="saved-c-header">
+                    <span class="saved-c-meta">${dateStr} · ${item.starsCount} sao</span>
+                    <button type="button" class="saved-c-delete" aria-label="Xóa chòm sao">&times;</button>
+                </div>
+                <h4 class="saved-c-title">${item.name}</h4>
+                <p class="saved-c-note">${item.note}</p>
+                <button type="button" class="saved-c-view">Xem lại trên khung vẽ →</button>
+            `;
+
+            card.querySelector('.saved-c-delete').addEventListener('click', (e) => {
+                e.stopPropagation();
+                this.deleteSaved(item.id);
+            });
+
+            card.querySelector('.saved-c-view').addEventListener('click', () => {
+                this.loadConstellation(item.lines);
+            });
+
+            listEl.appendChild(card);
+        });
+    }
+};
+
+/* ==========================================================================
+   LOOKBACK TIME (CỖ MÁY THỜI GIAN THIÊN VĂN)
+   ========================================================================== */
+const LookbackTime = {
+    data: [
+        {
+            step: 0,
+            name: "Mặt Trăng (The Moon)",
+            shortName: "MẶT TRĂNG",
+            distBadge: "384.400 km",
+            lookbackTime: "1.3 GIÂY",
+            lookbackTimeSub: "để đến mắt bạn — Bạn đang nhìn thấy Mặt Trăng ở:",
+            earthTime: "1.3 giây trước",
+            cosmicDesc: "Vệ tinh tự nhiên duy nhất của Trái Đất. Ở khoảng cách chỉ hơn 1 giây ánh sáng, đây là thiên thể gần chúng ta nhất trong vũ trụ bao la.",
+            statDist: "384.400 km (~0.00257 AU)",
+            earthDesc: "Khoảnh khắc bạn vừa chớp mắt hoặc đọc xong một từ. Nhịp tim của bạn vừa đập đúng một nhịp. Bạn và Mặt Trăng hầu như đang cùng tồn tại trong một hiện tại tức thời.",
+            era: "Hiện tại tức thời"
+        },
+        {
+            step: 1,
+            name: "Mặt Trời (The Sun)",
+            shortName: "MẶT TRỜI",
+            distBadge: "1 AU (~149,6 triệu km)",
+            lookbackTime: "8 PHÚT 19 GIÂY",
+            lookbackTimeSub: "để chạm tới Trái Đất — Bạn đang nhìn thấy Mặt Trời ở:",
+            earthTime: "8 phút 19 giây trước",
+            cosmicDesc: "Trái tim của Thái Dương Hệ, lò phản ứng nhiệt hạch khổng lồ cung cấp năng lượng và sự sống cho muôn loài trên Trái Đất.",
+            statDist: "1 AU (~149.600.000 km)",
+            earthDesc: "Nếu Mặt Trời đột ngột ngừng phát sáng ngay lúc này, chúng ta trên Trái Đất vẫn sẽ thấy trời sáng thêm hơn 8 phút nữa — đủ thời gian để uống xong một tách trà buổi sáng.",
+            era: "Vừa trôi qua trong buổi sáng nay"
+        },
+        {
+            step: 2,
+            name: "Sao Mộc (Jupiter)",
+            shortName: "SAO MỘC",
+            distBadge: "5.2 AU (~778 triệu km)",
+            lookbackTime: "43 PHÚT",
+            lookbackTimeSub: "để vượt qua vành đai tiểu hành tinh — Bạn đang thấy Sao Mộc ở:",
+            earthTime: "43 phút trước",
+            cosmicDesc: "Gã khổng lồ khí lớn nhất Thái Dương Hệ với Vết Đỏ Lớn — một cơn bão cuồng nộ đã hoành hành hàng trăm năm.",
+            statDist: "5.2 AU (~778.000.000 km)",
+            earthDesc: "Một tiết học trên lớp của bạn vừa bắt đầu khi photon ánh sáng từ Sao Mộc bắt đầu rời khỏi tầng khí quyển của nó để bay về phía ống kính của bạn.",
+            era: "Một tiết học trước"
+        },
+        {
+            step: 3,
+            name: "Proxima Centauri",
+            shortName: "PROXIMA CENTAURI",
+            distBadge: "4.24 Năm Ánh Sáng",
+            lookbackTime: "4.24 NĂM",
+            lookbackTimeSub: "vượt qua khoảng chân không liên sao — Bạn đang nhìn thấy ngôi sao này ở:",
+            earthTime: "4.24 năm trước",
+            cosmicDesc: "Ngôi sao gần Hệ Mặt Trời nhất, một sao lùn đỏ thuộc chòm sao Bán Nhân Mã, mang theo ngoại hành tinh Proxima b có tiềm năng hỗ trợ sự sống.",
+            statDist: "4.24 ly (~40.000 tỷ km)",
+            earthDesc: "Khoảng thời gian một học sinh bước vào ngưỡng cửa cấp THPT. Ánh sáng bạn thấy đêm nay đã bắt đầu hành trình từ khi bạn còn là cô cậu học trò lớp 9.",
+            era: "Thời điểm bạn tốt nghiệp cấp 2"
+        },
+        {
+            step: 4,
+            name: "Sao Bắc Cực (Polaris)",
+            shortName: "SAO BẮC CỰC",
+            distBadge: "433 Năm Ánh Sáng",
+            lookbackTime: "433 NĂM",
+            lookbackTimeSub: "dẫn đường cho các nhà hàng hải cổ xưa — Bạn đang nhìn thấy Polaris ở:",
+            earthTime: "433 năm trước (Năm ~1593)",
+            cosmicDesc: "Ngôi sao dẫn đường huyền thoại trên vòm trời phương bắc, một hệ tam sao nằm gần như bất động ngay phía trên trục quay Trái Đất.",
+            statDist: "433 ly (~4.100.000 tỷ km)",
+            earthDesc: "Năm 1593, thời kỳ Phục Hưng ở châu Âu. Galileo Galilei đang giảng dạy tại Đại học Padua và chuẩn bị chế tạo chiếc kính thiên văn đầu tiên để hướng lên bầu trời.",
+            era: "Thời kỳ Phục Hưng & Galileo Galilei"
+        },
+        {
+            step: 5,
+            name: "Tinh vân Lạp Hộ (Orion Nebula M42)",
+            shortName: "TINH VÂN ORION",
+            distBadge: "1.344 Năm Ánh Sáng",
+            lookbackTime: "1.344 NĂM",
+            lookbackTimeSub: "từ chiếc nôi sinh sao vĩ đại — Bạn đang nhìn thấy M42 ở:",
+            earthTime: "1.344 năm trước (Năm ~682)",
+            cosmicDesc: "Vườn ươm sao tráng lệ rực rỡ trong thanh kiếm của chàng thợ săn Orion, nơi hàng trăm ngôi sao non trẻ đang ra đời từ khí bụi vũ trụ.",
+            statDist: "1.344 ly (~12.700.000 tỷ km)",
+            earthDesc: "Thế kỷ thứ 7 (thời nhà Đường ở phương Đông và thời Trung Cổ ở phương Tây). Con người chưa từng có kính thiên văn, chỉ ngước nhìn thanh kiếm Lạp Hộ mờ ảo bằng mắt trần.",
+            era: "Thời kỳ Cổ Trung Đại (~Thế kỷ VII)"
+        },
+        {
+            step: 6,
+            name: "Thiên hà Tiên Nữ (Andromeda M31)",
+            shortName: "THIÊN HÀ TIÊN NỮ",
+            distBadge: "2.5 Triệu Năm Ánh Sáng",
+            lookbackTime: "2.5 TRIỆU NĂM",
+            lookbackTimeSub: "vượt qua không gian liên thiên hà — Bạn đang thấy Tiên Nữ ở:",
+            earthTime: "2.5 triệu năm trước",
+            cosmicDesc: "Thiên hà xoắn ốc khổng lồ chứa hơn 1.000 tỷ ngôi sao, thiên thể xa nhất mà mắt người có thể nhìn thấy trực tiếp mà không cần kính viễn vọng.",
+            statDist: "2.500.000 ly (~23.600 tỷ tỷ km)",
+            earthDesc: "Trên Trái Đất chưa hề xuất hiện loài người hiện đại (Homo sapiens). Người vượn Homo habilis mới chỉ bắt đầu biết ghè đẽo những viên đá cuội đầu tiên ở thảo nguyên châu Phi.",
+            era: "Bình minh loài người (Thời đồ đá cũ sơ kỳ)"
+        },
+        {
+            step: 7,
+            name: "Bức Xạ Nền Vũ Trụ (CMB)",
+            shortName: "BỨC XẠ NỀN (CMB)",
+            distBadge: "Rìa Vũ Trụ Quan Sát Được",
+            lookbackTime: "13.8 TỶ NĂM",
+            lookbackTimeSub: "từ thuở bình minh tạo dựng vạn vật — Bạn đang chạm vào:",
+            earthTime: "13.8 tỷ năm trước (Thuở Big Bang)",
+            cosmicDesc: "Tàn dư nhiệt đầu tiên của vụ nổ Big Bang, được giải phóng khi vũ trụ được 380.000 năm tuổi và các electron kết hợp với proton để tạo thành nguyên tử Hydro đầu tiên.",
+            statDist: "Rìa Vũ Trụ Khả Kiến (~46.5 tỷ ly)",
+            earthDesc: "Trái Đất, Mặt Trời và Dải Ngân Hà thậm chí còn chưa hề hình thành. Cả vũ trụ lúc này chỉ là một biển plasma rực lửa vừa trở nên trong suốt lần đầu tiên trong lịch sử.",
+            era: "Khởi nguồn Vũ Trụ (Vụ nổ Big Bang)"
+        }
+    ],
+
+    currentStep: 0,
+
+    init() {
+        const slider = document.getElementById('lookback-slider');
+        if (!slider) return;
+
+        slider.addEventListener('input', (e) => {
+            this.setStep(parseInt(e.target.value, 10));
+        });
+
+        // Presets
+        document.querySelectorAll('.lookback-preset-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const step = parseInt(btn.dataset.step, 10);
+                this.setStep(step);
+            });
+        });
+
+        // Ticks
+        document.querySelectorAll('.lookback-ticks .tick').forEach(tick => {
+            tick.addEventListener('click', () => {
+                const step = parseInt(tick.dataset.step, 10);
+                this.setStep(step);
+            });
+        });
+
+        this.setStep(0);
+    },
+
+    setStep(index) {
+        const clamped = Math.max(0, Math.min(this.data.length - 1, isNaN(index) ? 0 : index));
+        this.currentStep = clamped;
+        const item = this.data[clamped];
+
+        const slider = document.getElementById('lookback-slider');
+        if (slider) slider.value = clamped;
+
+        const glow = document.getElementById('lookback-track-glow');
+        if (glow) glow.style.width = `${(clamped / (this.data.length - 1)) * 100}%`;
+
+        // Text readouts
+        const distValue = document.getElementById('lookback-dist-value');
+        if (distValue) distValue.textContent = item.distBadge;
+
+        const objName = document.getElementById('lookback-object-name');
+        if (objName) objName.textContent = item.shortName;
+
+        const timeValue = document.getElementById('lookback-time-value');
+        if (timeValue) timeValue.textContent = item.lookbackTime;
+
+        const timeSub = document.getElementById('lookback-time-sub');
+        if (timeSub) timeSub.textContent = item.lookbackTimeSub;
+
+        // Dual card
+        const colName = document.getElementById('lookback-col-name');
+        if (colName) colName.textContent = item.name;
+
+        const cosmicDesc = document.getElementById('lookback-cosmic-desc');
+        if (cosmicDesc) cosmicDesc.textContent = item.cosmicDesc;
+
+        const statDist = document.getElementById('lookback-stat-dist');
+        if (statDist) statDist.textContent = item.statDist;
+
+        const earthTime = document.getElementById('lookback-earth-time');
+        if (earthTime) earthTime.textContent = item.earthTime;
+
+        const earthDesc = document.getElementById('lookback-earth-desc');
+        if (earthDesc) earthDesc.textContent = item.earthDesc;
+
+        const statEra = document.getElementById('lookback-stat-era');
+        if (statEra) statEra.textContent = item.era;
+
+        // Update presets active class
+        document.querySelectorAll('.lookback-preset-btn').forEach(btn => {
+            const btnStep = parseInt(btn.dataset.step, 10);
+            btn.classList.toggle('active', btnStep === clamped);
+        });
+
+        // Update ticks active class
+        document.querySelectorAll('.lookback-ticks .tick').forEach(tick => {
+            const tickStep = parseInt(tick.dataset.step, 10);
+            tick.classList.toggle('active', tickStep === clamped);
+        });
+    }
+};
+
+/* ==========================================================================
+   15. OBSERVATORY WINGS & FLOATING RAIL (ĐÀI QUAN SÁT 4 PHÂN KHU)
+   ========================================================================== */
+const ObservatoryWings = {
+    init() {
+        const rail = document.getElementById('observatory-rail');
+        const railItems = document.querySelectorAll('.rail-item');
+        const wings = document.querySelectorAll('.observatory-wing');
+        if (!rail || wings.length === 0) return;
+
+        // Toggle rail visibility based on scroll position (past hero)
+        const checkRailVisibility = () => {
+            if (window.scrollY > 350) {
+                rail.classList.add('is-visible');
+            } else {
+                rail.classList.remove('is-visible');
+            }
+        };
+
+        window.addEventListener('scroll', checkRailVisibility, { passive: true });
+        checkRailVisibility();
+
+        // Highlight active wing on scroll using IntersectionObserver
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const wingId = entry.target.id;
+                    railItems.forEach(item => {
+                        const href = item.getAttribute('href');
+                        const isActive = href === `#${wingId}`;
+                        item.classList.toggle('active', isActive);
+                        if (isActive) {
+                            item.setAttribute('aria-current', 'true');
+                        } else {
+                            item.removeAttribute('aria-current');
+                        }
+                    });
+                }
+            });
+        }, {
+            root: null,
+            threshold: 0.15,
+            rootMargin: '-10% 0px -40% 0px'
+        });
+
+        wings.forEach(w => observer.observe(w));
+    }
+};
+
+/* ==========================================================================
+   16. WING TABS MANAGER (ĐIỀU KHIỂN CHUYỂN TAB 4 PHÂN KHU)
+   ========================================================================== */
+const WingTabsManager = {
+    init() {
+        const tabBtns = document.querySelectorAll('.wing-tab-btn');
+        if (tabBtns.length === 0) return;
+
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const targetTab = btn.dataset.wingTab;
+                const masterCard = btn.closest('.wing-master-card');
+                if (!masterCard || !targetTab) return;
+
+                // Deactivate other buttons in this master card
+                masterCard.querySelectorAll('.wing-tab-btn').forEach(b => {
+                    const isTarget = b === btn;
+                    b.classList.toggle('active', isTarget);
+                    b.setAttribute('aria-selected', String(isTarget));
+                });
+
+                // Toggle panels in this master card
+                masterCard.querySelectorAll('.wing-tab-panel').forEach(panel => {
+                    const isTarget = panel.id === `panel-${targetTab}`;
+                    if (isTarget) {
+                        panel.style.display = 'block';
+                        panel.classList.add('active');
+                    } else {
+                        panel.style.display = 'none';
+                        panel.classList.remove('active');
+                    }
+                });
+
+                // Specialized re-renders/adjustments on tab activation
+                if (targetTab === 'deck-3d') {
+                    window.dispatchEvent(new Event('resize'));
+                } else if (targetTab === 'lab-lookback') {
+                    if (window.LookbackTime) LookbackTime.setStep(LookbackTime.currentStep);
+                } else if (targetTab === 'archive-studio') {
+                    if (window.ConstellationStudio) ConstellationStudio.render();
+                } else if (targetTab === 'lab-orbit') {
+                    if (window.resetSimulation) window.resetSimulation();
+                }
+            });
+        });
+
+        this.checkInitialHash();
+        window.addEventListener('hashchange', () => this.checkInitialHash());
+    },
+
+    activateTab(targetTab) {
+        const btn = document.querySelector(`.wing-tab-btn[data-wing-tab="${targetTab}"]`);
+        if (btn) btn.click();
+    },
+
+    checkInitialHash() {
+        const hash = window.location.hash.replace('#', '');
+        const hashMap = {
+            'sa-ban-3d': 'deck-3d',
+            'hanh-tinh': 'deck-3d',
+            'tonights-sky': 'deck-sky',
+            'nhat-ky': 'deck-journal',
+            'light-journey': 'lab-light',
+            'lookback-time': 'lab-lookback',
+            'co-che': 'lab-orbit',
+            'deepsky-grid': 'archive-gallery',
+            'tinh-van': 'archive-gallery',
+            'deep-space': 'archive-gallery',
+            'constellation-studio': 'archive-studio',
+            'field-notes': 'archive-field'
+        };
+
+        if (hashMap[hash]) {
+            setTimeout(() => {
+                this.activateTab(hashMap[hash]);
+            }, 100);
+        }
+    }
+};
+
+/* ==========================================================================
+   17. DEEP SKY ARCHIVE FILTER (BỘ LỌC KHO BÁU VŨ TRỤ SÂU)
+   ========================================================================== */
+const DeepSkyFilter = {
+    init() {
+        const btns = document.querySelectorAll('.deepsky-filter-btn');
+        const cards = document.querySelectorAll('.deepsky-card');
+        if (btns.length === 0 || cards.length === 0) return;
+
+        btns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const filter = btn.dataset.filter;
+                btns.forEach(b => b.classList.toggle('active', b === btn));
+
+                cards.forEach(card => {
+                    const cat = card.dataset.cat;
+                    const show = (filter === 'all' || cat === filter);
+                    card.classList.toggle('is-hidden', !show);
+                });
+            });
+        });
+    }
+};
+
+// Hook into DOMContentLoaded
+document.addEventListener('DOMContentLoaded', () => {
+    initTonightsSky();
+    ConstellationStudio.init();
+    LookbackTime.init();
+    WingTabsManager.init();
+    DeepSkyFilter.init();
+    ObservatoryWings.init();
+});

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#080909">
+    <meta name="description" content="Đến gần một hố đen. Xoay góc nhìn, thu phóng và quan sát những dải ánh sáng uốn cong trong trải nghiệm vũ trụ tương tác.">
+    <title>Hố Đen Tương Tác — Đài quan sát của Phúc</title>
+    <link rel="stylesheet" href="black-hole.css">
+    <script src="black-hole-audio.js" defer></script>
+    <script src="black-hole-moments.js" defer></script>
+    <script src="black-hole.js" defer></script>
+</head>
+<body>
+    <main class="experience" id="experience">
+        <canvas id="black-hole-canvas" tabindex="0" aria-label="Hố đen tương tác. Kéo hoặc dùng phím mũi tên để xoay. Cuộn, chụm hai ngón hoặc dùng phím cộng trừ để thu phóng." aria-describedby="interaction-hint"></canvas>
+        <div class="scene-shade" aria-hidden="true"></div>
+        <canvas id="light-trails" aria-hidden="true"></canvas>
+        <p id="scene-whisper" class="scene-whisper" role="status" hidden></p>
+
+        <header class="topbar interface">
+            <a class="back-link" href="index.html"><span aria-hidden="true">↖</span> <span>Đài quan sát</span></a>
+            <a class="wordmark" href="index.html" aria-label="Về Khám Phá Vũ Trụ">✦ <span>KHÁM PHÁ VŨ TRỤ</span></a>
+            <div class="header-actions">
+                <button class="notebook-toggle" id="notebook-button" type="button" aria-expanded="false" aria-controls="black-hole-notebook" aria-label="Mở ghi chép về hố đen"><span class="notebook-mark" aria-hidden="true"></span><span>Ghi chép</span></button>
+                <button class="icon-button" id="info-button" type="button" aria-label="Tìm hiểu và hướng dẫn" title="Tìm hiểu và hướng dẫn">i</button>
+                <button class="icon-button" id="fullscreen-button" type="button" aria-label="Toàn màn hình" title="Toàn màn hình">⛶</button>
+            </div>
+        </header>
+
+        <aside class="black-hole-notebook interface" id="black-hole-notebook" aria-labelledby="notebook-title" hidden>
+            <div class="notebook-topline">
+                <span class="notebook-kicker">ĐÀI QUAN SÁT CỦA PHÚC / 04</span>
+                <button class="icon-button" id="close-notebook" type="button" aria-label="Đóng ghi chép">×</button>
+            </div>
+            <div class="notebook-body">
+                <h2 id="notebook-title">Bên rìa <em>vô cùng.</em></h2>
+                <p class="notebook-intro">Một vài điều nhỏ, để ngắm lâu hơn.</p>
+                <div class="notebook-tabs" role="tablist" aria-label="Những điều quanh hố đen">
+                    <button id="note-tab-shadow" type="button" role="tab" aria-selected="true" aria-controls="note-shadow" tabindex="0">Vùng tối</button>
+                    <button id="note-tab-disk" type="button" role="tab" aria-selected="false" aria-controls="note-disk" tabindex="-1">Đĩa sáng</button>
+                    <button id="note-tab-light" type="button" role="tab" aria-selected="false" aria-controls="note-light" tabindex="-1">Ánh sáng cong</button>
+                </div>
+                <section class="notebook-entry" id="note-shadow" role="tabpanel" aria-labelledby="note-tab-shadow" tabindex="0">
+                    <div class="note-entry-heading"><span class="note-number" aria-hidden="true">01</span><h3>Một khoảng tối<br>giữ cả ánh sáng.</h3></div>
+                    <p>Vùng tối ở giữa là bóng hố đen. Sâu bên trong là chân trời sự kiện — ranh giới mà ánh sáng đã đi vào thì không thể quay về.</p>
+                    <button class="note-look" type="button" data-note-view="close">Ghé gần để nhìn rõ hơn <span aria-hidden="true">↗</span></button>
+                </section>
+                <section class="notebook-entry" id="note-disk" role="tabpanel" aria-labelledby="note-tab-disk" tabindex="0" hidden>
+                    <div class="note-entry-heading"><span class="note-number" aria-hidden="true">02</span><h3>Quanh bóng tối,<br>vật chất đang rực lên.</h3></div>
+                    <p>Dải sáng là đĩa bồi tụ: vật chất nóng xoay quanh hố đen. Thử nhìn từ trên, bạn sẽ thấy dải sáng mở ra thành một chiếc đĩa bao quanh vùng tối.</p>
+                    <button class="note-look" type="button" data-note-view="top">Nhìn chiếc đĩa từ trên <span aria-hidden="true">↗</span></button>
+                </section>
+                <section class="notebook-entry" id="note-light" role="tabpanel" aria-labelledby="note-tab-light" tabindex="0" hidden>
+                    <div class="note-entry-heading"><span class="note-number" aria-hidden="true">03</span><h3>Phía sau<br>cũng hiện ra trước mắt.</h3></div>
+                    <p>Ánh sáng từ phía sau đĩa bồi tụ bị bẻ cong trên đường đến mắt bạn. Nhờ vậy, ngay ở góc nhìn ngang, một vòm sáng vẫn hiện lên phía trên vùng tối.</p>
+                    <button class="note-look" type="button" data-note-view="cinematic">Ngắm lại từ góc nhìn ngang <span aria-hidden="true">↗</span></button>
+                </section>
+                <div class="notebook-moment">
+                    <span class="moment-label">GÓC NHÌN CỦA BẠN</span>
+                    <div><span id="note-view-state">Nhìn ngang · 1.0×</span><span id="note-motion-state">Đang chuyển động</span></div>
+                </div>
+                <form id="journal-form" class="personal-journal">
+                    <label for="journal-note">ĐÊM NAY, BẠN NGHĨ GÌ?</label>
+                    <textarea id="journal-note" rows="3" maxlength="1200" placeholder="Giữ lại một ý nghĩ, trước khi trở về…"></textarea>
+                    <button type="submit" class="note-look">Giữ lại dòng này <span aria-hidden="true">↗</span></button>
+                    <p id="journal-status" role="status">Chỉ lưu trong trình duyệt này, dành riêng cho bạn.</p>
+                </form>
+                <p class="notebook-signoff"><span aria-hidden="true">✦</span> Cứ thong thả. Vũ trụ vẫn ở đây.</p>
+            </div>
+        </aside>
+
+        <section class="scene-title interface" aria-labelledby="scene-heading">
+            <p class="eyebrow"><span></span> TRẢI NGHIỆM MỞ RỘNG / 04</p>
+            <h1 id="scene-heading">Phía bên kia<br><em>ánh sáng.</em></h1>
+            <p class="scene-description">Một hố đen. Vô vàn góc nhìn.<br>Chạm vào khoảng không và bắt đầu khám phá.</p>
+        </section>
+
+        <div class="scene-label interface" aria-hidden="true">
+            <span class="label-line"></span>
+            <span>HỐ ĐEN<span class="label-detail">ĐĨA BỒI TỤ & ÁNH SÁNG UỐN CONG</span></span>
+        </div>
+
+        <div class="zoom-tools interface" role="group" aria-label="Thu phóng">
+            <button class="icon-button" id="zoom-in" type="button" aria-label="Phóng to" title="Phóng to (+)">+</button>
+            <span id="zoom-value" aria-label="Mức phóng đại">1.0×</span>
+            <button class="icon-button" id="zoom-out" type="button" aria-label="Thu nhỏ" title="Thu nhỏ (−)">−</button>
+        </div>
+
+        <div class="bottom-ui interface">
+            <div class="control-panel" id="settings-panel" hidden>
+                <div class="panel-heading"><span>TÙY CHỈNH QUAN SÁT</span><button class="icon-button" id="close-settings" type="button" aria-label="Đóng tùy chỉnh">×</button></div>
+                <details class="scene-tuning">
+                <summary>Hình ảnh & chuyển động</summary>
+                <label for="motion-speed">Tốc độ chuyển động <output id="speed-value" for="motion-speed">1.0×</output></label>
+                <input id="motion-speed" type="range" min="0.2" max="2" step="0.1" value="1">
+                <label for="brightness">Độ sáng đĩa bồi tụ <output id="brightness-value" for="brightness">100%</output></label>
+                <input id="brightness" type="range" min="0.5" max="1.8" step="0.05" value="1">
+                <label for="render-quality">Chất lượng hình ảnh</label>
+                <select id="render-quality"><option value="auto">Tự động</option><option value="high">Chi tiết cao</option><option value="low">Ưu tiên độ mượt</option></select>
+                <p class="panel-note">Chọn “Ưu tiên độ mượt” nếu máy chạy chậm.</p>
+                </details>
+                <div class="moment-options" role="group" aria-label="Một chút riêng cho đêm nay">
+                    <span class="moment-label">MỘT CHÚT RIÊNG CHO ĐÊM NAY</span>
+                    <button id="trails-button" type="button" aria-pressed="false">Dấu vết ánh sáng <span aria-hidden="true">⌁</span></button>
+                    <button id="sound-button" type="button" aria-pressed="false">Âm thanh không gian <span aria-hidden="true">♪</span></button>
+                    <details class="sound-settings">
+                        <summary>Chọn nhạc & âm lượng</summary>
+                        <label for="sound-volume">Âm lượng <output id="sound-volume-value" for="sound-volume">35%</output></label>
+                        <input id="sound-volume" type="range" min="0" max="100" step="1" value="35">
+                        <label for="sound-style">Sắc thái đêm nay</label>
+                        <select id="sound-style">
+                            <option value="deep">Trầm sâu</option>
+                            <option value="float">Lơ lửng</option>
+                            <option value="pulse">Nhịp xa</option>
+                        </select>
+                        <p id="sound-description" class="panel-note">Một lớp âm trầm, chậm và tối.</p>
+                        <label class="personal-track-label" for="sound-file">Hoặc chọn nhạc của bạn</label>
+                        <input id="sound-file" type="file" accept="audio/*,.mp3,.m4a,.wav,.ogg,.flac,.aac">
+                        <button id="clear-sound-file" type="button" hidden>Trở về âm thanh không gian ↗</button>
+                        <p class="panel-note">Nhạc từ máy chỉ phát tại đây, không tải lên. Tải lại trang cần chọn lại tệp.</p>
+                        <p id="sound-status" class="panel-note" role="status">Âm thanh đang tắt.</p>
+                    </details>
+                    <audio id="personal-audio" preload="metadata" loop hidden></audio>
+                    <button id="quiet-button" type="button" aria-pressed="false">Chế độ lặng <span aria-hidden="true">☾</span></button>
+                    <button id="capture-button" type="button">Chụp khoảnh khắc <span aria-hidden="true">↗</span></button>
+                    <p class="panel-note">Âm thanh mặc định tắt. Dấu sáng và khoảnh khắc khi đến gần là những nét vẽ điện ảnh.</p>
+                    <p id="capture-status" class="panel-note" role="status"></p>
+                </div>
+            </div>
+
+            <div class="control-dock" role="toolbar" aria-label="Điều khiển hố đen">
+                <div class="view-presets" role="group" aria-label="Góc nhìn có sẵn">
+                    <button type="button" data-view="cinematic" aria-pressed="true">Điện ảnh</button>
+                    <button type="button" data-view="top" aria-pressed="false">Từ trên</button>
+                    <button type="button" data-view="close" aria-pressed="false">Cận cảnh</button>
+                </div>
+                <span class="dock-divider" aria-hidden="true"></span>
+                <button class="dock-button" id="pause-button" type="button" aria-pressed="false" title="Dừng chuyển động (Space)"><span id="pause-icon" aria-hidden="true">Ⅱ</span><span id="pause-label">Tạm dừng</span></button>
+                <button class="dock-button" id="orbit-button" type="button" aria-pressed="false" title="Tự động xoay góc nhìn"><span aria-hidden="true">↻</span><span>Tự xoay</span></button>
+                <button class="icon-button" id="reset-button" type="button" aria-label="Đặt lại góc nhìn" title="Đặt lại góc nhìn (R)">⟲</button>
+                <button class="icon-button" id="settings-button" type="button" aria-label="Tùy chỉnh quan sát" title="Tùy chỉnh quan sát" aria-expanded="false" aria-controls="settings-panel">☷</button>
+            </div>
+
+            <footer class="scene-footer">
+                <p id="interaction-hint"><span class="desktop-hint">Kéo để xoay <b>·</b> Cuộn để thu phóng</span><span class="touch-hint">Vuốt để xoay <b>·</b> Chụm hai ngón để thu phóng</span></p>
+                <button id="hide-ui" type="button">Ẩn giao diện <span aria-hidden="true">↗</span></button>
+                <p class="render-status"><span class="status-dot"></span><span id="render-status">ĐANG KHỞI TẠO</span></p>
+            </footer>
+        </div>
+
+        <button class="restore-ui" id="show-ui" type="button" hidden>Hiện điều khiển <span aria-hidden="true">↙</span></button>
+        <p class="sr-only" id="announcement" role="status" aria-live="polite"></p>
+
+        <div class="loading-message" id="loading-message" role="status"><span class="loading-ring" aria-hidden="true"></span>Đang mở một góc nhìn vào vô cùng…</div>
+        <section class="fallback-message" id="fallback-message" hidden aria-labelledby="fallback-title">
+            <span class="fallback-orbit" aria-hidden="true">◉</span>
+            <h2 id="fallback-title">Chưa thể mở không gian 3D</h2>
+            <p id="fallback-detail">Trình duyệt cần hỗ trợ WebGL 2. Hãy bật tăng tốc đồ họa trong trình duyệt rồi tải lại trang.</p>
+            <button type="button" id="retry-button">Thử lại</button>
+            <a href="index.html">Về đài quan sát ↗</a>
+        </section>
+    </main>
+
+    <dialog id="info-dialog" aria-labelledby="info-title">
+        <button class="icon-button dialog-close" id="close-info" type="button" aria-label="Đóng hướng dẫn">×</button>
+        <p class="eyebrow">MỘT GÓC NHÌN VÀO VÔ CÙNG</p>
+        <h2 id="info-title">Khi ánh sáng<br><em>đổi hướng.</em></h2>
+        <p>Dải sáng quanh hố đen là đĩa bồi tụ. Ánh sáng từ phía sau bị bẻ cong trên đường đến người quan sát, tạo nên những vòng sáng bao quanh vùng tối.</p>
+        <dl class="shortcut-list"><div><dt>Xoay góc nhìn</dt><dd>Kéo chuột / Vuốt / Phím mũi tên</dd></div><div><dt>Thu phóng</dt><dd>Cuộn / Chụm hai ngón / + và −</dd></div><div><dt>Tạm dừng</dt><dd>Phím cách khi chọn khung cảnh</dd></div><div><dt>Góc nhìn ban đầu</dt><dd>R</dd></div><div><dt>Ẩn / hiện giao diện</dt><dd>H · Esc để hiện lại</dd></div></dl>
+        <p class="science-note">Minh họa tương tác với đường đi ánh sáng được tính gần đúng. Màu sắc và độ sáng được điều chỉnh để dễ quan sát; không phải mô hình đo đạc khoa học.</p>
+        <a class="learn-link" href="https://science.nasa.gov/universe/black-holes/" target="_blank" rel="noopener">Tìm hiểu thêm cùng NASA ↗</a>
+    </dialog>
+    <noscript><div class="noscript-message">Hãy bật JavaScript để khám phá hố đen tương tác. <a href="index.html">Về đài quan sát</a></div></noscript>
+</body>
+</html>

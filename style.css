@@ -71,7 +71,7 @@ body {
 }
 
 /* --- DÀN TRANG --- */
-header { height: 40vh; display: flex; align-items: center; justify-content: center; text-align: center; }
+header.legacy-header { height: 40vh; display: flex; align-items: center; justify-content: center; text-align: center; }
 header.new-hero-section { height: auto !important; min-height: 100vh !important; justify-content: space-between !important; align-items: center !important; }
 .hero-content { max-width: 800px; padding: 20px; }
 .section { padding: 40px 5%; }

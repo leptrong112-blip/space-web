@@ -30,18 +30,80 @@
         </div>
     </div>   
 
+    <!-- FLOATING OBSERVATORY RAIL -->
+    <nav class="observatory-rail" id="observatory-rail" aria-label="Điều hướng 5 phân khu">
+        <a href="#gioi-thieu" class="rail-item active" data-wing="gioi-thieu" title="Phân khu 01: Nhập môn">
+            <span class="rail-num">01</span>
+            <span class="rail-dot"></span>
+            <span class="rail-text">Nhập Môn</span>
+        </a>
+        <a href="#observation-deck" class="rail-item" data-wing="observation-deck" title="Phân khu 02: Đài quan sát 3D">
+            <span class="rail-num">02</span>
+            <span class="rail-dot"></span>
+            <span class="rail-text">Quan Sát</span>
+        </a>
+        <a href="#cosmic-lab" class="rail-item" data-wing="cosmic-lab" title="Phân khu 03: Phòng thí nghiệm">
+            <span class="rail-num">03</span>
+            <span class="rail-dot"></span>
+            <span class="rail-text">Phòng Lab</span>
+        </a>
+        <a href="#deep-space-archive" class="rail-item" data-wing="deep-space-archive" title="Phân khu 04: Vũ trụ sâu">
+            <span class="rail-num">04</span>
+            <span class="rail-dot"></span>
+            <span class="rail-text">Vũ Trụ Sâu</span>
+        </a>
+        <a href="#lich-su" class="rail-item" data-wing="lich-su" title="Phân khu 05: Biên niên sử">
+            <span class="rail-num">05</span>
+            <span class="rail-dot"></span>
+            <span class="rail-text">Lịch Sử</span>
+        </a>
+    </nav>
+
     <header class="new-hero-section" id="trang-chu">
         <nav class="top-nav" aria-label="Điều hướng chính">
             <a href="#trang-chu" class="logo"><span class="brand-star" aria-hidden="true">✦</span><span>KHÁM PHÁ VŨ TRỤ<small>ĐÀI QUAN SÁT CỦA PHÚC</small></span></a>
             <button class="menu-toggle" aria-expanded="false" aria-controls="main-navigation">Menu ☰</button>
             <ul class="nav-links" id="main-navigation">
-                <li><a href="#sa-ban-3d">Đài quan sát</a></li>
-                <li><a href="#hanh-tinh">Thiên thể</a></li>
-                <li><a href="#light-journey">Ánh sáng</a></li>
-                <li><a href="#lich-su">Dấu chân</a></li>
-                <li><a href="story.html" class="nav-story" onclick="transitionToStory(event)">Nhật ký hành trình ↗</a></li>
-                <li><a href="vr-mode.html" class="nav-vr" onclick="transitionToVR(event)">Biển Sao 3D ✦</a></li>
-                <li><a href="VuTru_WebGL/index.html" class="nav-webgl" target="_blank" rel="noopener">Unity 3D ↗</a></li>
+                <li><a href="#gioi-thieu">01 · Nhập môn</a></li>
+                <li><a href="#observation-deck">02 · Quan sát 3D</a></li>
+                <li><a href="#cosmic-lab">03 · Phòng Lab</a></li>
+                <li><a href="#deep-space-archive">04 · Vũ trụ sâu</a></li>
+                <li><a href="#lich-su">05 · Lịch sử</a></li>
+                <li class="nav-dropdown">
+                    <button type="button" class="nav-dropdown-btn" aria-haspopup="true" aria-expanded="false">
+                        <span class="dropdown-star">✦</span> Trải Nghiệm Mở Rộng <span class="dropdown-arrow">▾</span>
+                    </button>
+                    <div class="nav-dropdown-content">
+                        <a href="story.html" class="dropdown-link" onclick="transitionToStory(event)">
+                            <span class="dropdown-icon">📖</span>
+                            <div class="dropdown-info">
+                                <span class="dropdown-title">Nhật Ký Hành Trình</span>
+                                <span class="dropdown-desc">Story mode cảm xúc ↗</span>
+                            </div>
+                        </a>
+                        <a href="vr-mode.html" class="dropdown-link" onclick="transitionToVR(event)">
+                            <span class="dropdown-icon">✨</span>
+                            <div class="dropdown-info">
+                                <span class="dropdown-title">Biển Sao 3D</span>
+                                <span class="dropdown-desc">Không gian chiều sâu VR ✦</span>
+                            </div>
+                        </a>
+                        <a href="VuTru_WebGL/index.html" class="dropdown-link" target="_blank" rel="noopener">
+                            <span class="dropdown-icon">🚀</span>
+                            <div class="dropdown-info">
+                                <span class="dropdown-title">Sa Bàn Unity 3D</span>
+                                <span class="dropdown-desc">Mô phỏng WebGL ↗</span>
+                            </div>
+                        </a>
+                        <a href="black-hole.html" class="dropdown-link">
+                            <span class="dropdown-icon" aria-hidden="true">◉</span>
+                            <div class="dropdown-info">
+                                <span class="dropdown-title">Hố Đen Tương Tác</span>
+                                <span class="dropdown-desc">Xoay góc nhìn · Thu phóng ↗</span>
+                            </div>
+                        </a>
+                    </div>
+                </li>
             </ul>
         </nav>
 
@@ -67,423 +129,866 @@
     </header>
 
     <div class="journey-paths" aria-label="Chọn một hành trình">
-        <a href="#sa-ban-3d"><span>01 / QUAN SÁT</span><strong>Một Hệ Mặt Trời trong tay bạn ↗</strong></a>
+        <a href="#gioi-thieu"><span>01 / NHẬP MÔN</span><strong>Khởi đầu từ một câu hỏi đơn sơ ↗</strong></a>
         <a href="story.html" onclick="transitionToStory(event)"><span>02 / CẢM NHẬN</span><strong>Nhật ký của một người du hành ↗</strong></a>
         <a href="vr-mode.html" onclick="transitionToVR(event)"><span>03 / THẢ MÌNH</span><strong>Trôi giữa biển sao ↗</strong></a>
         <a href="VuTru_WebGL/index.html" target="_blank" rel="noopener"><span>04 / TRẢI NGHIỆM</span><strong>Sa bàn Unity 3D (WebGL) ↗</strong></a>
     </div>
 
-    <section id="gioi-thieu" class="section" style="margin-top: 40px; margin-bottom: 60px;">
-        <div class="intro-grid">
-            <div class="glass-card info-box-glow" data-aos="fade-right">
-                <h2 class="cyan-text" style="font-size: 2rem; margin-bottom: 20px; letter-spacing: 2px;">THIÊN VĂN HỌC LÀ GÌ?</h2>
-                <p style="color: #ccc; line-height: 1.8; font-size: 1.1rem; margin-bottom: 15px;">
+    <!-- =====================================================================
+         PHÂN KHU 01: NHẬP MÔN THIÊN VĂN (INTRODUCTION)
+         ===================================================================== -->
+    <section id="gioi-thieu" class="section observatory-wing wing-intro" data-aos="fade-up">
+        <div class="section-heading-editorial wing-header">
+            <p class="eyebrow"><span class="wing-num-tag">01</span> KHỞI ĐẦU HÀNH TRÌNH / INTRODUCTION</p>
+            <h2 class="section-title">Trước Khi Ngước Nhìn Bầu Trời</h2>
+            <p class="section-desc">Mọi khám phá vĩ đại đều bắt đầu từ một câu hỏi đơn sơ. Hãy cùng tìm hiểu nguồn cội của vũ trụ và niềm say mê ngắm sao trước khi bước vào các đài quan sát.</p>
+        </div>
+
+        <div class="intro-grid-inner">
+            <div class="intro-panel-card glass-card info-box-glow">
+                <div class="intro-card-badge">01 · KHÁI NIỆM</div>
+                <h3 class="cyan-text" style="font-size: 1.45rem; margin-bottom: 14px; letter-spacing: 1.2px;">THIÊN VĂN HỌC LÀ GÌ?</h3>
+                <p style="color: var(--muted); line-height: 1.8; font-size: 0.96rem; margin-bottom: 14px;">
                     Thiên văn học nghiên cứu các thiên thể và những hiện tượng xảy ra trong vũ trụ. Nhưng với mình, nó còn bắt đầu từ một câu hỏi rất nhỏ: điều gì đang ở ngoài kia?
                 </p>
-                <p style="color: #ccc; line-height: 1.8; font-size: 1.1rem;">
+                <p style="color: var(--muted); line-height: 1.8; font-size: 0.96rem;">
                     Từ những đốm sáng lấp lánh trên bầu trời đêm cho đến những thiên hà xoắn ốc khổng lồ cách chúng ta hàng triệu năm ánh sáng, vũ trụ luôn chứa đựng những bí ẩn tuyệt đẹp chờ con người khám phá.
                 </p>
             </div>
 
-            <div class="glass-card info-box-glow" data-aos="fade-left">
-                <h2 class="cyan-text" style="font-size: 2rem; margin-bottom: 20px; letter-spacing: 2px;">NGUỒN GỐC VŨ TRỤ</h2>
-                <p style="color: #ccc; line-height: 1.8; font-size: 1.1rem; margin-bottom: 15px;">
+            <div class="intro-panel-card glass-card info-box-glow">
+                <div class="intro-card-badge">02 · NGUỒN CỘI</div>
+                <h3 class="cyan-text" style="font-size: 1.45rem; margin-bottom: 14px; letter-spacing: 1.2px;">NGUỒN GỐC VŨ TRỤ</h3>
+                <p style="color: var(--muted); line-height: 1.8; font-size: 0.96rem; margin-bottom: 14px;">
                     Khoảng 13,8 tỷ năm trước, vũ trụ ở trạng thái cực nóng và đặc. Mô hình <strong>Big Bang</strong> mô tả quá trình không gian giãn nở và nguội dần từ thời kỳ ấy; đó không phải một quả bom nổ vào khoảng không có sẵn.
                 </p>
-                <p style="color: #ccc; line-height: 1.8; font-size: 1.1rem;">
+                <p style="color: var(--muted); line-height: 1.8; font-size: 0.96rem;">
                     Vật chất dần tập hợp thành sao và thiên hà. Nhiều thế hệ sao đã làm giàu vũ trụ bằng các nguyên tố nặng, trước khi Hệ Mặt Trời và chúng ta xuất hiện. <a class="source-link" href="https://science.nasa.gov/universe/overview/" target="_blank" rel="noopener noreferrer">Đọc tiếp cùng NASA ↗</a>
                 </p>
             </div>
         </div>
     </section>
 
-    <section id="hanh-tinh" class="section">
-        <h2 class="section-title">Hệ Mặt Trời (Solar System)</h2>
-        <div class="grid">
-            <div class="planet-card" data-aos="fade-up" data-aos-delay="100">
-                <img src="Images/sao thủy.jpg" loading="lazy" decoding="async" alt="Sao Thủy">
-                <h3>Sao Thủy</h3>
-                <button onclick="flyToPlanet('mercury')">Xem trên Sa Bàn 3D</button>
-            </div>
-            <div class="planet-card" data-aos="fade-up" data-aos-delay="200">
-                <img src="Images/sao kim.jpg" loading="lazy" decoding="async" alt="Sao Kim">
-                <h3>Sao Kim</h3>
-                <button onclick="flyToPlanet('venus')">Xem trên Sa Bàn 3D</button>
-            </div>
-            <div class="planet-card" data-aos="fade-up" data-aos-delay="300">
-                <img src="Images/trái đất.jpg" loading="lazy" decoding="async" alt="Trái Đất">
-                <h3>Trái Đất</h3>
-                <button onclick="flyToPlanet('earth')">Xem trên Sa Bàn 3D</button>
-            </div>
-            <div class="planet-card" data-aos="fade-up" data-aos-delay="400">
-                <img src="Images/sao hỏa.jpg" loading="lazy" decoding="async" alt="Sao Hỏa">
-                <h3>Sao Hỏa</h3>
-                <button onclick="flyToPlanet('mars')">Xem trên Sa Bàn 3D</button>
-            </div>
-            <div class="planet-card" data-aos="fade-up" data-aos-delay="100">
-                <img src="Images/sao mộc.jpg" loading="lazy" decoding="async" alt="Sao Mộc">
-                <h3>Sao Mộc</h3>
-                <button onclick="flyToPlanet('jupiter')">Xem trên Sa Bàn 3D</button>
-            </div>
-            <div class="planet-card" data-aos="fade-up" data-aos-delay="200">
-                <img src="Images/sao thổ.jpg" loading="lazy" decoding="async" alt="Sao Thổ">
-                <h3>Sao Thổ</h3>
-                <button onclick="flyToPlanet('saturn')">Xem trên Sa Bàn 3D</button>
-            </div>
-            <div class="planet-card" data-aos="fade-up" data-aos-delay="300">
-                <img src="Images/sao thiên vương.jpg" loading="lazy" decoding="async" alt="Sao Thiên Vương">
-                <h3>Sao Thiên Vương</h3>
-                <button onclick="flyToPlanet('uranus')">Xem trên Sa Bàn 3D</button>
-            </div>
-            <div class="planet-card" data-aos="fade-up" data-aos-delay="400">
-                <img src="Images/sao hải vương.jpg" loading="lazy" decoding="async" alt="Sao Hải Vương">
-                <h3>Sao Hải Vương</h3>
-                <button onclick="flyToPlanet('neptune')">Xem trên Sa Bàn 3D</button>
-            </div>
-            <div class="planet-card" data-aos="fade-up" data-aos-delay="100">
-                <img src="Images/mặt trời.jpg" loading="lazy" decoding="async" alt="Mặt Trời">
-                <h3>Mặt Trời</h3>
-                <button onclick="flyToPlanet('sun')">Xem trên Sa Bàn 3D</button>
-            </div>
-            <div class="planet-card" data-aos="fade-up" data-aos-delay="200">
-                <img src="Images/mặt trăng.jpg" loading="lazy" decoding="async" alt="Mặt Trăng">
-                <h3>Mặt Trăng</h3>
-                <button onclick="flyToPlanet('moon')">Xem trên Sa Bàn 3D</button>
-            </div>
+    <!-- =====================================================================
+         PHÂN KHU 02: ĐÀI QUAN SÁT CỐT LÕI (OBSERVATION DECK)
+         ===================================================================== -->
+    <section id="observation-deck" class="section observatory-wing wing-deck">
+        <div class="section-heading-editorial wing-header" data-aos="fade-up">
+            <p class="eyebrow"><span class="wing-num-tag">02</span> ĐÀI QUAN SÁT CỐT LÕI / OBSERVATION DECK</p>
+            <h2 class="section-title">Chạm Vào Một Hệ Mặt Trời</h2>
+            <p class="section-desc">Không gian tương tác 3D đa chiều, cho phép bạn quan sát các hành tinh, theo dõi bầu trời thực tế đêm nay và ghi dấu những điều bạn tò mò vào nhật ký.</p>
         </div>
-    </section>
 
-    <section id="sa-ban-3d" class="section">
-        <div class="three-container-wrapper glass-card">
-            <div class="observatory-heading"><div><p class="eyebrow">ĐÀI QUAN SÁT / TƯƠNG TÁC 3D</p><h2 class="neon-subtitle">Chạm vào một thế giới.</h2></div><span class="live-indicator"><span class="status-dot"></span> KHÔNG GIAN CỦA BẠN</span></div>
-            <p class="observatory-description">Kéo để đổi góc nhìn. Cuộn để tiến gần. Chọn một thiên thể và dành cho nó một chút thời gian.</p>
-            <div class="observatory-controls" aria-label="Điều khiển sa bàn">
-                <button id="solar-pause" type="button" aria-pressed="false">Ⅱ Dừng thời gian</button>
-                <label>Tốc độ <input id="solar-speed" type="range" min="0.1" max="5" step="0.1" value="1"><output id="solar-speed-value" for="solar-speed">1×</output></label>
-                <button id="solar-labels" type="button" aria-pressed="true">Tên thiên thể</button>
-                <button id="solar-orbits" type="button" aria-pressed="true">Quỹ đạo</button>
-                <button id="solar-reset" type="button">↺ Toàn cảnh</button>
-                <button id="solar-galaxy" type="button">✦ Ngân Hà</button>
+        <!-- SINGLE MASTER OBSERVATORY CARD (PHÂN KHU 02) -->
+        <div class="glass-card wing-master-card" data-aos="fade-up">
+            <nav class="wing-tabs-nav" role="tablist" aria-label="Mô-đun đài quan sát cốt lõi">
+                <button type="button" class="wing-tab-btn active" data-wing-tab="deck-3d" role="tab" aria-selected="true">
+                    <span class="tab-btn-icon">✦</span>
+                    <span class="tab-btn-text">Sa Bàn 3D &amp; 10 Hành Tinh</span>
+                </button>
+                <button type="button" class="wing-tab-btn" data-wing-tab="deck-sky" role="tab" aria-selected="false">
+                    <span class="tab-btn-icon">🌙</span>
+                    <span class="tab-btn-text">Bầu Trời Đêm Nay &amp; Pha Trăng</span>
+                </button>
+                <button type="button" class="wing-tab-btn" data-wing-tab="deck-journal" role="tab" aria-selected="false">
+                    <span class="tab-btn-icon">📓</span>
+                    <span class="tab-btn-text">Sổ Tay Quan Sát Cá Nhân</span>
+                </button>
+            </nav>
+
+            <!-- Panel 1: Sa Bàn 3D & 10 Hành Tinh (Default Active) -->
+            <div id="panel-deck-3d" class="wing-tab-panel active" role="tabpanel">
+                <div id="sa-ban-3d" class="sa-ban-section">
+                    <div class="three-container-wrapper">
+                        <div class="observatory-heading"><div><p class="eyebrow">ĐÀI QUAN SÁT / TƯƠNG TÁC 3D</p><h2 class="neon-subtitle">Không gian ba chiều trong tay bạn.</h2></div><span class="live-indicator"><span class="status-dot"></span> KHÔNG GIAN CỦA BẠN</span></div>
+                        <p class="observatory-description">Kéo để đổi góc nhìn. Cuộn để tiến gần. Chọn một thiên thể và dành cho nó một chút thời gian.</p>
+                        <div class="observatory-controls" aria-label="Điều khiển sa bàn">
+                            <button id="solar-pause" type="button" aria-pressed="false">Ⅱ Dừng thời gian</button>
+                            <label>Tốc độ <input id="solar-speed" type="range" min="0.1" max="5" step="0.1" value="1"><output id="solar-speed-value" for="solar-speed">1×</output></label>
+                            <button id="solar-labels" type="button" aria-pressed="true">Tên thiên thể</button>
+                            <button id="solar-orbits" type="button" aria-pressed="true">Quỹ đạo</button>
+                            <button id="solar-reset" type="button">↺ Toàn cảnh</button>
+                            <button id="solar-galaxy" type="button">✦ Ngân Hà</button>
+                        </div>
+                        <div id="planet-picker" class="planet-picker" aria-label="Chọn thiên thể"></div>
+                        
+                        <div style="position: relative; width: 100%; height: 70vh; margin: 0 auto;">
+                            <div id="threejs-container" class="glass-canvas"></div>
+                        </div>
+                        <p class="model-note">Một mô hình để khám phá: kích thước, khoảng cách và thời gian đã được điều chỉnh cho dễ quan sát, không cùng tỷ lệ với thực tế.</p>
+
+                        <!-- Celestial Strip Tray -->
+                        <div id="hanh-tinh" class="celestial-strip-wrap">
+                            <div class="celestial-strip-header">
+                                <div>
+                                    <span class="strip-eyebrow">DANH MỤC THIÊN THỂ THÁI DƯƠNG HỆ</span>
+                                    <h3 class="strip-title">10 Thế Giới Quanh Mặt Trời</h3>
+                                </div>
+                                <span class="strip-hint">Bấm thẻ để điều hướng camera sa bàn 3D ↗</span>
+                            </div>
+                            <div class="celestial-strip" role="region" aria-label="Khay chọn thiên thể">
+                                <div class="planet-card compact-card" data-aos="fade-up" data-aos-delay="50">
+                                    <img src="Images/sao thủy.jpg" loading="lazy" decoding="async" alt="Sao Thủy">
+                                    <div class="compact-card-info">
+                                        <h4>Sao Thủy</h4>
+                                        <button type="button" onclick="flyToPlanet('mercury')">Quan sát →</button>
+                                    </div>
+                                </div>
+                                <div class="planet-card compact-card" data-aos="fade-up" data-aos-delay="100">
+                                    <img src="Images/sao kim.jpg" loading="lazy" decoding="async" alt="Sao Kim">
+                                    <div class="compact-card-info">
+                                        <h4>Sao Kim</h4>
+                                        <button type="button" onclick="flyToPlanet('venus')">Quan sát →</button>
+                                    </div>
+                                </div>
+                                <div class="planet-card compact-card" data-aos="fade-up" data-aos-delay="150">
+                                    <img src="Images/trái đất.jpg" loading="lazy" decoding="async" alt="Trái Đất">
+                                    <div class="compact-card-info">
+                                        <h4>Trái Đất</h4>
+                                        <button type="button" onclick="flyToPlanet('earth')">Quan sát →</button>
+                                    </div>
+                                </div>
+                                <div class="planet-card compact-card" data-aos="fade-up" data-aos-delay="200">
+                                    <img src="Images/sao hỏa.jpg" loading="lazy" decoding="async" alt="Sao Hỏa">
+                                    <div class="compact-card-info">
+                                        <h4>Sao Hỏa</h4>
+                                        <button type="button" onclick="flyToPlanet('mars')">Quan sát →</button>
+                                    </div>
+                                </div>
+                                <div class="planet-card compact-card" data-aos="fade-up" data-aos-delay="250">
+                                    <img src="Images/sao mộc.jpg" loading="lazy" decoding="async" alt="Sao Mộc">
+                                    <div class="compact-card-info">
+                                        <h4>Sao Mộc</h4>
+                                        <button type="button" onclick="flyToPlanet('jupiter')">Quan sát →</button>
+                                    </div>
+                                </div>
+                                <div class="planet-card compact-card" data-aos="fade-up" data-aos-delay="300">
+                                    <img src="Images/sao thổ.jpg" loading="lazy" decoding="async" alt="Sao Thổ">
+                                    <div class="compact-card-info">
+                                        <h4>Sao Thổ</h4>
+                                        <button type="button" onclick="flyToPlanet('saturn')">Quan sát →</button>
+                                    </div>
+                                </div>
+                                <div class="planet-card compact-card" data-aos="fade-up" data-aos-delay="350">
+                                    <img src="Images/sao thiên vương.jpg" loading="lazy" decoding="async" alt="Sao Thiên Vương">
+                                    <div class="compact-card-info">
+                                        <h4>Thiên Vương</h4>
+                                        <button type="button" onclick="flyToPlanet('uranus')">Quan sát →</button>
+                                    </div>
+                                </div>
+                                <div class="planet-card compact-card" data-aos="fade-up" data-aos-delay="400">
+                                    <img src="Images/sao hải vương.jpg" loading="lazy" decoding="async" alt="Sao Hải Vương">
+                                    <div class="compact-card-info">
+                                        <h4>Hải Vương</h4>
+                                        <button type="button" onclick="flyToPlanet('neptune')">Quan sát →</button>
+                                    </div>
+                                </div>
+                                <div class="planet-card compact-card" data-aos="fade-up" data-aos-delay="450">
+                                    <img src="Images/mặt trời.jpg" loading="lazy" decoding="async" alt="Mặt Trời">
+                                    <div class="compact-card-info">
+                                        <h4>Mặt Trời</h4>
+                                        <button type="button" onclick="flyToPlanet('sun')">Quan sát →</button>
+                                    </div>
+                                </div>
+                                <div class="planet-card compact-card" data-aos="fade-up" data-aos-delay="500">
+                                    <img src="Images/mặt trăng.jpg" loading="lazy" decoding="async" alt="Mặt Trăng">
+                                    <div class="compact-card-info">
+                                        <h4>Mặt Trăng</h4>
+                                        <button type="button" onclick="flyToPlanet('moon')">Quan sát →</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div id="planet-picker" class="planet-picker" aria-label="Chọn thiên thể"></div>
-            
-            <div style="position: relative; width: 100%; height: 70vh; margin: 0 auto;">
-                <div id="threejs-container" class="glass-canvas"></div>
-                
 
+            <!-- Panel 2: Bầu Trời Đêm Nay & Pha Trăng -->
+            <div id="panel-deck-sky" class="wing-tab-panel" role="tabpanel" style="display: none;">
+                <div id="tonights-sky" class="tonights-sky-module">
+                    <div class="tonights-sky-header">
+                        <p class="eyebrow">BẦU TRỜI TỐI NAY / REAL-TIME SKY</p>
+                        <h2 class="tonights-sky-title">Góc Nhìn Thực Địa</h2>
+                        <p class="tonights-sky-desc">Một cây cầu nối giữa đài quan sát số và bầu trời thực tế trên đầu bạn đêm nay.</p>
+                    </div>
+
+                    <div class="tonights-sky-grid">
+                        <!-- Moon Phase Visualizer -->
+                        <div class="sky-module moon-phase-module">
+                            <div class="sky-module-badge">PHA MẶT TRĂNG HIỆN TẠI</div>
+                            <div class="moon-visual-container">
+                                <div class="moon-disk-graphic" id="moon-graphic" aria-hidden="true">
+                                    <div class="moon-lit-half" id="moon-phase-shape"></div>
+                                </div>
+                                <div class="moon-data">
+                                    <h3 id="moon-phase-name">Đang đồng bộ...</h3>
+                                    <div class="moon-stats">
+                                        <span class="moon-stat-item">
+                                            <small>ĐỘ SÁNG</small>
+                                            <strong id="moon-illumination">--%</strong>
+                                        </span>
+                                        <span class="moon-stat-divider">·</span>
+                                        <span class="moon-stat-item">
+                                            <small>TUỔI TRĂNG</small>
+                                            <strong id="moon-age">-- ngày</strong>
+                                        </span>
+                                        <span class="moon-stat-divider">·</span>
+                                        <span class="moon-stat-item">
+                                            <small>CHU KỲ</small>
+                                            <strong>29.53 ngày</strong>
+                                        </span>
+                                    </div>
+                                    <p class="moon-astronomy-note" id="moon-advice">Đang tính toán góc nhìn tối nay...</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Seasonal Observation Recommendation -->
+                        <div class="sky-module seasonal-observation-module">
+                            <div class="sky-module-badge">MỤC TIÊU QUAN SÁT THÁNG NÀY</div>
+                            <div class="observation-highlight">
+                                <span class="observation-constellation" id="sky-season-tag">BẦU TRỜI THÁNG NÀY</span>
+                                <h3 id="sky-target-title">Đang đồng bộ mục tiêu...</h3>
+                                <p id="sky-target-desc">Khám phá vị trí các hành tinh và chòm sao nổi bật trên bầu trời thực tế.</p>
+                                <div class="sky-observing-tip">
+                                    <span class="tip-icon">🔭</span>
+                                    <span id="sky-tip-text">Một chiếc ống nhòm nhỏ hoặc đôi mắt trần dưới bầu trời tối là tất cả những gì bạn cần.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tonights-sky-footer">
+                        <p>“Đài quan sát mô phỏng vũ trụ để bạn hiểu hơn, nhưng vẻ đẹp lớn nhất vẫn đang ở ngay trên mái nhà bạn đêm nay.”</p>
+                    </div>
+                </div>
             </div>
-            <p class="model-note">Một mô hình để khám phá: kích thước, khoảng cách và thời gian đã được điều chỉnh cho dễ quan sát, không cùng tỷ lệ với thực tế.</p>
+
+            <!-- Panel 3: Sổ Tay Quan Sát Cá Nhân -->
+            <div id="panel-deck-journal" class="wing-tab-panel" role="tabpanel" style="display: none;">
+                <div id="nhat-ky" class="journal-wrapper">
+                    <div class="journal-heading">
+                        <div>
+                            <p class="eyebrow">NHẬT KÝ QUAN SÁT / FIELD JOURNAL</p>
+                            <h2 class="neon-subtitle">Những thế giới bạn đã chạm vào.</h2>
+                        </div>
+                        <p id="observation-count">0/10 thiên thể trong nhật ký.</p>
+                    </div>
+                    <div id="journal-list" class="journal-list" aria-live="polite"></div>
+                    <p id="journal-empty" class="journal-empty">Chưa có ghi chép nào. Hãy chọn một thiên thể trên sa bàn và lưu lại điều khiến bạn tò mò.</p>
+                </div>
+            </div>
+
         </div>
-    </section>
+    </section> <!-- end observation-deck -->
 
-    <section id="light-journey" class="section light-section">
-        <div class="light-intro"><p class="eyebrow">GÓC TÒ MÒ / 01</p><h2>Ngay cả ánh sáng<br>cũng cần <em>thời gian.</em></h2><p>Khi nhìn Mặt Trời, bạn đang nhìn về quá khứ. Ánh sáng phải vượt qua khoảng không trước khi chạm tới mắt chúng ta.</p><a class="source-link" href="https://science.nasa.gov/learn/basics-of-space-flight/chapter1-1/" target="_blank" rel="noopener noreferrer">Khám phá khoảng cách cùng NASA ↗</a></div>
-        <div class="light-lab">
-            <div class="light-readout"><span>ÁNH SÁNG TỪ MẶT TRỜI</span><output id="light-time" for="light-distance">8 phút 19 giây</output><p>để tới khoảng cách bạn chọn</p></div>
-            <div class="light-track" aria-hidden="true"><span class="light-sun"></span><span class="light-beam"></span><span class="light-destination"></span></div>
-            <label class="light-slider-label" for="light-distance">Khoảng cách <output id="light-au" for="light-distance">1 AU</output></label>
-            <input id="light-distance" type="range" min="0.4" max="30.1" step="0.1" value="1">
-            <div class="light-presets"><button data-distance="1" aria-pressed="true">Trái Đất</button><button data-distance="5.2" aria-pressed="false">Sao Mộc</button><button data-distance="30.1" aria-pressed="false">Sao Hải Vương</button></div>
-            <p class="model-note">1 AU ≈ 149,6 triệu km. Thời gian tính theo khoảng cách đã chọn; vị trí các hành tinh chỉ là mốc trung bình. Chuyển động ánh sáng trên hình được tăng tốc để minh họa.</p>
+    <!-- =====================================================================
+         PHÂN KHU 03: PHÒNG THÍ NGHIỆM VŨ TRỤ (COSMIC LAB)
+         ===================================================================== -->
+    <section id="cosmic-lab" class="section observatory-wing wing-lab">
+        <div class="section-heading-editorial wing-header" data-aos="fade-up">
+            <p class="eyebrow"><span class="wing-num-tag">03</span> PHÒNG THÍ NGHIỆM VŨ TRỤ / COSMIC LAB</p>
+            <h2 class="section-title">Quy Luật Ánh Sáng &amp; Thời Gian</h2>
+            <p class="section-desc">Nơi những định luật ánh sáng, thời gian và lực hấp dẫn định hình trật tự vũ trụ được mô phỏng trực quan.</p>
         </div>
-    </section>
 
-    <section id="co-che" class="section" style="margin-top: 60px; margin-bottom: 60px;">
-        <h2 class="section-title" data-aos="fade-up">Cơ Chế Quỹ Đạo Vũ Trụ</h2>
-        
-        <div class="glass-card" data-aos="zoom-in" style="max-width: 1200px; margin: 0 auto; padding: 40px; display: flex; flex-wrap: wrap; gap: 40px; align-items: center;">
-            
-            <div style="flex: 1; min-width: 300px;">
-                <h3 style="color: #d18af1; font-size: 1.8rem; margin-bottom: 20px;">Cuộc Kéo Co Của Vũ Trụ</h3>
-                
-                <h4 style="color: #00d4ff; margin-bottom: 10px;">1. Lực Vạn Vật Hấp Dẫn (Newton)</h4>
-                <p style="color: #ccc; line-height: 1.6; margin-bottom: 20px;">
-                    Theo mô hình Newton, Mặt Trời hút các hành tinh về phía mình. Lực hút giảm theo bình phương khoảng cách: càng ở xa, tác động càng yếu. Trong mô phỏng này, Mặt Trời được giữ cố định để bạn dễ quan sát.
-                </p>
-                
-                <h4 style="color: #00ffcc; margin-bottom: 10px;">2. Vận Tốc Tiếp Tuyến</h4>
-                <p style="color: #ccc; line-height: 1.6; margin-bottom: 20px;">
-                    Thiên thể vừa chuyển động ngang vừa bị kéo về phía Mặt Trời, nên đường đi liên tục uốn cong. Thay đổi vận tốc ban đầu có thể tạo ra quỹ đạo kín, đường đi va chạm hoặc quỹ đạo thoát. <strong>Thử ba mức bên dưới và nhìn xem đường đi thay đổi thế nào.</strong>
-                </p>
+        <!-- SINGLE MASTER LAB CARD (PHÂN KHU 03) -->
+        <div class="glass-card wing-master-card" data-aos="fade-up">
+            <nav class="wing-tabs-nav" role="tablist" aria-label="Các thí nghiệm vật lý thiên văn">
+                <button type="button" class="wing-tab-btn active" data-wing-tab="lab-light" role="tab" aria-selected="true">
+                    <span class="tab-btn-icon">⚡</span>
+                    <span class="tab-btn-text">01 · Ánh Sáng Thái Dương Hệ (AU)</span>
+                </button>
+                <button type="button" class="wing-tab-btn" data-wing-tab="lab-lookback" role="tab" aria-selected="false">
+                    <span class="tab-btn-icon">⏳</span>
+                    <span class="tab-btn-text">02 · Nhìn Ngược Quá Khứ (Byr)</span>
+                </button>
+                <button type="button" class="wing-tab-btn" data-wing-tab="lab-orbit" role="tab" aria-selected="false">
+                    <span class="tab-btn-icon">🪐</span>
+                    <span class="tab-btn-text">03 · Mô Phỏng Cơ Chế Quỹ Đạo</span>
+                </button>
+            </nav>
 
-                <div style="background: rgba(155, 89, 182, 0.1); padding: 15px; border-radius: 12px; border: 1px solid rgba(155, 89, 182, 0.4);">
-                    <strong style="color: #ffaa00;">💡 Chú thích trong Sa bàn 3D:</strong> <br>
-                    <p style="color: #ddd; margin-top: 8px; font-size: 0.95rem;">
-                        Sa bàn phía trên minh họa xu hướng <strong>hành tinh ở gần Mặt Trời có chu kỳ quỹ đạo ngắn hơn</strong>. Tốc độ đã được điều chỉnh cho dễ quan sát, không phải mô phỏng định lượng Định luật Kepler.
+            <!-- Panel 1: Light Journey -->
+            <div id="panel-lab-light" class="wing-tab-panel active" role="tabpanel">
+                <div id="light-journey" class="light-section">
+                    <div class="light-intro"><p class="eyebrow">GÓC TÒ MÒ / 01</p><h2>Ngay cả ánh sáng<br>cũng cần <em>thời gian.</em></h2><p>Khi nhìn Mặt Trời, bạn đang nhìn về quá khứ. Ánh sáng phải vượt qua khoảng không trước khi chạm tới mắt chúng ta.</p><a class="source-link" href="https://science.nasa.gov/learn/basics-of-space-flight/chapter1-1/" target="_blank" rel="noopener noreferrer">Khám phá khoảng cách cùng NASA ↗</a></div>
+                    <div class="light-lab">
+                        <div class="light-readout"><span>ÁNH SÁNG TỪ MẶT TRỜI</span><output id="light-time" for="light-distance">8 phút 19 giây</output><p>để tới khoảng cách bạn chọn</p></div>
+                        <div class="light-track" aria-hidden="true"><span class="light-sun"></span><span class="light-beam"></span><span class="light-destination"></span></div>
+                        <label class="light-slider-label" for="light-distance">Khoảng cách <output id="light-au" for="light-distance">1 AU</output></label>
+                        <input id="light-distance" type="range" min="0.4" max="30.1" step="0.1" value="1">
+                        <div class="light-presets"><button data-distance="1" aria-pressed="true">Trái Đất</button><button data-distance="5.2" aria-pressed="false">Sao Mộc</button><button data-distance="30.1" aria-pressed="false">Sao Hải Vương</button></div>
+                        <p class="model-note">1 AU ≈ 149,6 triệu km. Thời gian tính theo khoảng cách đã chọn; vị trí các hành tinh chỉ là mốc trung bình. Chuyển động ánh sáng trên hình được tăng tốc để minh họa.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Panel 2: Lookback Time -->
+            <div id="panel-lab-lookback" class="wing-tab-panel" role="tabpanel" style="display: none;">
+                <div id="lookback-time" class="lookback-section" style="padding: 10px 0;">
+                    <div class="lookback-readout">
+                        <div class="lookback-meta">
+                            <span class="lookback-badge" id="lookback-dist-badge">KHOẢNG CÁCH: <strong id="lookback-dist-value">384.400 km</strong></span>
+                            <span class="lookback-object" id="lookback-object-name">MẶT TRĂNG</span>
+                        </div>
+                        <div class="lookback-time-display">
+                            <span class="lookback-time-label">ÁNH SÁNG MẤT</span>
+                            <output id="lookback-time-value" for="lookback-slider">1.3 GIÂY</output>
+                            <span class="lookback-time-sub" id="lookback-time-sub">để đến mắt bạn — Bạn đang nhìn thấy Mặt Trăng ở:</span>
+                        </div>
+                    </div>
+
+                    <div class="lookback-slider-area">
+                        <div class="lookback-track-wrap">
+                            <div class="lookback-track-glow" id="lookback-track-glow"></div>
+                            <input id="lookback-slider" type="range" min="0" max="7" step="1" value="0" aria-label="Thước đo nhìn ngược thời gian">
+                        </div>
+                        <div class="lookback-ticks" aria-hidden="true">
+                            <span class="tick active" data-step="0">Mặt Trăng</span>
+                            <span class="tick" data-step="1">Mặt Trời</span>
+                            <span class="tick" data-step="2">Sao Mộc</span>
+                            <span class="tick" data-step="3">Proxima</span>
+                            <span class="tick" data-step="4">Polaris</span>
+                            <span class="tick" data-step="5">Orion M42</span>
+                            <span class="tick" data-step="6">Tiên Nữ M31</span>
+                            <span class="tick" data-step="7">CMB Big Bang</span>
+                        </div>
+                    </div>
+
+                    <div class="lookback-presets" role="group" aria-label="Các mốc vũ trụ nhanh">
+                        <button type="button" class="lookback-preset-btn active" data-step="0">Mặt Trăng</button>
+                        <button type="button" class="lookback-preset-btn" data-step="1">Mặt Trời</button>
+                        <button type="button" class="lookback-preset-btn" data-step="4">Sao Bắc Cực</button>
+                        <button type="button" class="lookback-preset-btn" data-step="6">Thiên Hà Tiên Nữ</button>
+                        <button type="button" class="lookback-preset-btn" data-step="7">Bức Xạ Big Bang</button>
+                    </div>
+
+                    <div class="lookback-dual-card">
+                        <div class="lookback-col lookback-cosmic-col">
+                            <div class="lookback-col-header">
+                                <span class="lookback-col-tag">VẬT THỂ VŨ TRỤ</span>
+                                <h3 id="lookback-col-name">Mặt Trăng (The Moon)</h3>
+                            </div>
+                            <p id="lookback-cosmic-desc" class="lookback-col-text">Vệ tinh tự nhiên duy nhất của Trái Đất. Ở khoảng cách chỉ hơn 1 giây ánh sáng, đây là thiên thể gần chúng ta nhất trong vũ trụ bao la.</p>
+                            <div class="lookback-col-stat">
+                                <span>Khoảng cách:</span> <strong id="lookback-stat-dist">384.400 km (~0.00257 AU)</strong>
+                            </div>
+                        </div>
+
+                        <div class="lookback-divider" aria-hidden="true">
+                            <span class="lookback-divider-line"></span>
+                            <span class="lookback-divider-icon">⏳</span>
+                            <span class="lookback-divider-line"></span>
+                        </div>
+
+                        <div class="lookback-col lookback-earth-col">
+                            <div class="lookback-col-header">
+                                <span class="lookback-col-tag lookback-tag-earth">TRÁI ĐẤT KHI ÁNH SÁNG KHỞI HÀNH</span>
+                                <h3 id="lookback-earth-time">1.3 giây trước</h3>
+                            </div>
+                            <p id="lookback-earth-desc" class="lookback-col-text">Khoảnh khắc bạn vừa chớp mắt hoặc đọc xong một từ. Nhịp tim của bạn vừa đập đúng một nhịp. Bạn và Mặt Trăng hầu như đang cùng tồn tại trong một hiện tại tức thời.</p>
+                            <div class="lookback-col-stat">
+                                <span>Bối cảnh:</span> <strong id="lookback-stat-era">Hiện tại tức thời</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                    <p class="model-note lookback-note">
+                        💡 <strong>Quy luật cơ bản:</strong> 1 Năm Ánh Sáng (Light-year) là quãng đường ánh sáng đi được trong một năm (~9.460 tỷ km). Vì vậy, nhìn vào một vật thể cách xa 1 triệu năm ánh sáng đồng nghĩa với việc bạn đang nhìn vào nó của đúng 1 triệu năm trước.
                     </p>
                 </div>
             </div>
 
-            <div class="simulation-container" style="flex: 1.2; min-width: 350px; background: #0b1021; padding: 25px; border-radius: 15px; text-align: center; box-shadow: 0 0 30px rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.1);">
-                <h4 style="color: #ffaa00; margin-bottom: 15px; font-size: 1.3rem;">🎮 Tương Tác: Trình Giả Lập Quỹ Đạo</h4>
-                
-                <canvas id="orbitCanvas" width="600" height="300" aria-label="Mô phỏng quỹ đạo; xanh: vận tốc, đỏ: gia tốc hấp dẫn" style="background: #080d14; border-radius: 8px; max-width: 100%; height: auto; border: 1px solid #333;"></canvas>
-                <div class="light-presets"><button data-orbit-speed="0">Rơi về Mặt Trời</button><button data-orbit-speed="1.6">Quỹ đạo gần tròn</button><button data-orbit-speed="2.8">Thoát ra xa</button></div>
-                <p id="orbit-status" class="model-note" role="status"></p>
-                <p class="model-note">Đơn vị quy ước, minh họa hai vật thể; không dùng để dự đoán quỹ đạo thực.</p>
-                
-                <div style="display: flex; justify-content: space-between; margin-top: 20px; gap: 20px; flex-wrap: wrap; text-align: left;">
-                    <div style="flex: 1; min-width: 200px;">
-                        <label style="color: #00ffcc; font-size: 1rem; display: block; margin-bottom: 8px;">Vận tốc tới (Mũi tên Xanh): <span id="velValue" style="color: white; font-weight: bold;">1.5</span></label>
-                        <input type="range" id="velSlider" min="0" max="3" step="0.1" value="1.5" style="width: 100%; cursor: pointer;">
+            <!-- Panel 3: Orbit Simulator -->
+            <div id="panel-lab-orbit" class="wing-tab-panel" role="tabpanel" style="display: none;">
+                <div id="co-che" class="orbit-module">
+                    <div class="orbit-theory" style="margin-bottom: 24px;">
+                        <h3 class="orbit-title">Vũ Điệu Của Lực Hấp Dẫn</h3>
+                        
+                        <div class="orbit-principle">
+                            <h4>1. Lực Vạn Vật Hấp Dẫn (Newton)</h4>
+                            <p>Mặt Trời liên tục hút các hành tinh về tâm. Lực hấp dẫn suy giảm theo bình phương khoảng cách: càng ở xa, lực kéo càng yếu. Trong mô phỏng này, Mặt Trời được giữ cố định để bạn quan sát rõ đường cong chuyển động.</p>
+                        </div>
+                        
+                        <div class="orbit-principle">
+                            <h4>2. Vận Tốc Tiếp Tuyến</h4>
+                            <p>Nếu không có vận tốc ngang, thiên thể sẽ rơi thẳng vào tâm lửa. Nếu vận tốc quá lớn, nó sẽ vĩnh viễn bay ra ngoài không gian. Ở một dải vận tốc cân bằng, thiên thể liên tục "rơi vòng quanh" ngôi sao mẹ.</p>
+                        </div>
+
+                        <div class="orbit-note-box">
+                            <span class="orbit-note-tag">QUY LUẬT TỰ NHIÊN</span>
+                            <p>Hành tinh ở càng gần Mặt Trời phải di chuyển càng nhanh để không bị rơi vào trong (Sao Thủy: ~47 km/s; Trái Đất: ~30 km/s; Sao Hải Vương: ~5.4 km/s).</p>
+                        </div>
                     </div>
-                    <div style="flex: 1; min-width: 200px;">
-                        <label style="color: #ff4444; font-size: 1rem; display: block; margin-bottom: 8px;">Lực hút Mặt Trời (Mũi tên Đỏ): <span id="gravValue" style="color: white; font-weight: bold;">5000</span></label>
-                        <input type="range" id="gravSlider" min="1000" max="10000" step="500" value="5000" style="width: 100%; cursor: pointer;">
+
+                    <div class="orbit-simulator-panel">
+                        <div class="orbit-sim-header">
+                            <span class="orbit-sim-badge">MÔ PHỎNG 2D THỜI GIAN THỰC</span>
+                            <h4>Trình Giả Lập Quỹ Đạo</h4>
+                        </div>
+                        
+                        <div class="orbit-canvas-wrapper">
+                            <canvas id="orbitCanvas" width="600" height="300" aria-label="Mô phỏng quỹ đạo 2 vật thể: véc-tơ lam là vận tốc, véc-tơ đất nung là gia tốc hấp dẫn"></canvas>
+                        </div>
+
+                        <div class="light-presets orbit-presets">
+                            <button data-orbit-speed="0">Rơi về Mặt Trời</button>
+                            <button data-orbit-speed="1.6">Quỹ đạo gần tròn</button>
+                            <button data-orbit-speed="2.8">Thoát ly tự do</button>
+                        </div>
+                        <p id="orbit-status" class="model-note" role="status">Đang quan sát. Đổi thanh trượt rồi bấm Làm lại để thử một quỹ đạo khác.</p>
+                        <p class="model-note">Đơn vị quy ước minh họa hai vật thể; không dùng để dự đoán quỹ đạo thực.</p>
+                        
+                        <div class="orbit-controls-grid">
+                            <div class="orbit-control-group">
+                                <label for="velSlider" class="orbit-control-label">
+                                    <span class="orbit-vector-dot velocity-dot"></span> Vận tốc tới (Lam): <output id="velValue" for="velSlider">1.5</output>
+                                </label>
+                                <input type="range" id="velSlider" min="0" max="3" step="0.1" value="1.5">
+                            </div>
+                            <div class="orbit-control-group">
+                                <label for="gravSlider" class="orbit-control-label">
+                                    <span class="orbit-vector-dot gravity-dot"></span> Lực hút Mặt Trời (Đất nung): <output id="gravValue" for="gravSlider">5000</output>
+                                </label>
+                                <input type="range" id="gravSlider" min="1000" max="10000" step="500" value="5000">
+                            </div>
+                        </div>
+                        
+                        <button onclick="resetSimulation()" class="orbit-reset-btn">LÀM LẠI MÔ PHỎNG</button>
                     </div>
                 </div>
-                
-                <button onclick="resetSimulation()" class="orbit-reset-btn">LÀM LẠI MÔ PHỎNG</button>
-            </div>
-            
-        </div>
-    </section>
-    <section id="tinh-van" class="section">
-        <h2 class="section-title">Tinh Vân (Nebulae)</h2>
-        <div class="grid">
-            <div class="planet-card" data-aos="fade-up" data-aos-delay="100">
-                <img src="https://images.unsplash.com/photo-1462331940025-496dfbfc7564?w=800&q=80" alt="Tinh vân Lạp Hộ">
-                <h3>Tinh Vân Lạp Hộ</h3>
-                <button onclick="openModal('orion')">Hồ sơ dữ liệu</button>
-            </div>
-            <div class="planet-card" data-aos="fade-up" data-aos-delay="200">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/0/00/Crab_Nebula.jpg" alt="Tinh vân Cua">
-                <h3>Tinh Vân Cua</h3>
-                <button onclick="openModal('crab')">Hồ sơ dữ liệu</button>
-            </div>
-            <div class="planet-card" data-aos="fade-up" data-aos-delay="300">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/b/b1/NGC7293_%282004%29.jpg" alt="Tinh vân Mắt Chúa">
-                <h3>Tinh Vân Helix</h3>
-                <button onclick="openModal('helix')">Hồ sơ dữ liệu</button>
-            </div>
-            <div class="planet-card" data-aos="fade-up" data-aos-delay="400">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/6/68/Pillars_of_creation_2014_HST_WFC3-UVIS_full-res_denoised.jpg" alt="Cột trụ sáng tạo">
-                <h3>Cột Trụ Sáng Tạo</h3>
-                <button onclick="openModal('pillars')">Hồ sơ dữ liệu</button>
-            </div>
-            <div class="planet-card" data-aos="fade-up" data-aos-delay="100">
-                <img src="Images/tinh vân thuyền đế (Carina Nebula).png" alt="Tinh vân Thuyền Để">
-                <h3>Tinh Vân Thuyền Để</h3>
-                <button onclick="openModal('carina')">Hồ sơ dữ liệu</button>
-            </div>
-            <div class="planet-card" data-aos="fade-up" data-aos-delay="200">
-                <img src="Images/Tinh vân Hồ Điệp (NGC 6302).jpg" alt="Tinh vân Hồ Điệp">
-                <h3>Tinh Vân Hồ Điệp</h3>
-                <button onclick="openModal('butterfly')">Hồ sơ dữ liệu</button>
             </div>
         </div>
     </section>
-
-    <section id="deep-space" class="section" style="margin-top: 100px; overflow: hidden;">
-        <div class="space-banner" style="background-image: url('https://www.shutterstock.com/shutterstock/videos/3802627261/thumb/1.jpg?ip=x480');">
-            <div class="banner-overlay"></div>
-            <div class="banner-content" data-aos="fade-right">
-                <h2>NGOẠI HÀNH TINH (EXOPLANET)</h2>
-                <p>Những thế giới xa xôi quay quanh một ngôi sao khác ngoài Mặt Trời của chúng ta.</p>
-                <div class="banner-btns">
-                    <button onclick="openModal('exoplanet')">MỞ HỒ SƠ</button>
-                </div>
-            </div>
+    <!-- =====================================================================
+         PHÂN KHU 04: KHO LƯU TRỮ VŨ TRỤ SÂU (DEEP SKY ARCHIVES)
+         ===================================================================== -->
+    <section id="deep-space-archive" class="section observatory-wing wing-deepsky">
+        <div class="section-heading-editorial wing-header" data-aos="fade-up">
+            <p class="eyebrow"><span class="wing-num-tag">04</span> KHO LƯU TRỮ VŨ TRỤ SÂU / DEEP SKY ARCHIVES</p>
+            <h2 class="section-title">Chân Trời Vô Tận &amp; Tinh Cầu Xa Xôi</h2>
+            <p class="section-desc">Vượt qua ranh giới Thái Dương Hệ — chiêm ngưỡng tinh vân rực rỡ, những hòn đảo thiên hà khổng lồ và vực thẳm không-thời gian.</p>
         </div>
-        <div class="space-banner" style="background-image: url('Images/galaxy.jpg');">
-            <div class="banner-overlay" style="background: linear-gradient(-90deg, rgba(20, 5, 10, 0.9) 0%, rgba(20, 5, 10, 0.2) 100%);"></div>
-            <div class="banner-content" data-aos="fade-left" style="margin-left: auto; text-align: right;">
-                <h2>THIÊN HÀ XOẮN ỐC</h2>
-                <p>Cấu trúc vĩ đại chứa hàng tỷ ngôi sao, khí bụi và hố đen khổng lồ ở trung tâm.</p>
-                <div class="banner-btns">
-                    <button onclick="openModal('galaxy')">MỞ HỒ SƠ</button>
-                </div>
-            </div>
-        </div>
-        <div class="space-banner" style="background-image: url('Images/lỗ đen vũ trụ.jpg');">
-            <div class="banner-overlay"></div>
-            <div class="banner-content" data-aos="fade-right">
-                <h2>LỖ ĐEN VŨ TRỤ (BLACK HOLE)</h2>
-                <p>Vùng không thời gian có lực hấp dẫn mạnh đến mức cắn nuốt cả ánh sáng.</p>
-                <div class="banner-btns">
-                    <button onclick="openModal('blackhole')">MỞ HỒ SƠ</button>
-                </div>
-            </div>
-        </div>
-    </section>
 
-    <section id="lich-su" class="section" style="margin-top: 80px; margin-bottom: 80px;">
-        <h2 class="section-title" data-aos="fade-up">Cột Mốc Lịch Sử</h2>
-        
-        <div class="timeline-container">
-            <div id="timeline-line-dynamic" class="timeline-line-dynamic"></div>
+        <!-- Anchors for backward-compatibility -->
+        <span id="tinh-van" class="wing-anchor"></span>
+        <span id="deep-space" class="wing-anchor"></span>
 
-            <div class="timeline-item left" data-aos="fade-right">
-                <div class="timeline-dot"></div>
-                <div class="timeline-content glass-card hover-glow interaction-card">
-                    <h3 class="timeline-date">1957</h3>
-                    <h4 class="timeline-title">Kỷ Nguyên Không Gian</h4>
-                    <p>Liên Xô phóng Sputnik 1, vệ tinh nhân tạo đầu tiên.</p>
-                    <button class="expand-btn">Xem chi tiết &#10095;</button>
-                </div>
-                
-                <div class="detail-card glass-card hover-glow cinematic-popup">
-                    <button class="close-detail-btn">&times;</button>
-                    <div class="detail-branch-line"></div>
-                    <h3 class="detail-title">Vệ Tinh Sputnik 1</h3>
-                    <img src="Images/Vệ Tinh Sputnik 1.jpg" alt="Sputnik 1" class="detail-img glow-img">
-                    <p class="detail-text typewriter" data-text="Sputnik 1 là vệ tinh nhân tạo đầu tiên, nặng 83kg. Nó truyền tín hiệu 'bíp-bíp' về Trái Đất, đánh dấu sự khởi đầu của Kỷ nguyên Không gian và cuộc đua vũ trụ."></p>
-                </div>
-            </div>
+        <!-- SINGLE MASTER DEEP SKY CARD (PHÂN KHU 04) -->
+        <div class="glass-card wing-master-card" data-aos="fade-up">
+            <nav class="wing-tabs-nav" role="tablist" aria-label="Các mô-đun vũ trụ sâu">
+                <button type="button" class="wing-tab-btn active" data-wing-tab="archive-gallery" role="tab" aria-selected="true">
+                    <span class="tab-btn-icon">🌌</span>
+                    <span class="tab-btn-text">01 · Kho Báu Vũ Trụ Sâu (9)</span>
+                </button>
+                <button type="button" class="wing-tab-btn" data-wing-tab="archive-studio" role="tab" aria-selected="false">
+                    <span class="tab-btn-icon">✨</span>
+                    <span class="tab-btn-text">02 · Xưởng Vẽ Chòm Sao</span>
+                </button>
+                <button type="button" class="wing-tab-btn" data-wing-tab="archive-field" role="tab" aria-selected="false">
+                    <span class="tab-btn-icon">📋</span>
+                    <span class="tab-btn-text">03 · Ghi Chú Thực Địa</span>
+                </button>
+            </nav>
 
-            <div class="timeline-item right" data-aos="fade-left">
-                <div class="timeline-dot"></div>
-                <div class="timeline-content glass-card hover-glow interaction-card">
-                    <h3 class="timeline-date">1969</h3>
-                    <h4 class="timeline-title">Bước Chân Lịch Sử</h4>
-                    <p>NASA đưa phi hành gia Apollo 11 lên Mặt Trăng.</p>
-                    <button class="expand-btn">Xem chi tiết &#10095;</button>
-                </div>
-
-                <div class="detail-card glass-card hover-glow cinematic-popup">
-                    <button class="close-detail-btn">&times;</button>
-                    <div class="detail-branch-line"></div>
-                    <h3 class="detail-title">Sứ Mệnh Apollo 11</h3>
-                    <img src="Images/Sứ Mệnh Apollo 11.webp" alt="Apollo 11" class="detail-img glow-img">
-                    <p class="detail-text typewriter" data-text="Tàu Apollo 11 hạ cánh trên Mặt Trăng. Neil Armstrong đã thực hiện 'bước chân vĩ đại' cho nhân loại, mang lại kiến thức và chứng minh tiềm năng khám phá vô tận của con người."></p>
-                </div>
-            </div>
-
-            <div class="timeline-item left" data-aos="fade-right">
-                <div class="timeline-dot"></div>
-                <div class="timeline-content glass-card hover-glow interaction-card">
-                    <h3 class="timeline-date">1990</h3>
-                    <h4 class="timeline-title">Con Mắt Nhân Loại</h4>
-                    <p>Kính viễn vọng Hubble được phóng, nhìn xuyên thiên hà.</p>
-                    <button class="expand-btn">Xem chi tiết &#10095;</button>
-                </div>
-
-                <div class="detail-card glass-card hover-glow cinematic-popup">
-                    <button class="close-detail-btn">&times;</button>
-                    <div class="detail-branch-line"></div>
-                    <h3 class="detail-title">Kính Hubble</h3>
-                    <img src="Images/Kính Hubble.jpeg" alt="Hubble" class="detail-img glow-img">
-                    <p class="detail-text typewriter" data-text="Hubble không bị ảnh hưởng bởi bầu khí quyển, giúp chụp được những bức ảnh sắc nét về tinh vân, thiên hà xa xôi, thay đổi cách chúng ta hiểu về vũ trụ."></p>
-                </div>
-            </div>
-
-            <div class="timeline-item right" data-aos="fade-left">
-                <div class="timeline-dot"></div>
-                <div class="timeline-content glass-card hover-glow interaction-card">
-                    <h3 class="timeline-date">2012</h3>
-                    <h4 class="timeline-title">Kẻ Độc Hành (Curiosity)</h4>
-                    <p>Robot tự hành hạ cánh và khám phá Sao Hỏa.</p>
-                    <button class="expand-btn">Xem chi tiết &#10095;</button>
-                </div>
-
-                <div class="detail-card glass-card hover-glow cinematic-popup">
-                    <button class="close-detail-btn">&times;</button>
-                    <div class="detail-branch-line"></div>
-                    <h3 class="detail-title">Robot Curiosity</h3>
-                    <img src="Images/Robot Curiosity.jpg" alt="Curiosity Rover" class="detail-img glow-img">
-                    <p class="detail-text typewriter" data-text="Curiosity là robot phức tạp nhất NASA từng gửi đến Sao Hỏa. Nó tìm kiếm dấu hiệu của sự sống cổ đại, mang lại dữ liệu vô giá về địa chất và khí quyển của Hành tinh Đỏ."></p>
-                </div>
-            </div>
-
-            <div class="timeline-item left" data-aos="fade-right">
-                <div class="timeline-dot"></div>
-                <div class="timeline-content glass-card hover-glow interaction-card">
-                    <h3 class="timeline-date">2021</h3>
-                    <h4 class="timeline-title">James Webb (JWST)</h4>
-                    <p>Mắt thần nhìn về thuở bình minh vũ trụ.</p>
-                    <button class="expand-btn">Xem chi tiết &#10095;</button>
-                </div>
-
-                <div class="detail-card glass-card hover-glow cinematic-popup">
-                    <button class="close-detail-btn">&times;</button>
-                    <div class="detail-branch-line"></div>
-                    <h3 class="detail-title">Kính James Webb (JWST)</h3>
-                    <img src="Images/James webb.webp" alt="JWST" class="detail-img glow-img">
-                    <p class="detail-text typewriter" data-text="Sử dụng tia hồng ngoại, Webb có thể nhìn xuyên qua các đám mây bụi để quan sát những ngôi sao đầu tiên được hình thành ngay sau Vụ nổ lớn (Big Bang)."></p>
-                </div>
-            </div>
-
-            <div class="timeline-item right" data-aos="fade-left">
-                <div class="timeline-dot"></div>
-                <div class="timeline-content glass-card hover-glow interaction-card" style="border-color: rgba(255, 170, 0, 0.4); box-shadow: 0 0 15px rgba(255, 170, 0, 0.3);">
-                    <h3 class="timeline-date" style="color: #ffaa00; text-shadow: 0 0 20px rgba(255, 170, 0, 0.6);">20??...</h3>
-                    <h4 class="timeline-title">Chân Trời Tiếp Theo ?</h4>
-                    <p>Đâu là cột mốc vĩ đại tiếp theo của nhân loại ?</p>
-                    <button class="expand-btn" style="color: #ffaa00; text-shadow: 0 0 10px rgba(255, 170, 0, 0.4);">Xem chi tiết &#10095;</button>
-                </div>
-
-                <div class="detail-card glass-card hover-glow cinematic-popup" style="border-color: rgba(255, 170, 0, 0.5);">
-                    <button class="close-detail-btn" style="color: #ffaa00;">&times;</button>
-                    <div class="detail-branch-line" style="background: rgba(255, 170, 0, 0.5); box-shadow: 0 0 10px rgba(255, 170, 0, 0.6);"></div>
-                    <h3 class="detail-title" style="color: #ffaa00; text-shadow: 0 0 20px rgba(255, 170, 0, 0.5);">Tương Lai Nằm Trong Tay Bạn... ?</h3>
-                    <img src="https://images.openai.com/static-rsc-4/TiGG8CHwejIn7fB7oA1B5ofHiWeChH11wqYr44Vgh-sSbd-tGGSFbSb9wo0OWRKEi08Kv3-J43Ifn0mkUimpwni3dZdpaKE2PmLCEemerpnKjSpqpLpJDUig5rwGAnoIslkb9ADs28psgk2uPnHx-W-dzOBg9EouQpmso6WUhJM-42nOILD2ncbIbfXUbfSp?purpose=fullsize" alt="Future Mars Colony" class="detail-img glow-img" style="border-color: rgba(255, 170, 0, 0.3);">
-                    <p class="detail-text typewriter" data-text="Cơ sở của nhân loại trên Sao Hỏa... ? Sứ mệnh Interstellar... ? Tìm thấy sự sống ngoài Trái Đất... ? Tương Lai... luôn chứa đựng những bí ẩn và nằm trong tầm tay của chúng ta... ?"></p>
-                </div>
-            </div>
-
-        </div>
-    </section>
-
-    <section id="about-project" class="section" style="margin-top: 50px; margin-bottom: 50px;">
-        <h2 class="section-title">Người Làm</h2>
-        
-        <div class="about-container" data-aos="zoom-in" data-aos-duration="1000">
-            
-            <div class="nasa-id-card glass-card">
-                <div class="id-header">
-                    <span class="nasa-logo">NASA</span>
-                    <span class="id-title">CREW MEMBER</span>
-                </div>
-                <div class="id-body">
-                    <div class="avatar-box">
-                        <img src="https://cdn-icons-png.flaticon.com/512/3242/3242212.png" alt="Avatar">
+            <!-- Panel 1: Deep Sky Gallery (Default Active) -->
+            <div id="panel-archive-gallery" class="wing-tab-panel active" role="tabpanel">
+                <div class="deepsky-filter-bar">
+                    <span class="deepsky-filter-title">BỘ LỌC DANH MỤC:</span>
+                    <div class="deepsky-filter-btns" role="tablist" aria-label="Bộ lọc thiên thể vũ trụ sâu">
+                        <button type="button" class="deepsky-filter-btn active" data-filter="all">✦ Tất Cả (9)</button>
+                        <button type="button" class="deepsky-filter-btn" data-filter="nebula">🌌 Tinh Vân (6)</button>
+                        <button type="button" class="deepsky-filter-btn" data-filter="galaxy">🌀 Thiên Hà &amp; Hố Đen (2)</button>
+                        <button type="button" class="deepsky-filter-btn" data-filter="exoplanet">🪐 Ngoại Hành Tinh (1)</button>
                     </div>
-                    <div class="info-box">
+                </div>
+
+                <div class="deepsky-grid" id="deepsky-grid">
+                    <!-- 1. Orion -->
+                    <article class="deepsky-card" data-cat="nebula" data-aos="fade-up" data-aos-delay="50">
+                        <div class="deepsky-card-media">
+                            <img src="https://images.unsplash.com/photo-1462331940025-496dfbfc7564?w=800&q=80" loading="lazy" decoding="async" alt="Tinh vân Lạp Hộ">
+                            <span class="deepsky-card-badge">M42 · Tinh vân phát xạ</span>
+                        </div>
+                        <div class="deepsky-card-body">
+                            <h3>Tinh Vân Lạp Hộ</h3>
+                            <p>Vườn ươm sao sáng nhất trên bầu trời mùa đông, cách Trái Đất khoảng 1.344 năm ánh sáng.</p>
+                            <button type="button" class="deepsky-view-btn" onclick="openModal('orion')">Mở hồ sơ →</button>
+                        </div>
+                    </article>
+
+                    <!-- 2. Crab -->
+                    <article class="deepsky-card" data-cat="nebula" data-aos="fade-up" data-aos-delay="100">
+                        <div class="deepsky-card-media">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/0/00/Crab_Nebula.jpg" loading="lazy" decoding="async" alt="Tinh vân Cua">
+                            <span class="deepsky-card-badge">M1 · Tàn tích Siêu tân tinh</span>
+                        </div>
+                        <div class="deepsky-card-body">
+                            <h3>Tinh Vân Cua</h3>
+                            <p>Tàn dư rực rỡ từ vụ nổ sao năm 1054, chứa một ẩn tinh pulsar quay 30 vòng/giây.</p>
+                            <button type="button" class="deepsky-view-btn" onclick="openModal('crab')">Mở hồ sơ →</button>
+                        </div>
+                    </article>
+
+                    <!-- 3. Helix -->
+                    <article class="deepsky-card" data-cat="nebula" data-aos="fade-up" data-aos-delay="150">
+                        <div class="deepsky-card-media">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/b/b1/NGC7293_%282004%29.jpg" loading="lazy" decoding="async" alt="Tinh vân Mắt Chúa">
+                            <span class="deepsky-card-badge">NGC 7293 · Tinh vân hành tinh</span>
+                        </div>
+                        <div class="deepsky-card-body">
+                            <h3>Tinh Vân Helix</h3>
+                            <p>"Con Mắt Vũ Trụ" — tương lai xa xôi khoảng 5 tỷ năm nữa của chính Mặt Trời của chúng ta.</p>
+                            <button type="button" class="deepsky-view-btn" onclick="openModal('helix')">Mở hồ sơ →</button>
+                        </div>
+                    </article>
+
+                    <!-- 4. Pillars of Creation -->
+                    <article class="deepsky-card" data-cat="nebula" data-aos="fade-up" data-aos-delay="200">
+                        <div class="deepsky-card-media">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/6/68/Pillars_of_creation_2014_HST_WFC3-UVIS_full-res_denoised.jpg" loading="lazy" decoding="async" alt="Cột trụ sáng tạo">
+                            <span class="deepsky-card-badge">M16 · Vườn ươm sao</span>
+                        </div>
+                        <div class="deepsky-card-body">
+                            <h3>Cột Trụ Sáng Tạo</h3>
+                            <p>Những tháp bụi hydro cao nhiều năm ánh sáng đang sinh dưỡng hàng nghìn vì sao non trẻ.</p>
+                            <button type="button" class="deepsky-view-btn" onclick="openModal('pillars')">Mở hồ sơ →</button>
+                        </div>
+                    </article>
+
+                    <!-- 5. Carina -->
+                    <article class="deepsky-card" data-cat="nebula" data-aos="fade-up" data-aos-delay="250">
+                        <div class="deepsky-card-media">
+                            <img src="Images/tinh vân thuyền đế (Carina Nebula).png" loading="lazy" decoding="async" alt="Tinh vân Thuyền Để">
+                            <span class="deepsky-card-badge">NGC 3372 · Phức hợp tinh vân</span>
+                        </div>
+                        <div class="deepsky-card-body">
+                            <h3>Tinh Vân Thuyền Để</h3>
+                            <p>Nơi chứa sao siêu khổng lồ Eta Carinae — một trong những ngôi sao bão hòa mãnh liệt nhất Ngân Hà.</p>
+                            <button type="button" class="deepsky-view-btn" onclick="openModal('carina')">Mở hồ sơ →</button>
+                        </div>
+                    </article>
+
+                    <!-- 6. Butterfly -->
+                    <article class="deepsky-card" data-cat="nebula" data-aos="fade-up" data-aos-delay="300">
+                        <div class="deepsky-card-media">
+                            <img src="Images/Tinh vân Hồ Điệp (NGC 6302).jpg" loading="lazy" decoding="async" alt="Tinh vân Hồ Điệp">
+                            <span class="deepsky-card-badge">NGC 6302 · Tinh vân lưỡng cực</span>
+                        </div>
+                        <div class="deepsky-card-body">
+                            <h3>Tinh Vân Hồ Điệp</h3>
+                            <p>Đôi cánh khí nóng hơn 20.000°C giải phóng từ một ngôi sao trung tâm sắp hoàn tất vòng đời.</p>
+                            <button type="button" class="deepsky-view-btn" onclick="openModal('butterfly')">Mở hồ sơ →</button>
+                        </div>
+                    </article>
+
+                    <!-- 7. Spiral Galaxy -->
+                    <article class="deepsky-card" data-cat="galaxy" data-aos="fade-up" data-aos-delay="350">
+                        <div class="deepsky-card-media">
+                            <img src="Images/galaxy.jpg" loading="lazy" decoding="async" alt="Thiên Hà Xoắn Ốc">
+                            <span class="deepsky-card-badge">ĐẢO VŨ TRỤ · HÀNG TRĂM TỶ SAO</span>
+                        </div>
+                        <div class="deepsky-card-body">
+                            <h3>Thiên Hà Xoắn Ốc</h3>
+                            <p>Cấu trúc khổng lồ chứa hàng trăm tỷ ngôi sao, quay chậm rãi quanh một hố đen siêu khối lượng ở tâm điểm.</p>
+                            <button type="button" class="deepsky-view-btn" onclick="openModal('galaxy')">Mở hồ sơ →</button>
+                        </div>
+                    </article>
+
+                    <!-- 8. Black Hole -->
+                    <article class="deepsky-card" data-cat="galaxy" data-aos="fade-up" data-aos-delay="400">
+                        <div class="deepsky-card-media">
+                            <img src="Images/lỗ đen vũ trụ.jpg" loading="lazy" decoding="async" alt="Hố Đen Vũ Trụ">
+                            <span class="deepsky-card-badge">VỰC THẲM KHÔNG-THỜI GIAN</span>
+                        </div>
+                        <div class="deepsky-card-body">
+                            <h3>Hố Đen Vũ Trụ (Black Hole)</h3>
+                            <p>Nơi mật độ vật chất vô hạn bẻ cong không gian và làm ngưng đọng dòng thời gian tại ranh giới chân trời sự kiện.</p>
+                            <button type="button" class="deepsky-view-btn" onclick="openModal('blackhole')">Mở hồ sơ →</button>
+                        </div>
+                    </article>
+
+                    <!-- 9. Exoplanet -->
+                    <article class="deepsky-card" data-cat="exoplanet" data-aos="fade-up" data-aos-delay="450">
+                        <div class="deepsky-card-media">
+                            <img src="Images/Kepler-22b.jpg" loading="lazy" decoding="async" alt="Ngoại Hành Tinh">
+                            <span class="deepsky-card-badge">THẾ GIỚI XA XÔI · 5.500+ NGOẠI TINH</span>
+                        </div>
+                        <div class="deepsky-card-body">
+                            <h3>Ngoại Hành Tinh (Exoplanet)</h3>
+                            <p>Những thế giới quay quanh các mặt trời xa lạ — một số chứa đại dương lỏng, mở ra hy vọng tìm kiếm sự sống.</p>
+                            <button type="button" class="deepsky-view-btn" onclick="openModal('exoplanet')">Mở hồ sơ →</button>
+                        </div>
+                    </article>
+                </div>
+            </div>
+
+            <!-- Panel 2: Constellation Studio -->
+            <div id="panel-archive-studio" class="wing-tab-panel" role="tabpanel" style="display: none;">
+                <div id="constellation-studio" class="constellation-module">
+                    <div class="constellation-container">
+                        <div class="constellation-canvas-area">
+                            <div class="constellation-canvas-wrapper">
+                                <canvas id="constellationCanvas" width="540" height="300" aria-label="Khung vẽ nối sao tương tác; click để nối các vì sao thành chòm sao"></canvas>
+                            </div>
+                            <div class="constellation-canvas-actions">
+                                <button type="button" id="constellation-undo" class="constellation-btn-secondary">↺ Xóa nét cuối</button>
+                                <button type="button" id="constellation-clear" class="constellation-btn-secondary">✕ Bắt đầu lại</button>
+                                <span class="constellation-tip">Nhấp chuột vào các ngôi sao để nối đường kẻ.</span>
+                            </div>
+                        </div>
+
+                        <div class="constellation-editor-panel">
+                            <div class="constellation-input-group">
+                                <label for="constellation-name">Tên chòm sao của bạn</label>
+                                <input type="text" id="constellation-name" maxlength="40" placeholder="Ví dụ: Chòm sao Kẻ Du Hành, Cánh Chim Đêm...">
+                            </div>
+                            <div class="constellation-input-group">
+                                <label for="constellation-note">Ý nghĩa hoặc câu chuyện gửi gắm</label>
+                                <textarea id="constellation-note" maxlength="200" rows="3" placeholder="Điều gì khiến bạn nghĩ về hình bóng này khi nhìn lên bầu trời?"></textarea>
+                            </div>
+                            <button type="button" id="constellation-save-btn" class="orbit-reset-btn">☆ GHI DẤU VÀO SỔ TAY</button>
+
+                            <div class="saved-constellations-area">
+                                <h4>CÁC CHÒM SAO ĐÃ GHI DẤU</h4>
+                                <div id="saved-constellations-list" class="saved-constellations-list"></div>
+                                <p id="constellation-empty" class="constellation-empty-msg">Chưa có chòm sao nào được lưu. Hãy nối các vì sao và lưu lại kỷ niệm của bạn.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Panel 3: Field Notes -->
+            <div id="panel-archive-field" class="wing-tab-panel" role="tabpanel" style="display: none;">
+                <div id="field-notes" class="field-notes-module">
+                    <div class="field-notes-grid">
+                        <article class="field-note-card" style="background: rgba(8, 14, 22, 0.6); border: 1px solid rgba(165, 207, 213, 0.12); border-radius: 12px; padding: 24px;">
+                            <div class="field-note-meta">
+                                <span class="note-target">TITAN · VỆ TINH SAO THỔ</span>
+                                <span class="note-num">01</span>
+                            </div>
+                            <h3 style="color: var(--ink); margin: 12px 0 8px;">Bầu Trời Cam &amp; Những Cơn Mưa Metan</h3>
+                            <p class="field-note-excerpt" style="color: var(--muted); line-height: 1.6;">Năm 2005, tàu thăm dò Huygens của ESA xuyên qua tầng mây dày đặc màu cam của Titan. Bên dưới lớp sương mù là một thế giới có đồi cát, thung lũng sông và các hồ hydrocarbon lỏng ở -179°C — một Trái Đất nguyên thủy bị đóng băng trong thời gian.</p>
+                            <div class="field-note-footer" style="margin-top: 16px; font-size: 0.82rem; color: var(--ice);">
+                                <span>Khoảng cách: 1.4 tỷ km</span> · <span class="note-tag-subtle">Hành trình Cassini</span>
+                            </div>
+                        </article>
+
+                        <article class="field-note-card" style="background: rgba(8, 14, 22, 0.6); border: 1px solid rgba(165, 207, 213, 0.12); border-radius: 12px; padding: 24px;">
+                            <div class="field-note-meta">
+                                <span class="note-target">SAO KIM · HÀNH TINH THỨ HAI</span>
+                                <span class="note-num">02</span>
+                            </div>
+                            <h3 style="color: var(--ink); margin: 12px 0 8px;">Bản Song Sinh Rực Lửa</h3>
+                            <p class="field-note-excerpt" style="color: var(--muted); line-height: 1.6;">Sao Kim có cùng kích thước và cấu trúc đá như Trái Đất, từng có thể chứa cả đại dương. Nhưng hiệu ứng nhà kính mất kiểm soát đã biến nó thành địa ngục với nhiệt độ 465°C và áp suất bề mặt đủ đè bẹp tàu ngầm, nhắc nhở chúng ta về sự mong manh của khí quyển nhà mình.</p>
+                            <div class="field-note-footer" style="margin-top: 16px; font-size: 0.82rem; color: var(--ice);">
+                                <span>Nhiệt độ: 465°C</span> · <span class="note-tag-subtle">Bài học khí hậu</span>
+                            </div>
+                        </article>
+
+                        <article class="field-note-card" style="background: rgba(8, 14, 22, 0.6); border: 1px solid rgba(165, 207, 213, 0.12); border-radius: 12px; padding: 24px;">
+                            <div class="field-note-meta">
+                                <span class="note-target">EUROPA · VỆ TINH SAO MỘC</span>
+                                <span class="note-num">03</span>
+                            </div>
+                            <h3 style="color: var(--ink); margin: 12px 0 8px;">Đại Dương Ẩn Mình Dưới Băng</h3>
+                            <p class="field-note-excerpt" style="color: var(--muted); line-height: 1.6;">Bề mặt Europa phẳng lặng và nứt nẻ như một viên ngọc cẩm thạch trắng. Dưới lớp vỏ băng dày 20km là một đại dương nước lỏng khổng lồ chứa lượng nước nhiều gấp đôi toàn bộ đại dương Trái Đất, được sưởi ấm liên tục bởi lực thủy triều mãnh liệt từ Sao Mộc.</p>
+                            <div class="field-note-footer" style="margin-top: 16px; font-size: 0.82rem; color: var(--ice);">
+                                <span>Đại dương ngầm: ~100 km sâu</span> · <span class="note-tag-subtle">Cái nôi sự sống</span>
+                            </div>
+                        </article>
+
+                        <article class="field-note-card" style="background: rgba(8, 14, 22, 0.6); border: 1px solid rgba(165, 207, 213, 0.12); border-radius: 12px; padding: 24px;">
+                            <div class="field-note-meta">
+                                <span class="note-target">VOYAGER 1 · RÌA LIÊN SAO</span>
+                                <span class="note-num">04</span>
+                            </div>
+                            <h3 style="color: var(--ink); margin: 12px 0 8px;">Lời Thì Thầm Từ Vô Cùng</h3>
+                            <p class="field-note-excerpt" style="color: var(--muted); line-height: 1.6;">Được phóng từ năm 1977, Voyager 1 hiện là vật thể nhân tạo bay xa nhất, cách Trái Đất hơn 24 tỷ km. Nó đã vượt qua ranh giới nhật quyển để bước vào không gian liên sao tĩnh mịch, mang theo Đĩa Ghi Vàng và bức ảnh "Đốm Xanh Mờ" — toàn bộ lịch sử nhân loại trên một hạt bụi lơ lửng.</p>
+                            <div class="field-note-footer" style="margin-top: 16px; font-size: 0.82rem; color: var(--ice);">
+                                <span>Khoảng cách: 24+ tỷ km</span> · <span class="note-tag-subtle">Hành trình vĩnh cửu</span>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section> <!-- end deep-space-archive -->
+
+    <!-- =====================================================================
+         PHÂN KHU 05: BIÊN NIÊN SỬ LỊCH SỬ (TIMELINE CHRONICLE)
+         ===================================================================== -->
+    <section id="lich-su" class="section observatory-wing wing-chronicle">
+        <div class="section-heading-editorial wing-header" data-aos="fade-up">
+            <p class="eyebrow"><span class="wing-num-tag">05</span> BIÊN NIÊN SỬ LỊCH SỬ / HUMAN CHRONICLE</p>
+            <h2 class="section-title">Dấu Chân Nhân Loại Giữa Các Vì Sao</h2>
+            <p class="section-desc">Hành trình nhân loại ngước nhìn và chinh phục không gian qua các thời đại, từ vệ tinh đầu tiên năm 1957 đến những kính viễn vọng nhìn thấu bình minh vũ trụ.</p>
+        </div>
+
+        <!-- SINGLE MASTER CHRONICLE CARD (PHÂN KHU 05) -->
+        <div class="glass-card wing-master-card" data-aos="fade-up" style="padding: 40px 30px;">
+            <div class="timeline-section" style="margin-top: 10px; margin-bottom: 20px;">
+                <div class="timeline-container">
+                    <div id="timeline-line-dynamic" class="timeline-line-dynamic"></div>
+
+                        <div class="timeline-item left" data-aos="fade-right">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-content glass-card hover-glow interaction-card">
+                                <h3 class="timeline-date">1957</h3>
+                                <h4 class="timeline-title">Kỷ Nguyên Không Gian</h4>
+                                <p>Liên Xô phóng Sputnik 1, vệ tinh nhân tạo đầu tiên.</p>
+                                <button class="expand-btn">Xem chi tiết &#10095;</button>
+                            </div>
+                            
+                            <div class="detail-card glass-card hover-glow cinematic-popup">
+                                <button class="close-detail-btn">&times;</button>
+                                <div class="detail-branch-line"></div>
+                                <h3 class="detail-title">Vệ Tinh Sputnik 1</h3>
+                                <img src="Images/Vệ Tinh Sputnik 1.jpg" alt="Sputnik 1" class="detail-img glow-img">
+                                <p class="detail-text typewriter" data-text="Sputnik 1 là vệ tinh nhân tạo đầu tiên, nặng 83kg. Nó truyền tín hiệu 'bíp-bíp' về Trái Đất, đánh dấu sự khởi đầu của Kỷ nguyên Không gian và cuộc đua vũ trụ."></p>
+                            </div>
+                        </div>
+
+                        <div class="timeline-item right" data-aos="fade-left">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-content glass-card hover-glow interaction-card">
+                                <h3 class="timeline-date">1969</h3>
+                                <h4 class="timeline-title">Bước Chân Lịch Sử</h4>
+                                <p>NASA đưa phi hành gia Apollo 11 lên Mặt Trăng.</p>
+                                <button class="expand-btn">Xem chi tiết &#10095;</button>
+                            </div>
+
+                            <div class="detail-card glass-card hover-glow cinematic-popup">
+                                <button class="close-detail-btn">&times;</button>
+                                <div class="detail-branch-line"></div>
+                                <h3 class="detail-title">Sứ Mệnh Apollo 11</h3>
+                                <img src="Images/Sứ Mệnh Apollo 11.webp" alt="Apollo 11" class="detail-img glow-img">
+                                <p class="detail-text typewriter" data-text="Tàu Apollo 11 hạ cánh trên Mặt Trăng. Neil Armstrong đã thực hiện 'bước chân vĩ đại' cho nhân loại, mang lại kiến thức và chứng minh tiềm năng khám phá vô tận của con người."></p>
+                            </div>
+                        </div>
+
+                        <div class="timeline-item left" data-aos="fade-right">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-content glass-card hover-glow interaction-card">
+                                <h3 class="timeline-date">1990</h3>
+                                <h4 class="timeline-title">Con Mắt Nhân Loại</h4>
+                                <p>Kính viễn vọng Hubble được phóng, nhìn xuyên thiên hà.</p>
+                                <button class="expand-btn">Xem chi tiết &#10095;</button>
+                            </div>
+
+                            <div class="detail-card glass-card hover-glow cinematic-popup">
+                                <button class="close-detail-btn">&times;</button>
+                                <div class="detail-branch-line"></div>
+                                <h3 class="detail-title">Kính Hubble</h3>
+                                <img src="Images/Kính Hubble.jpeg" alt="Hubble" class="detail-img glow-img">
+                                <p class="detail-text typewriter" data-text="Hubble không bị ảnh hưởng bởi bầu khí quyển, giúp chụp được những bức ảnh sắc nét về tinh vân, thiên hà xa xôi, thay đổi cách chúng ta hiểu về vũ trụ."></p>
+                            </div>
+                        </div>
+
+                        <div class="timeline-item right" data-aos="fade-left">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-content glass-card hover-glow interaction-card">
+                                <h3 class="timeline-date">2012</h3>
+                                <h4 class="timeline-title">Kẻ Độc Hành (Curiosity)</h4>
+                                <p>Robot tự hành hạ cánh và khám phá Sao Hỏa.</p>
+                                <button class="expand-btn">Xem chi tiết &#10095;</button>
+                            </div>
+
+                            <div class="detail-card glass-card hover-glow cinematic-popup">
+                                <button class="close-detail-btn">&times;</button>
+                                <div class="detail-branch-line"></div>
+                                <h3 class="detail-title">Robot Curiosity</h3>
+                                <img src="Images/Robot Curiosity.jpg" alt="Curiosity Rover" class="detail-img glow-img">
+                                <p class="detail-text typewriter" data-text="Curiosity là robot phức tạp nhất NASA từng gửi đến Sao Hỏa. Nó tìm kiếm dấu hiệu của sự sống cổ đại, mang lại dữ liệu vô giá về địa chất và khí quyển của Hành tinh Đỏ."></p>
+                            </div>
+                        </div>
+
+                        <div class="timeline-item left" data-aos="fade-right">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-content glass-card hover-glow interaction-card">
+                                <h3 class="timeline-date">2021</h3>
+                                <h4 class="timeline-title">James Webb (JWST)</h4>
+                                <p>Mắt thần nhìn về thuở bình minh vũ trụ.</p>
+                                <button class="expand-btn">Xem chi tiết &#10095;</button>
+                            </div>
+
+                            <div class="detail-card glass-card hover-glow cinematic-popup">
+                                <button class="close-detail-btn">&times;</button>
+                                <div class="detail-branch-line"></div>
+                                <h3 class="detail-title">Kính James Webb (JWST)</h3>
+                                <img src="Images/James webb.webp" alt="JWST" class="detail-img glow-img">
+                                <p class="detail-text typewriter" data-text="Sử dụng tia hồng ngoại, Webb có thể nhìn xuyên qua các đám mây bụi để quan sát những ngôi sao đầu tiên được hình thành ngay sau Vụ nổ lớn (Big Bang)."></p>
+                            </div>
+                        </div>
+
+                        <div class="timeline-item right" data-aos="fade-left">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-content glass-card hover-glow interaction-card" style="border-color: rgba(222, 193, 149, 0.35); box-shadow: 0 0 15px rgba(222, 193, 149, 0.2);">
+                                <h3 class="timeline-date" style="color: #DEC195; text-shadow: 0 0 20px rgba(222, 193, 149, 0.4);">20??...</h3>
+                                <h4 class="timeline-title">Chân Trời Tiếp Theo ?</h4>
+                                <p>Đâu là cột mốc vĩ đại tiếp theo của nhân loại ?</p>
+                                <button class="expand-btn" style="color: #DEC195; text-shadow: 0 0 10px rgba(222, 193, 149, 0.3);">Xem chi tiết &#10095;</button>
+                            </div>
+
+                            <div class="detail-card glass-card hover-glow cinematic-popup" style="border-color: rgba(222, 193, 149, 0.4);">
+                                <button class="close-detail-btn" style="color: #DEC195;">&times;</button>
+                                <div class="detail-branch-line" style="background: rgba(222, 193, 149, 0.4); box-shadow: 0 0 10px rgba(222, 193, 149, 0.3);"></div>
+                                <h3 class="detail-title" style="color: #DEC195; text-shadow: 0 0 20px rgba(222, 193, 149, 0.4);">Tương Lai Nằm Trong Tay Bạn... ?</h3>
+                                <img src="https://images.openai.com/static-rsc-4/TiGG8CHwejIn7fB7oA1B5ofHiWeChH11wqYr44Vgh-sSbd-tGGSFbSb9wo0OWRKEi08Kv3-J43Ifn0mkUimpwni3dZdpaKE2PmLCEemerpnKjSpqpLpJDUig5rwGAnoIslkb9ADs28psgk2uPnHx-W-dzOBg9EouQpmso6WUhJM-42nOILD2ncbIbfXUbfSp?purpose=fullsize" alt="Future Mars Colony" class="detail-img glow-img" style="border-color: rgba(222, 193, 149, 0.3);">
+                                <p class="detail-text typewriter" data-text="Cơ sở của nhân loại trên Sao Hỏa... ? Sứ mệnh Interstellar... ? Tìm thấy sự sống ngoài Trái Đất... ? Tương Lai... luôn chứa đựng những bí ẩn và nằm trong tầm tay của chúng ta... ?"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section> <!-- end lich-su -->
+
+    <!-- =====================================================================
+         VỀ ĐÀI QUAN SÁT & NHỮNG NGƯỜI THỰC HIỆN (CUỐI TRANG / TRƯỚC FOOTER)
+         ===================================================================== -->
+    <section id="about-project" class="section about-project-section" data-aos="fade-up">
+        <div class="glass-card about-card-wrapper" style="padding: 48px 40px; border-color: rgba(222, 193, 149, 0.25);">
+            <div class="about-observatory">
+                <div class="about-story">
+                    <p class="eyebrow">VỀ ĐÀI QUAN SÁT</p>
+                    <h2 style="font-family: var(--font-sans); font-weight: 700; font-size: clamp(1.8rem, 2.4vw, 2.2rem); color: #fff; line-height: 1.35; margin-bottom: 20px;">Một góc nhỏ được dựng lên từ sự tò mò.</h2>
+                    <p class="about-lead">Mình bắt đầu project này vì từ rất lâu, bầu trời luôn khiến mình muốn biết ngoài kia còn gì. Càng tìm hiểu, mình càng muốn dựng nên một nơi để giữ lại cảm giác ấy.</p>
+                    <p style="color: var(--muted); line-height: 1.8; margin-bottom: 14px;">Đây là nơi khoa học gặp cảm xúc: một sa bàn để chạm vào những thế giới xa xôi, một câu chuyện để đi qua chúng, và một cuốn nhật ký để giữ lại điều khiến bạn ngước nhìn.</p>
+                    <p class="about-built">Được xây thủ công bằng HTML, CSS, JavaScript và Three.js.</p>
+                </div>
+                <div class="about-people" aria-label="Những người thực hiện">
+                    <article>
+                        <span>CREATOR / DEVELOPER</span>
                         <h3>Lê Trọng Phúc</h3>
-                        <p class="role">Lớp 11</p>
-                        <hr class="id-divider">
-                        <p class="mission"><b>Mục tiêu:</b> Ứng dụng công nghệ không gian 3D vào giáo dục thiên văn học, mang lại trải nghiệm tương tác trực quan.</p>
-                        <p class="tech-title"><b>Công nghệ cốt lõi:</b></p>
-                        <div class="tech-tags">
-                            <span>HTML/CSS/JS</span>
-                            <span class="highlight-tag">Three.js (3D)</span>
-                            <span>AOS Animation</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="nasa-id-card glass-card">
-                <div class="id-header">
-                    <span class="nasa-logo">NASA</span>
-                    <span class="id-title">CREW MEMBER</span>
-                </div>
-                <div class="id-body">
-                    <div class="avatar-box">
-                        <img src="https://cdn-icons-png.flaticon.com/512/3242/3242212.png" alt="Avatar">
-                    </div>
-                    <div class="info-box">
+                        <p>Ý tưởng, thiết kế trải nghiệm và phát triển đài quan sát.</p>
+                    </article>
+                    <article>
+                        <span>CONTRIBUTOR</span>
                         <h3>Nguyễn Chí Toàn</h3>
-                        <p class="role">Lớp 11</p>
-                        <hr class="id-divider">
-                        <p class="mission"><b>Mục tiêu:</b> Ứng dụng công nghệ không gian 3D vào giáo dục thiên văn học, mang lại trải nghiệm tương tác trực quan.</p>
-                        <p class="tech-title"><b>Công nghệ cốt lõi:</b></p>
-                        <div class="tech-tags">
-                            <span>HTML/CSS/JS</span>
-                            <span class="highlight-tag">Three.js (3D)</span>
-                            <span>AOS Animation</span>
-                        </div>
-                    </div>
+                        <p>Đồng hành và đóng góp cho hành trình của project.</p>
+                    </article>
                 </div>
             </div>
-            
-        </div> 
 
-        <div class="creator-message" data-aos="fade-up" data-aos-delay="200">
-            <p class="greeting-text">
-                "Vũ trụ bao la, nhưng sự tò mò của con người là vô tận. Cảm ơn thầy cô và các bạn đã ghé thăm trạm không gian nhỏ bé này. Hy vọng chuyến bay đã mang lại cho mọi người những trải nghiệm trực quan và thú vị nhất. Hãy luôn giữ ngọn lửa đam mê và tiếp tục nhìn lên những vì sao!"
-            </p>
-            <p class="signature">- Lê Trọng Phúc -</p>
+            <blockquote class="cosmic-postcard" style="margin-top: 36px;">
+                <span>POSTCARD / 01</span>
+                <p>“Có lẽ điều kỳ lạ nhất về vũ trụ không phải là nó quá lớn, mà là chúng ta đủ nhỏ để vẫn muốn hiểu nó.”</p>
+                <cite>— Phúc</cite>
+            </blockquote>
+
+            <details class="credits-panel" style="margin-top: 28px;">
+                <summary>Nguồn &amp; ghi nhận <span aria-hidden="true">＋</span></summary>
+                <div class="credits-grid">
+                    <div><h3>Khoa học</h3><p>NASA Science, ESA và JPL là các nguồn tham khảo chính cho dữ liệu thiên văn.</p></div>
+                    <div><h3>Hình ảnh</h3><p>NASA/Wikimedia Commons, Unsplash, Shutterstock và các ảnh được lưu cục bộ trong project.</p></div>
+                    <div><h3>Công nghệ</h3><p>Three.js, AOS và Unity WebGL.</p></div>
+                    <div><h3>Project</h3><p>Thiết kế &amp; phát triển bởi Lê Trọng Phúc, với sự đóng góp của Nguyễn Chí Toàn.</p></div>
+                </div>
+            </details>
         </div>
     </section>
 
@@ -579,19 +1084,11 @@
     </div>
 
     <footer class="project-footer">
-        <h2 class="footer-logo">✦ KHÁM PHÁ VŨ TRỤ ✦</h2>
-        <p class="footer-tags">Thiên Văn Học • Hệ Mặt Trời • Vũ Trụ Học</p>
-        
-        <div class="footer-line"></div>
-        
-        <p class="footer-credit">Thực hiện bởi <span class="cyan-text">Lê Trọng Phúc và Nguyễn Chí Toàn</span></p>
-        <p class="footer-school">Lớp 11 • Trường TH-THCS-THPT Tân Phú</p>
-        <p class="footer-subject">Dự Án Học Tập Môn Vật Lý / Thiên Văn Học</p>
-        
-        <p class="footer-copyright">© 2026 • BÀI TẬP HỌC SINH • TẤT CẢ QUYỀN ĐƯỢC BẢO LƯU</p>
-
-        <div class="personal-signature-index" style="position: absolute; bottom: 10px; right: 15px; font-family: 'Share Tech Mono', monospace; font-size: 0.7rem; color: rgba(255, 255, 255, 0.2); letter-spacing: 2px;">
-            EXPLORED BY Phuc.
+        <a href="#trang-chu" class="footer-brand">✦ ĐÀI QUAN SÁT CỦA PHÚC</a>
+        <p>Một dự án học tập và trải nghiệm thiên văn học, được xây dựng từ sự tò mò và lòng say mê với bầu trời đêm.</p>
+        <div class="footer-meta">
+            <span>TH-THCS-THPT TÂN PHÚ · 2026</span>
+            <span>THỰC HIỆN BỞI PHÚC &amp; TOÀN</span>
         </div>
     </footer>
 
