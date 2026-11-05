@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#05080f">
+  <link rel="icon" href="data:,">
+  <title>Bên kia ô kính — Đài quan sát của Phúc</title>
+  <meta name="description" content="Ngắm Trái Đất qua ô kính khoang tàu, chọn một điểm hẹn và khởi hành tới những vùng trời xa cùng Đài quan sát của Phúc.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="voyage-prototype.css">
+  <!-- Keep the pinned Three.js and SpaceAudio dependencies already used by Space Web. -->
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script defer src="space-audio.js"></script>
+  <script defer src="voyage-prototype.js"></script>
+</head>
+<body data-state="observation" data-destination="0" data-view-mode="cupola">
+  <main id="viewport" tabindex="0" aria-label="Không gian quan sát qua ô kính tàu. Kéo hoặc dùng phím mũi tên để đổi hướng nhìn; chọn các nhãn điểm chạm để đọc câu chuyện của từng vùng trời.">
+    <div class="still-sky" aria-hidden="true"></div>
+    <div class="still-frame" aria-hidden="true"></div>
+  </main>
+  <div id="shade" aria-hidden="true"></div>
+  <div class="cabin-vignette" aria-hidden="true"></div>
+
+  <!-- Projected interactive celestial story beacons -->
+  <div id="hotspots" class="hotspots interface" aria-label="Các điểm chạm câu chuyện trên bầu trời" hidden></div>
+
+  <header class="interface masthead" id="masthead">
+    <a href="index.html#trang-chu" class="return-link">← Đài quan sát</a>
+    <div class="time-machine" id="time-machine" aria-live="off">
+      <div class="tm-item">
+        <span class="tm-label">KHOẢNG CÁCH ÁNH SÁNG</span>
+        <strong class="tm-value" id="tm-distance">QUỸ ĐẠO TRÁI ĐẤT · ~420 KM</strong>
+      </div>
+      <span class="tm-divider" aria-hidden="true"></span>
+      <div class="tm-item">
+        <span class="tm-label">THỜI GIAN ÁNH SÁNG · NHÌN TỪ TRÁI ĐẤT</span>
+        <strong class="tm-value tm-era" id="tm-era">Ánh sáng Mặt Trời mất 8 phút 20 giây để tới Trái Đất bên dưới bạn</strong>
+      </div>
+    </div>
+    <span class="masthead-mark">BÊN KIA Ô KÍNH <small id="telemetry-coord">ĐÀI QUAN SÁT CỦA PHÚC · VÒM KÍNH QUAN SÁT</small></span>
+  </header>
+
+  <button id="visibility" type="button" aria-expanded="true" aria-controls="panel controls hotspots">Ẩn giao diện <span aria-hidden="true">↗</span></button>
+
+  <!-- Compact pill shown when the user minimizes the dashboard panel with "X" -->
+  <button id="panel-reopen" class="panel-reopen interface" type="button" hidden aria-label="Mở lại bảng thông tin hành trình">
+    <span class="reopen-dot" aria-hidden="true"></span>
+    <span id="panel-reopen-label">Mở bảng thông tin · Bên kia ô kính</span>
+  </button>
+
+  <aside id="panel" class="interface" aria-label="Câu chuyện thiên thể và hành trình">
+    <div class="panel-top-row">
+      <p class="eyebrow" id="phase">KHOANG QUAN SÁT · QUỸ ĐẠO TRÁI ĐẤT</p>
+      <button id="panel-close" class="panel-close-btn" type="button" title="Thu nhỏ bảng thông tin này" aria-label="Thu nhỏ bảng thông tin">✕</button>
+    </div>
+    <h1 id="title">Bên kia ô kính.</h1>
+    <p id="description">Bên dưới mũi tàu là Trái Đất đang quay chậm dưới lớp mây mỏng; phía xa là Mặt Trăng và ánh nắng Mặt Trời. Hãy nhìn quanh hoặc chọn một điểm hẹn ngoài vũ trụ để lên đường.</p>
+    <details id="exploration" hidden>
+      <summary>Ghé một góc nhìn</summary>
+      <div id="anchor-list" class="anchor-list"></div>
+      <p id="anchor-invitation" role="status"></p>
+      <button id="anchor-skip" type="button" hidden>Đến góc nhìn ngay</button>
+      <button id="manual-flight" type="button" aria-pressed="false">Tự di chuyển: tắt</button>
+      <p class="flight-help">Kéo để nhìn · WASD di chuyển · Q/E lên/xuống. Thả phím để dừng.</p>
+    </details>
+
+    <div id="authenticity-note" class="authenticity-note" role="note">
+      <span class="auth-badge" id="auth-badge">TƯ LIỆU &amp; CÁCH DỰNG</span>
+      <span id="auth-text">Trái Đất, Mặt Trăng và Mặt Trời dựng trên khối cầu từ bản đồ bề mặt trong kho tư liệu dự án, kết hợp hiệu ứng mây và khí quyển trên trình duyệt.</span>
+    </div>
+
+    <div id="story-callout" class="story-callout" hidden>
+      <div class="story-callout-header">
+        <span class="story-callout-tag" id="story-tag">ĐIỂM CHẠM THIÊN VĂN</span>
+        <button type="button" id="story-close" class="story-close" aria-label="Đóng chi tiết điểm chạm">Đóng ↩</button>
+      </div>
+      <h2 id="story-heading"></h2>
+      <p id="story-body"></p>
+    </div>
+
+    <div id="destination-picker" class="destination-picker" role="group" aria-label="Chọn điểm đến ngoài vũ trụ">
+      <span class="picker-label">ĐIỂM ĐẾN:</span>
+      <button type="button" class="dest-chip active" data-dest="0" aria-pressed="true">M87* / Gargantua</button>
+      <button type="button" class="dest-chip" data-dest="1" aria-pressed="false">Sao Thổ</button>
+      <button type="button" class="dest-chip" data-dest="2" aria-pressed="false">Tinh vân Carina</button>
+      <button type="button" class="dest-chip" data-dest="3" aria-pressed="false">Tinh vân Hồ Điệp</button>
+    </div>
+
+    <details id="moment-journal" class="moment-journal" hidden>
+      <summary>✦ Giữ lại một suy nghĩ ở nơi này</summary>
+      <form id="moment-form" class="moment-form">
+        <textarea id="moment-input" rows="2" maxlength="280" placeholder="Viết một dòng cho riêng bạn khi đứng trước vùng trời này..."></textarea>
+        <div class="moment-actions">
+          <button type="submit" class="moment-save">Lưu vào ký ức ↗</button>
+          <span id="moment-status" role="status">Chỉ lưu trên trình duyệt này.</span>
+        </div>
+        <p id="moment-saved-preview" class="moment-saved-preview" hidden></p>
+      </form>
+    </details>
+
+    <details id="about-scene">
+      <summary>Về thiên thể &amp; cách dựng cảnh</summary>
+      <p id="scene-science-note">Khung cảnh quỹ đạo kết hợp các khối cầu hành tinh có chiếu sáng theo hướng Mặt Trời cùng trường sao nhiều lớp cự ly. Mọi giải thích kỹ thuật và nguồn tư liệu của từng vùng trời đều được ghi rõ tại đây.</p>
+      <a id="reference-image" target="_blank" rel="noopener" hidden>Xem ảnh tư liệu gốc ↗</a>
+    </details>
+    <p id="fallback" role="status" hidden>Không thể mở cảnh 3D. Bạn vẫn có thể xem khung cảnh tĩnh bằng nút Khởi hành.</p>
+  </aside>
+
+  <nav id="controls" class="controls interface" aria-label="Điều khiển chuyến đi">
+    <button id="warp" class="primary" type="button">Khởi hành · M87* / Gargantua <span aria-hidden="true">↗</span></button>
+    <button id="return-orbit" type="button" hidden>Về quỹ đạo Trái Đất</button>
+    <button id="skip" type="button" hidden>Đến nơi ngay</button>
+    <button id="view-mode" type="button" aria-pressed="false" title="Chuyển giữa góc nhìn trong khoang tàu và ngoài không gian (Phím V)">Góc nhìn: Khoang tàu</button>
+    <button id="toggle-labels" type="button" aria-pressed="true" title="Bật hoặc tắt các nhãn điểm chạm trên bầu trời (Phím L)">Nhãn: bật</button>
+    <button id="sound" type="button" aria-pressed="false">Âm thanh: tắt</button>
+    <button id="pause" type="button" aria-pressed="false">Tạm dừng</button>
+    <button id="reset" type="button">Nhìn thẳng</button>
+  </nav>
+
+  <p id="hint" class="interface hint">Kéo nhẹ để đổi hướng nhìn · Chạm vào nhãn trên trời để đọc thêm · Phím L: Tắt/bật nhãn · Phím H: Ẩn giao diện</p>
+  <p id="announcement" class="sr-only" role="status" aria-live="polite"></p>
+  <nav id="touch-flight" class="interface" aria-label="Di chuyển trong vùng quan sát" hidden>
+    <button type="button" data-move="w" aria-label="Tiến">↑</button>
+    <button type="button" data-move="s" aria-label="Lùi">↓</button>
+    <button type="button" data-move="a" aria-label="Sang trái">←</button>
+    <button type="button" data-move="d" aria-label="Sang phải">→</button>
+    <button type="button" data-move="q" aria-label="Hạ xuống">−</button>
+    <button type="button" data-move="e" aria-label="Nâng lên">+</button>
+  </nav>
+  <noscript>Hãy bật JavaScript để khởi hành. Khung cảnh tĩnh vẫn có thể xem tại đây.</noscript>
+</body>
+</html>

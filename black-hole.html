@@ -7,7 +7,9 @@
     <meta name="description" content="Đến gần một hố đen. Xoay góc nhìn, thu phóng và quan sát những dải ánh sáng uốn cong trong trải nghiệm vũ trụ tương tác.">
     <title>Hố Đen Tương Tác — Đài quan sát của Phúc</title>
     <link rel="stylesheet" href="black-hole.css">
+    <script src="black-hole-model.js" defer></script>
     <script src="black-hole-audio.js" defer></script>
+    <script src="black-hole-keepsakes.js" defer></script>
     <script src="black-hole-moments.js" defer></script>
     <script src="black-hole.js" defer></script>
 </head>
@@ -66,6 +68,7 @@
                     <button type="submit" class="note-look">Giữ lại dòng này <span aria-hidden="true">↗</span></button>
                     <p id="journal-status" role="status">Chỉ lưu trong trình duyệt này, dành riêng cho bạn.</p>
                 </form>
+                <details class="journal-history"><summary>Những lần đã ngồi lại <span id="journal-count">0 / 10</span></summary><div id="journal-entries"></div></details>
                 <p class="notebook-signoff"><span aria-hidden="true">✦</span> Cứ thong thả. Vũ trụ vẫn ở đây.</p>
             </div>
         </aside>
@@ -96,12 +99,17 @@
                 <input id="motion-speed" type="range" min="0.2" max="2" step="0.1" value="1">
                 <label for="brightness">Độ sáng đĩa bồi tụ <output id="brightness-value" for="brightness">100%</output></label>
                 <input id="brightness" type="range" min="0.5" max="1.8" step="0.05" value="1">
-                <label for="render-quality">Chất lượng hình ảnh</label>
-                <select id="render-quality"><option value="auto">Tự động</option><option value="high">Chi tiết cao</option><option value="low">Ưu tiên độ mượt</option></select>
-                <p class="panel-note">Chọn “Ưu tiên độ mượt” nếu máy chạy chậm.</p>
                 </details>
+                <fieldset class="performance-modes"><legend>NHỊP CHẠY CỦA ĐÀI QUAN SÁT</legend>
+                    <button type="button" data-performance="battery" aria-pressed="false">Tiết kiệm pin</button>
+                    <button type="button" data-performance="balanced" aria-pressed="true">Cân bằng</button>
+                    <button type="button" data-performance="maximum" aria-pressed="false">Tối đa</button>
+                </fieldset>
+                <p class="panel-note" id="performance-description" role="status">Cân bằng độ chi tiết và độ mượt, tự giảm độ phân giải khi cần.</p>
                 <div class="moment-options" role="group" aria-label="Một chút riêng cho đêm nay">
                     <span class="moment-label">MỘT CHÚT RIÊNG CHO ĐÊM NAY</span>
+                    <button id="tour-button" type="button">Một vòng bên vô cùng <span>36 giây ↗</span></button>
+                    <p class="panel-note">Một chuyến quan sát qua ba góc nhìn. Kéo hoặc zoom để trở lại tự do.</p>
                     <button id="trails-button" type="button" aria-pressed="false">Dấu vết ánh sáng <span aria-hidden="true">⌁</span></button>
                     <button id="sound-button" type="button" aria-pressed="false">Âm thanh không gian <span aria-hidden="true">♪</span></button>
                     <details class="sound-settings">
@@ -115,6 +123,7 @@
                             <option value="pulse">Nhịp xa</option>
                         </select>
                         <p id="sound-description" class="panel-note">Một lớp âm trầm, chậm và tối.</p>
+                        <label class="check-option"><input id="sound-reactive" type="checkbox" checked> Âm nền theo góc nhìn</label>
                         <label class="personal-track-label" for="sound-file">Hoặc chọn nhạc của bạn</label>
                         <input id="sound-file" type="file" accept="audio/*,.mp3,.m4a,.wav,.ogg,.flac,.aac">
                         <button id="clear-sound-file" type="button" hidden>Trở về âm thanh không gian ↗</button>
@@ -124,6 +133,7 @@
                     <audio id="personal-audio" preload="metadata" loop hidden></audio>
                     <button id="quiet-button" type="button" aria-pressed="false">Chế độ lặng <span aria-hidden="true">☾</span></button>
                     <button id="capture-button" type="button">Chụp khoảnh khắc <span aria-hidden="true">↗</span></button>
+                    <label class="check-option" id="haptics-option" hidden><input id="haptics-toggle" type="checkbox"> Rung nhẹ khi chạm</label>
                     <p class="panel-note">Âm thanh mặc định tắt. Dấu sáng và khoảnh khắc khi đến gần là những nét vẽ điện ảnh.</p>
                     <p id="capture-status" class="panel-note" role="status"></p>
                 </div>
@@ -150,6 +160,11 @@
         </div>
 
         <button class="restore-ui" id="show-ui" type="button" hidden>Hiện điều khiển <span aria-hidden="true">↙</span></button>
+        <section id="tour-controls" class="tour-controls" aria-label="Chuyến quan sát" hidden>
+            <span id="tour-chapter" role="status"></span>
+            <progress id="tour-progress" max="36" value="0" aria-label="Tiến trình chuyến quan sát"></progress>
+            <div><button id="tour-pause" type="button" aria-pressed="false">Tạm dừng</button><button id="tour-stop" type="button">Trở lại tự do ↙</button></div>
+        </section>
         <p class="sr-only" id="announcement" role="status" aria-live="polite"></p>
 
         <div class="loading-message" id="loading-message" role="status"><span class="loading-ring" aria-hidden="true"></span>Đang mở một góc nhìn vào vô cùng…</div>
@@ -162,6 +177,16 @@
         </section>
     </main>
 
+    <dialog id="postcard-dialog" aria-labelledby="postcard-title">
+        <button id="close-postcard" class="icon-button dialog-close" type="button" aria-label="Đóng ảnh kỷ niệm">×</button>
+        <p class="eyebrow">MANG MỘT KHOẢNG TRỜI VỀ</p><h2 id="postcard-title">Khoảnh khắc <em>của bạn.</em></h2>
+        <canvas id="postcard-preview" aria-label="Ảnh kỷ niệm xem trước"></canvas>
+        <label for="postcard-ratio">Khung ảnh</label><select id="postcard-ratio"><option value="original">Góc nhìn hiện tại</option><option value="landscape">Ngang · 16:9</option><option value="square">Vuông · 1:1</option><option value="portrait">Dọc · 9:16</option></select>
+        <div class="postcard-options"><label><input id="postcard-signature" type="checkbox" checked> Chữ ký đài quan sát</label><label><input id="postcard-date" type="checkbox" checked> Ngày & giờ</label><label><input id="postcard-quote-toggle" type="checkbox"> Một câu để nhớ</label></div>
+        <label for="postcard-quote">Lời nhắn</label><input id="postcard-quote" type="text" maxlength="140" value="Cứ thong thả. Vũ trụ vẫn ở đây.">
+        <button id="download-postcard" type="button" class="postcard-download">Giữ lấy khoảnh khắc ↗</button>
+        <p id="postcard-status" role="status"></p>
+    </dialog>
     <dialog id="info-dialog" aria-labelledby="info-title">
         <button class="icon-button dialog-close" id="close-info" type="button" aria-label="Đóng hướng dẫn">×</button>
         <p class="eyebrow">MỘT GÓC NHÌN VÀO VÔ CÙNG</p>

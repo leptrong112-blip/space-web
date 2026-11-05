@@ -10,6 +10,17 @@
     const initial = { yaw: 0.25, pitch: 0.13, distance: 23 };
     const camera = { ...initial };
     const target = { ...initial };
+    const model = window.BlackHoleModel;
+    const views = { cinematic: initial, top: { yaw: .25, pitch: 1.38, distance: 26 }, close: { yaw: .25, pitch: .16, distance: 12 } };
+    let flight = null, tour = null, lastDraw = 0, soundElapsed = 0, soundYaw = camera.yaw;
+    let performanceMode = 'balanced';
+    try { const saved = localStorage.getItem('phuc.black-hole.performance.v1'); if (Object.hasOwn(model.modes, saved)) performanceMode = saved; } catch { /* Use balanced when storage is unavailable. */ }
+    let haptics = false, lastHaptic = -1000;
+    function haptic() {
+        if (!haptics || reducedMotion || performance.now() - lastHaptic < 180) return;
+        lastHaptic = performance.now();
+        try { navigator.vibrate?.(8); } catch { /* Optional device feedback. */ }
+    }
     let paused = reducedMotion;
     let autoOrbit = false;
     let elapsed = 0;
@@ -165,8 +176,8 @@
 
     function makeStarTexture() {
         const stars = document.createElement('canvas');
-        stars.width = 4096;
-        stars.height = 2048;
+        stars.width = model.modes[performanceMode].texture;
+        stars.height = stars.width / 2;
         const ctx = stars.getContext('2d');
         ctx.fillStyle = '#020305';
         ctx.fillRect(0, 0, stars.width, stars.height);
@@ -175,11 +186,11 @@
             seed = (seed * 16807) % 2147483647;
             return (seed - 1) / 2147483646;
         };
-        for (let i = 0; i < 15000; i++) {
+        for (let i = 0; i < model.modes[performanceMode].stars; i++) {
             const x = random() * stars.width;
             const y = Math.acos(2 * random() - 1) / Math.PI * stars.height;
             const bright = random();
-            const radius = .35 + Math.pow(bright, 8) * .95;
+            const radius = (.35 + Math.pow(bright, 8) * .95) * stars.width / 4096;
             const alpha = .22 + bright * .65;
             if (bright > .985) {
                 const glow = ctx.createRadialGradient(x, y, 0, x, y, radius * 3);
@@ -205,7 +216,8 @@
     }
 
     function initialize() {
-        gl = canvas.getContext('webgl2', { alpha: false, antialias: false, depth: false, stencil: false, powerPreference: 'high-performance' });
+        const powerPreference = performanceMode === 'battery' ? 'low-power' : performanceMode === 'maximum' ? 'high-performance' : 'default';
+        gl = canvas.getContext('webgl2', { alpha: false, antialias: false, depth: false, stencil: false, powerPreference });
         if (!gl) throw new Error('WebGL2 unavailable');
         const vert = compile(gl.VERTEX_SHADER, vertexSource);
         const frag = compile(gl.FRAGMENT_SHADER, fragmentSource);
@@ -233,10 +245,10 @@
 
     function resize() {
         if (!gl || gl.isContextLost()) return;
-        const quality = $('render-quality').value;
-        const maxPixels = quality === 'high' ? 2100000 : quality === 'low' ? 460000 : 1150000;
+        const profile = model.modes[performanceMode];
+        const maxPixels = profile.pixels;
         const w = canvas.clientWidth, h = canvas.clientHeight;
-        const scale = Math.min(devicePixelRatio || 1, 1.5, Math.sqrt(maxPixels / (w * h))) * (quality === 'auto' ? qualityScale : 1);
+        const scale = Math.min(devicePixelRatio || 1, profile.dpr, Math.sqrt(maxPixels / (w * h))) * (performanceMode === 'balanced' ? qualityScale : 1);
         canvas.width = Math.max(1, Math.round(w * scale));
         canvas.height = Math.max(1, Math.round(h * scale));
         gl.viewport(0, 0, canvas.width, canvas.height);
@@ -256,12 +268,16 @@
 
     function render(now) {
         frame = 0;
+        if ($('postcard-dialog').open) { lastTime = 0; return; }
+        if (lastDraw && now - lastDraw < 1000 / model.modes[performanceMode].fps - 1) { schedule(); return; }
+        lastDraw = now;
         const delta = lastTime ? Math.min((now - lastTime) / 1000, .1) : 0;
         const actualDelta = lastTime ? now - lastTime : 0;
         lastTime = now;
+        advanceJourney(actualDelta / 1000);
         if (!paused) {
-            elapsed += delta * speed * moments.pace;
-            if (autoOrbit && !pointers.size) {
+            elapsed += reducedMotion && tour ? 0 : delta * speed * moments.pace;
+            if (autoOrbit && !pointers.size && !flight && !tour) {
                 const turn = delta * .085 * moments.pace;
                 target.yaw += turn;
                 moments.orbitBy(turn);
@@ -269,6 +285,7 @@
         }
         const ease = reducedMotion ? 1 : 1 - Math.exp(-delta * 10);
         let moving = false;
+        if (flight || tour) Object.assign(camera, target);
         for (const key of ['yaw', 'pitch', 'distance']) {
             const difference = target[key] - camera[key];
             if (Math.abs(difference) > .00005) { camera[key] += difference * Math.max(ease, .01); moving = true; }
@@ -298,15 +315,20 @@
             dirty = false;
             $('zoom-value').textContent = `${(initial.distance / camera.distance).toFixed(1)}×`;
             updateNotebookView();
-            moments.checkDistance(camera.distance, paused);
+            soundElapsed += delta;
+            if (soundElapsed >= .15) {
+                moments.soundView(camera, (camera.yaw - soundYaw) / soundElapsed);
+                soundElapsed = 0; soundYaw = camera.yaw;
+            }
+            if (!tour && !flight && !$('postcard-dialog').open) moments.checkDistance(camera.distance, paused);
         }
         // Decrease pixel cost after sustained slow frames, only in Auto mode.
         // Do not change resolution repeatedly or while the scene is paused.
-        if (!paused && actualDelta > 0 && $('render-quality').value === 'auto') {
+        if (!paused && actualDelta > 0 && performanceMode === 'balanced') {
             frameSamples++;
             frameTotal += actualDelta;
             if (frameSamples === 45) {
-                slowFrames = frameTotal / frameSamples > 34 ? slowFrames + 1 : 0;
+                slowFrames = frameTotal / frameSamples > 45 ? slowFrames + 1 : 0;
                 if (slowFrames >= 2 && qualityScale > .55) {
                     qualityScale = Math.max(.55, qualityScale * .8);
                     resize();
@@ -316,7 +338,7 @@
                 frameTotal = 0;
             }
         }
-        if (!paused || moving || dirty) schedule();
+        if (!paused || moving || dirty || flight) schedule();
     }
 
     function announce(text) { $('announcement').textContent = text; }
@@ -344,24 +366,76 @@
         document.querySelectorAll('[data-view]').forEach(button => button.setAttribute('aria-pressed', 'false'));
     }
 
-    function setView(name) {
-        const views = {
-            cinematic: initial,
-            top: { yaw: .25, pitch: 1.38, distance: 26 },
-            close: { yaw: .25, pitch: .16, distance: 12 }
-        };
-        // Choose the equivalent yaw closest to the current orbit, so presets
-        // do not spin the camera through many revolutions after auto orbit.
-        const view = views[name];
-        Object.assign(target, view, { yaw: camera.yaw + Math.atan2(Math.sin(view.yaw - camera.yaw), Math.cos(view.yaw - camera.yaw)) });
+    function flyTo(view, name) {
+        stopTour(false, false);
+        moments.leave();
+        flight = { from: { ...camera }, to: { ...view }, time: 0, name };
+        lastTime = 0;
+        moments.silenceWhisper();
+        if (reducedMotion) {
+            Object.assign(target, model.curve(camera, view, 1)); Object.assign(camera, target); flight = null;
+            if (name) moments.view(name);
+        }
         updateZoomButtons();
         updatePlaybackUI();
-        document.querySelectorAll('[data-view]').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.view === name)));
-        moments.view(name);
         requestRender();
+    }
+    function setView(name) {
+        flyTo(views[name], name);
+        document.querySelectorAll('[data-view]').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.view === name)));
+    }
+    function advanceJourney(delta) {
+        if (tour) {
+            if (!paused) tour.time += delta;
+            const sample = model.tourPose(tour.from, tour.time, reducedMotion);
+            Object.assign(target, sample.pose);
+            if (sample.index !== tour.chapter) {
+                tour.chapter = sample.index;
+                $('tour-chapter').textContent = model.chapters[sample.index].title;
+                moments.whisper(model.chapters[sample.index].line, 600000);
+            }
+            $('tour-progress').value = Math.min(36, tour.time);
+            dirty = true;
+            if (tour.time >= 36) { Object.assign(camera, target); stopTour(true); }
+        } else if (flight) {
+            flight.time += delta;
+            Object.assign(target, model.curve(flight.from, flight.to, flight.time / 2.6));
+            dirty = true;
+            if (flight.time >= 2.6) {
+                const name = flight.name; Object.assign(camera, target); flight = null;
+                if (name) moments.view(name);
+            }
+        }
+    }
+    function startTour() {
+        if (tour || !gl || gl.isContextLost() || !$('fallback-message').hidden) return;
+        moments.leave(); moments.silenceWhisper(); flight = null;
+        camera.yaw = Math.atan2(Math.sin(camera.yaw), Math.cos(camera.yaw));
+        Object.assign(target, camera);
+        tour = { from: { ...camera }, time: 0, chapter: -1, pausedBefore: paused, orbitBefore: autoOrbit, hiddenBefore: experience.classList.contains('ui-hidden') };
+        autoOrbit = false; paused = false; clearPreset(); hideUI(true);
+        experience.classList.add('tour-active'); $('tour-controls').hidden = false;
+        $('tour-pause').textContent = 'Tạm dừng'; $('tour-pause').setAttribute('aria-pressed', 'false');
+        $('tour-stop').focus({ preventScroll: true });
+        lastTime = 0; updatePlaybackUI(); requestRender();
+    }
+    function stopTour(completed = false, focus = true) {
+        if (!tour) return;
+        const previous = tour; tour = null; Object.assign(target, camera);
+        paused = previous.pausedBefore; autoOrbit = previous.orbitBefore;
+        $('tour-controls').hidden = true; experience.classList.remove('tour-active');
+        moments.silenceWhisper(); hideUI(previous.hiddenBefore); updatePlaybackUI();
+        if (completed) moments.whisper('Cảm ơn bạn đã ngồi lại. Có điều gì bạn muốn giữ trong ghi chép?', 6500);
+        if (focus) canvas.focus({ preventScroll: true });
+        lastTime = 0; requestRender();
+    }
+    function takeControl() {
+        stopTour(false, false);
+        if (flight) { flight = null; Object.assign(target, camera); moments.silenceWhisper(); }
     }
 
     function zoom(factor) {
+        takeControl();
         target.distance = clamp(target.distance * factor, 8, 52);
         updateZoomButtons();
         clearPreset();
@@ -457,24 +531,29 @@
     }
     canvas.addEventListener('pointerdown', event => {
         if (event.pointerType === 'mouse' && event.button !== 0) return;
+        takeControl();
         canvas.focus({ preventScroll: true });
         canvas.setPointerCapture(event.pointerId);
-        pointers.set(event.pointerId, { x: event.clientX, y: event.clientY });
+        pointers.set(event.pointerId, { x: event.clientX, y: event.clientY, startX: event.clientX, startY: event.clientY, dragging: false });
         lastPinch = pinchDistance();
     });
     canvas.addEventListener('pointermove', event => {
         const previous = pointers.get(event.pointerId);
         if (!previous) return;
-        pointers.set(event.pointerId, { x: event.clientX, y: event.clientY });
+        const point = { ...previous, x: event.clientX, y: event.clientY };
+        pointers.set(event.pointerId, point);
         if (pointers.size >= 2) {
             const currentPinch = pinchDistance();
-            if (lastPinch > 0 && currentPinch > 0) zoom(lastPinch / currentPinch);
+            if (lastPinch > 8 && currentPinch > 8) zoom(Math.exp(clamp(Math.log(lastPinch / currentPinch), -.15, .15)));
             lastPinch = currentPinch;
         } else {
-            const turn = -(event.clientX - previous.x) * .005;
+            if (!previous.dragging && Math.hypot(point.x - point.startX, point.y - point.startY) < 4) return;
+            point.dragging = true;
+            const sensitivity = 2.4 / Math.max(320, Math.min(canvas.clientWidth, canvas.clientHeight));
+            const turn = -(event.clientX - previous.x) * sensitivity;
             target.yaw += turn;
             moments.orbitBy(turn);
-            target.pitch = clamp(target.pitch + (event.clientY - previous.y) * .004, -1.48, 1.48);
+            target.pitch = clamp(target.pitch + (event.clientY - previous.y) * sensitivity * .8, -1.48, 1.48);
             clearPreset();
             requestRender();
         }
@@ -503,20 +582,25 @@
         };
         if (!actions[event.key]) return;
         event.preventDefault();
+        if (event.key !== ' ') takeControl();
         actions[event.key]();
         if (event.key.startsWith('Arrow')) clearPreset();
         requestRender();
     });
     document.addEventListener('keydown', event => {
-        if ($('info-dialog').open) return;
+        if ($('info-dialog').open || $('postcard-dialog').open) return;
         if (event.key === 'Escape') {
+            if (tour) { stopTour(); return; }
             setSettings(false);
             if (!$('black-hole-notebook').hidden) setNotebook(false, true);
             if (experience.classList.contains('ui-hidden')) hideUI(false);
         }
         if (event.target.matches('input, select, textarea') || event.ctrlKey || event.metaKey || event.altKey) return;
         if (event.key.toLowerCase() === 'r') setView('cinematic');
-        if (event.key.toLowerCase() === 'h') hideUI(!experience.classList.contains('ui-hidden'));
+        if (event.key.toLowerCase() === 'h') {
+            if (tour) stopTour();
+            else hideUI(!experience.classList.contains('ui-hidden'));
+        }
     });
 
     document.querySelectorAll('[data-view]').forEach(button => button.addEventListener('click', () => setView(button.dataset.view)));
@@ -525,6 +609,7 @@
     $('pause-button').addEventListener('click', togglePause);
     $('reset-button').addEventListener('click', () => { setView('cinematic'); announce('Đã về góc nhìn ban đầu.'); });
     $('orbit-button').addEventListener('click', () => {
+        takeControl();
         autoOrbit = !autoOrbit;
         if (autoOrbit) { paused = false; clearPreset(); }
         updatePlaybackUI();
@@ -544,13 +629,40 @@
         $('brightness-value').value = `${Math.round(exposure * 100)}%`;
         requestRender();
     });
-    $('render-quality').addEventListener('change', () => {
+    function updatePerformanceUI() {
+        document.querySelectorAll('[data-performance]').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.performance === performanceMode)));
+        $('performance-description').textContent = {
+            battery: 'Ít sao hơn, hình ảnh nhẹ hơn · tối đa 24 khung hình/giây để giảm tải.',
+            balanced: 'Cân bằng độ chi tiết và độ mượt · tối đa 40 khung hình/giây, tự giảm độ phân giải khi cần.',
+            maximum: 'Nhiều chi tiết và sao nhất · tối đa 60 khung hình/giây, tùy khả năng của máy.'
+        }[performanceMode];
+    }
+    document.querySelectorAll('[data-performance]').forEach(button => button.addEventListener('click', () => {
+        if (performanceMode === button.dataset.performance) return;
+        performanceMode = button.dataset.performance;
+        try { localStorage.setItem('phuc.black-hole.performance.v1', performanceMode); } catch { /* Selection still works for this visit. */ }
         qualityScale = 1;
         frameSamples = 0;
         frameTotal = 0;
         slowFrames = 0;
+        lastTime = 0; lastDraw = 0;
+        updatePerformanceUI();
+        if (gl && !gl.isContextLost()) {
+            gl.deleteTexture(starTexture); starTexture = makeStarTexture();
+        }
         resize();
+    }));
+    updatePerformanceUI();
+    $('tour-button').addEventListener('click', startTour);
+    $('tour-stop').addEventListener('click', () => stopTour());
+    $('tour-pause').addEventListener('click', () => {
+        togglePause();
+        $('tour-pause').textContent = paused ? 'Tiếp tục' : 'Tạm dừng';
+        $('tour-pause').setAttribute('aria-pressed', String(paused));
     });
+    if (typeof navigator.vibrate === 'function' && matchMedia('(pointer: coarse)').matches) $('haptics-option').hidden = false;
+    $('haptics-toggle').addEventListener('change', event => { haptics = event.target.checked; haptic(); });
+    document.addEventListener('pointerup', event => { if (event.pointerType === 'touch' && event.target.closest('button')) haptic(); });
     $('hide-ui').addEventListener('click', () => hideUI(true));
     $('show-ui').addEventListener('click', () => hideUI(false));
     $('info-button').addEventListener('click', () => { setSettings(false); setNotebook(false); $('info-dialog').showModal(); });
@@ -575,6 +687,7 @@
     });
 
     function showFallback(message) {
+        stopTour(false, false); flight = null;
         moments.leave();
         if (captureRequested) { captureRequested = false; moments.captureFailed(); }
         cancelAnimationFrame(frame);
@@ -598,10 +711,16 @@
         else requestRender();
     });
     window.addEventListener('resize', resize);
+    window.addEventListener('blur', () => { pointers.clear(); lastPinch = 0; });
     window.addEventListener('pagehide', () => { cancelAnimationFrame(frame); frame = 0; });
     window.addEventListener('pageshow', event => { if (event.persisted) { lastTime = 0; requestRender(); } });
     const moments = window.createBlackHoleMoments({
         canvas, hideUI, requestRender, reducedMotion,
+        getView: () => ({ ...camera }),
+        recallView(view) { flyTo(view); clearPreset(); setNotebook(false); canvas.focus({ preventScroll: true }); },
+        interrupt: takeControl,
+        resume() { lastTime = 0; setSettings(true); requestRender(); },
+        notifyHorizon: haptic,
         requestCapture() {
             if (!gl || gl.isContextLost() || !$('fallback-message').hidden) { moments.captureFailed(); return; }
             captureRequested = true;

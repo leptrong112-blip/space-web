@@ -10,6 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,600&family=Share+Tech+Mono&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="observatory.css">
+    <link rel="stylesheet" href="chronicle.css">
     <meta name="description" content="Một đài quan sát nhỏ dành cho những tâm hồn luôn hướng về bầu trời. Khám phá Hệ Mặt Trời 3D, hành trình ánh sáng và những câu chuyện vũ trụ.">
     <script src="space-audio.js"></script>
     <script src="observatory.js" defer></script>
@@ -32,30 +33,30 @@
 
     <!-- FLOATING OBSERVATORY RAIL -->
     <nav class="observatory-rail" id="observatory-rail" aria-label="Điều hướng 5 phân khu">
-        <a href="#gioi-thieu" class="rail-item active" data-wing="gioi-thieu" title="Phân khu 01: Nhập môn">
+        <a href="#gioi-thieu" class="rail-item active" data-wing="gioi-thieu" title="Phân khu 01: Khởi đầu">
             <span class="rail-num">01</span>
             <span class="rail-dot"></span>
-            <span class="rail-text">Nhập Môn</span>
+            <span class="rail-text">Khởi Đầu</span>
         </a>
-        <a href="#observation-deck" class="rail-item" data-wing="observation-deck" title="Phân khu 02: Đài quan sát 3D">
+        <a href="#observation-deck" class="rail-item" data-wing="observation-deck" title="Phân khu 02: Đài quan sát">
             <span class="rail-num">02</span>
             <span class="rail-dot"></span>
-            <span class="rail-text">Quan Sát</span>
+            <span class="rail-text">Đài Quan Sát</span>
         </a>
-        <a href="#cosmic-lab" class="rail-item" data-wing="cosmic-lab" title="Phân khu 03: Phòng thí nghiệm">
+        <a href="#cosmic-lab" class="rail-item" data-wing="cosmic-lab" title="Phân khu 03: Ánh sáng &amp; Quỹ đạo">
             <span class="rail-num">03</span>
             <span class="rail-dot"></span>
-            <span class="rail-text">Phòng Lab</span>
+            <span class="rail-text">Ánh Sáng</span>
         </a>
         <a href="#deep-space-archive" class="rail-item" data-wing="deep-space-archive" title="Phân khu 04: Vũ trụ sâu">
             <span class="rail-num">04</span>
             <span class="rail-dot"></span>
             <span class="rail-text">Vũ Trụ Sâu</span>
         </a>
-        <a href="#lich-su" class="rail-item" data-wing="lich-su" title="Phân khu 05: Biên niên sử">
+        <a href="#lich-su" class="rail-item" data-wing="lich-su" title="Phân khu 05: Dấu chân">
             <span class="rail-num">05</span>
             <span class="rail-dot"></span>
-            <span class="rail-text">Lịch Sử</span>
+            <span class="rail-text">Dấu Chân</span>
         </a>
     </nav>
 
@@ -64,11 +65,11 @@
             <a href="#trang-chu" class="logo"><span class="brand-star" aria-hidden="true">✦</span><span>KHÁM PHÁ VŨ TRỤ<small>ĐÀI QUAN SÁT CỦA PHÚC</small></span></a>
             <button class="menu-toggle" aria-expanded="false" aria-controls="main-navigation">Menu ☰</button>
             <ul class="nav-links" id="main-navigation">
-                <li><a href="#gioi-thieu">01 · Nhập môn</a></li>
-                <li><a href="#observation-deck">02 · Quan sát 3D</a></li>
-                <li><a href="#cosmic-lab">03 · Phòng Lab</a></li>
+                <li><a href="#gioi-thieu">01 · Khởi đầu</a></li>
+                <li><a href="#observation-deck">02 · Đài quan sát</a></li>
+                <li><a href="#cosmic-lab">03 · Ánh sáng</a></li>
                 <li><a href="#deep-space-archive">04 · Vũ trụ sâu</a></li>
-                <li><a href="#lich-su">05 · Lịch sử</a></li>
+                <li><a href="#lich-su">05 · Dấu chân</a></li>
                 <li class="nav-dropdown">
                     <button type="button" class="nav-dropdown-btn" aria-haspopup="true" aria-expanded="false">
                         <span class="dropdown-star">✦</span> Trải Nghiệm Mở Rộng <span class="dropdown-arrow">▾</span>
@@ -81,11 +82,18 @@
                                 <span class="dropdown-desc">Story mode cảm xúc ↗</span>
                             </div>
                         </a>
+                        <a href="voyage-prototype.html" class="dropdown-link">
+                            <span class="dropdown-icon" aria-hidden="true">◌</span>
+                            <div class="dropdown-info">
+                                <span class="dropdown-title">Bên Kia Ô Kính</span>
+                                <span class="dropdown-desc">Nhìn từ khoang tàu · Chọn nơi đến ↗</span>
+                            </div>
+                        </a>
                         <a href="vr-mode.html" class="dropdown-link" onclick="transitionToVR(event)">
                             <span class="dropdown-icon">✨</span>
                             <div class="dropdown-info">
                                 <span class="dropdown-title">Biển Sao 3D</span>
-                                <span class="dropdown-desc">Không gian chiều sâu VR ✦</span>
+                                <span class="dropdown-desc">Không gian chiều sâu 3D ✦</span>
                             </div>
                         </a>
                         <a href="VuTru_WebGL/index.html" class="dropdown-link" target="_blank" rel="noopener">
@@ -113,23 +121,28 @@
                 <h1 class="hero-title">Ngước nhìn.<br><em>Và ngỡ ngàng.</em></h1>
                 <p class="hero-desc">Có những hành trình bắt đầu chỉ bằng một lần nhìn lên bầu trời. Đây là nơi mình giữ lại sự tò mò ấy — và mời bạn cùng đi xa hơn.</p>
                 <div class="hero-actions">
-                    <a class="hero-btn" href="#sa-ban-3d">Bước vào đài quan sát <span aria-hidden="true">↗</span></a>
+                    <a class="hero-btn" href="#sa-ban-3d">Bước vào đài quan sát <span aria-hidden="true">↓</span></a>
                     <a class="quiet-link" href="story.html" onclick="transitionToStory(event)">Theo một câu chuyện <span aria-hidden="true">→</span></a>
                 </div>
                 <p class="hero-signature">Từ một người yêu thiên văn, gửi đến bạn.</p>
             </div>
-            <div class="hero-world" role="img" aria-label="Minh họa Trái Đất xanh trong bóng tối không gian; kích thước và quỹ đạo mang tính nghệ thuật">
+            <div class="hero-world" tabindex="0" role="region" aria-label="Mô hình thiên thể ở trang mở đầu; dùng phím mũi tên trái phải hoặc nút điều hướng để đổi thiên thể">
                 <div class="world-orbit orbit-one"></div><div class="world-orbit orbit-two"></div>
                 <div class="earth-glow"></div><div class="earth-portrait"></div>
-                <div class="world-label"><span class="status-dot"></span> TRÁI ĐẤT<small>Ngôi nhà của mọi hành trình.</small></div>
-                <span class="world-coordinate">SOL / 03</span>
+                <div id="hero-celestial-canvas" class="hero-celestial-canvas" aria-hidden="true"></div>
+                <div class="world-label"><span class="status-dot"></span> <span id="hero-celestial-name">TRÁI ĐẤT</span><small id="hero-celestial-desc">Ngôi nhà của mọi hành trình.</small></div>
+                <span class="world-coordinate" id="hero-celestial-index">SOL / 03</span>
+                <div class="hero-celestial-nav" aria-label="Đổi thiên thể hiển thị">
+                    <button type="button" id="hero-prev-btn" class="hero-celestial-btn" aria-label="Hành tinh trước: SAO KIM (SOL / 02)">‹</button>
+                    <button type="button" id="hero-next-btn" class="hero-celestial-btn" aria-label="Hành tinh tiếp theo: SAO HỎA (SOL / 04)">›</button>
+                </div>
             </div>
         </div>
         <div class="hero-bottom"><span>01 — KHỞI ĐẦU TỪ MỘT ĐỐM XANH</span><a href="#gioi-thieu">Cuộn để khám phá ↓</a><span>EXPLORED BY PHÚC</span></div>
     </header>
 
     <div class="journey-paths" aria-label="Chọn một hành trình">
-        <a href="#gioi-thieu"><span>01 / NHẬP MÔN</span><strong>Khởi đầu từ một câu hỏi đơn sơ ↗</strong></a>
+        <a href="#gioi-thieu"><span>01 / KHỞI ĐẦU</span><strong>Khởi đầu từ một câu hỏi đơn sơ ↓</strong></a>
         <a href="story.html" onclick="transitionToStory(event)"><span>02 / CẢM NHẬN</span><strong>Nhật ký của một người du hành ↗</strong></a>
         <a href="vr-mode.html" onclick="transitionToVR(event)"><span>03 / THẢ MÌNH</span><strong>Trôi giữa biển sao ↗</strong></a>
         <a href="VuTru_WebGL/index.html" target="_blank" rel="noopener"><span>04 / TRẢI NGHIỆM</span><strong>Sa bàn Unity 3D (WebGL) ↗</strong></a>
@@ -648,7 +661,7 @@
                     <!-- 4. Pillars of Creation -->
                     <article class="deepsky-card" data-cat="nebula" data-aos="fade-up" data-aos-delay="200">
                         <div class="deepsky-card-media">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/6/68/Pillars_of_creation_2014_HST_WFC3-UVIS_full-res_denoised.jpg" loading="lazy" decoding="async" alt="Cột trụ sáng tạo">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/68/Pillars_of_creation_2014_HST_WFC3-UVIS_full-res_denoised.jpg/960px-Pillars_of_creation_2014_HST_WFC3-UVIS_full-res_denoised.jpg" loading="lazy" decoding="async" alt="Cột trụ sáng tạo">
                             <span class="deepsky-card-badge">M16 · Vườn ươm sao</span>
                         </div>
                         <div class="deepsky-card-body">
@@ -705,7 +718,7 @@
                         </div>
                         <div class="deepsky-card-body">
                             <h3>Hố Đen Vũ Trụ (Black Hole)</h3>
-                            <p>Nơi mật độ vật chất vô hạn bẻ cong không gian và làm ngưng đọng dòng thời gian tại ranh giới chân trời sự kiện.</p>
+                            <p>Vùng không-thời gian bị uốn cong cực hạn, bao quanh bởi chân trời sự kiện — ranh giới mà ngay cả ánh sáng cũng không thể thoát ra.</p>
                             <button type="button" class="deepsky-view-btn" onclick="openModal('blackhole')">Mở hồ sơ →</button>
                         </div>
                     </article>
@@ -821,129 +834,145 @@
     <!-- =====================================================================
          PHÂN KHU 05: BIÊN NIÊN SỬ LỊCH SỬ (TIMELINE CHRONICLE)
          ===================================================================== -->
-    <section id="lich-su" class="section observatory-wing wing-chronicle">
+    <section id="lich-su" class="section observatory-wing wing-chronicle" aria-labelledby="chronicle-title">
         <div class="section-heading-editorial wing-header" data-aos="fade-up">
-            <p class="eyebrow"><span class="wing-num-tag">05</span> BIÊN NIÊN SỬ LỊCH SỬ / HUMAN CHRONICLE</p>
-            <h2 class="section-title">Dấu Chân Nhân Loại Giữa Các Vì Sao</h2>
-            <p class="section-desc">Hành trình nhân loại ngước nhìn và chinh phục không gian qua các thời đại, từ vệ tinh đầu tiên năm 1957 đến những kính viễn vọng nhìn thấu bình minh vũ trụ.</p>
+            <p class="eyebrow"><span class="wing-num-tag">05</span> DẤU CHÂN NHÂN LOẠI</p>
+            <h2 class="section-title" id="chronicle-title">Dấu chân giữa các vì sao</h2>
+            <p class="section-desc">Từ một tín hiệu nhỏ trên quỹ đạo đến ánh sáng của những thiên hà xa xôi. Mỗi chặng đường bắt đầu bằng sự tò mò — và khát vọng nhìn xa hơn.</p>
         </div>
+        <div class="chronicle-shell">
+            <div class="chronicle-prologue">
+                <p>NHỮNG CỘT MỐC CỦA MỘT HÀNH TRÌNH</p>
+                <span>1957 — NGÀY MAI</span>
+            </div>
+            <ol class="timeline-container" aria-label="Các cột mốc khám phá không gian">
+                <li class="timeline-item">
+                    <span class="timeline-date">1957</span>
+                    <span class="timeline-dot" aria-hidden="true"></span>
+                    <div class="timeline-content">
+                        <p class="timeline-kicker">Sputnik 1 · Quỹ đạo Trái Đất</p>
+                        <h3 class="timeline-title">Tín hiệu đầu tiên từ quỹ đạo</h3>
+                        <p class="timeline-summary">Một tiếng “bíp” nhỏ mở đầu hành trình đi xa hơn bầu trời.</p>
+                        <button type="button" class="expand-btn" aria-expanded="false" aria-controls="timeline-detail-1">Khám phá câu chuyện <span aria-hidden="true">↗</span></button>
+                    </div>
+                    <img class="timeline-thumbnail" src="Images/Vệ Tinh Sputnik 1.jpg" alt="Vệ tinh Sputnik 1" width="240" height="160" loading="lazy">
+                    <div id="timeline-detail-1" class="detail-card" role="region" aria-labelledby="timeline-detail-title-1" hidden>
+                        <img class="detail-img" src="Images/Vệ Tinh Sputnik 1.jpg" alt="Vệ tinh Sputnik 1" width="480" height="320" loading="lazy">
+                        <div class="timeline-detail-copy">
+                            <h4 class="detail-title" id="timeline-detail-title-1">Vệ tinh Sputnik 1</h4>
+                            <p class="detail-text">Sputnik 1 là vệ tinh nhân tạo đầu tiên của Trái Đất. Những tín hiệu vô tuyến của nó đánh dấu sự khởi đầu của Kỷ nguyên Không gian.</p>
 
-        <!-- SINGLE MASTER CHRONICLE CARD (PHÂN KHU 05) -->
-        <div class="glass-card wing-master-card" data-aos="fade-up" style="padding: 40px 30px;">
-            <div class="timeline-section" style="margin-top: 10px; margin-bottom: 20px;">
-                <div class="timeline-container">
-                    <div id="timeline-line-dynamic" class="timeline-line-dynamic"></div>
-
-                        <div class="timeline-item left" data-aos="fade-right">
-                            <div class="timeline-dot"></div>
-                            <div class="timeline-content glass-card hover-glow interaction-card">
-                                <h3 class="timeline-date">1957</h3>
-                                <h4 class="timeline-title">Kỷ Nguyên Không Gian</h4>
-                                <p>Liên Xô phóng Sputnik 1, vệ tinh nhân tạo đầu tiên.</p>
-                                <button class="expand-btn">Xem chi tiết &#10095;</button>
-                            </div>
-                            
-                            <div class="detail-card glass-card hover-glow cinematic-popup">
-                                <button class="close-detail-btn">&times;</button>
-                                <div class="detail-branch-line"></div>
-                                <h3 class="detail-title">Vệ Tinh Sputnik 1</h3>
-                                <img src="Images/Vệ Tinh Sputnik 1.jpg" alt="Sputnik 1" class="detail-img glow-img">
-                                <p class="detail-text typewriter" data-text="Sputnik 1 là vệ tinh nhân tạo đầu tiên, nặng 83kg. Nó truyền tín hiệu 'bíp-bíp' về Trái Đất, đánh dấu sự khởi đầu của Kỷ nguyên Không gian và cuộc đua vũ trụ."></p>
-                            </div>
-                        </div>
-
-                        <div class="timeline-item right" data-aos="fade-left">
-                            <div class="timeline-dot"></div>
-                            <div class="timeline-content glass-card hover-glow interaction-card">
-                                <h3 class="timeline-date">1969</h3>
-                                <h4 class="timeline-title">Bước Chân Lịch Sử</h4>
-                                <p>NASA đưa phi hành gia Apollo 11 lên Mặt Trăng.</p>
-                                <button class="expand-btn">Xem chi tiết &#10095;</button>
-                            </div>
-
-                            <div class="detail-card glass-card hover-glow cinematic-popup">
-                                <button class="close-detail-btn">&times;</button>
-                                <div class="detail-branch-line"></div>
-                                <h3 class="detail-title">Sứ Mệnh Apollo 11</h3>
-                                <img src="Images/Sứ Mệnh Apollo 11.webp" alt="Apollo 11" class="detail-img glow-img">
-                                <p class="detail-text typewriter" data-text="Tàu Apollo 11 hạ cánh trên Mặt Trăng. Neil Armstrong đã thực hiện 'bước chân vĩ đại' cho nhân loại, mang lại kiến thức và chứng minh tiềm năng khám phá vô tận của con người."></p>
-                            </div>
-                        </div>
-
-                        <div class="timeline-item left" data-aos="fade-right">
-                            <div class="timeline-dot"></div>
-                            <div class="timeline-content glass-card hover-glow interaction-card">
-                                <h3 class="timeline-date">1990</h3>
-                                <h4 class="timeline-title">Con Mắt Nhân Loại</h4>
-                                <p>Kính viễn vọng Hubble được phóng, nhìn xuyên thiên hà.</p>
-                                <button class="expand-btn">Xem chi tiết &#10095;</button>
-                            </div>
-
-                            <div class="detail-card glass-card hover-glow cinematic-popup">
-                                <button class="close-detail-btn">&times;</button>
-                                <div class="detail-branch-line"></div>
-                                <h3 class="detail-title">Kính Hubble</h3>
-                                <img src="Images/Kính Hubble.jpeg" alt="Hubble" class="detail-img glow-img">
-                                <p class="detail-text typewriter" data-text="Hubble không bị ảnh hưởng bởi bầu khí quyển, giúp chụp được những bức ảnh sắc nét về tinh vân, thiên hà xa xôi, thay đổi cách chúng ta hiểu về vũ trụ."></p>
-                            </div>
-                        </div>
-
-                        <div class="timeline-item right" data-aos="fade-left">
-                            <div class="timeline-dot"></div>
-                            <div class="timeline-content glass-card hover-glow interaction-card">
-                                <h3 class="timeline-date">2012</h3>
-                                <h4 class="timeline-title">Kẻ Độc Hành (Curiosity)</h4>
-                                <p>Robot tự hành hạ cánh và khám phá Sao Hỏa.</p>
-                                <button class="expand-btn">Xem chi tiết &#10095;</button>
-                            </div>
-
-                            <div class="detail-card glass-card hover-glow cinematic-popup">
-                                <button class="close-detail-btn">&times;</button>
-                                <div class="detail-branch-line"></div>
-                                <h3 class="detail-title">Robot Curiosity</h3>
-                                <img src="Images/Robot Curiosity.jpg" alt="Curiosity Rover" class="detail-img glow-img">
-                                <p class="detail-text typewriter" data-text="Curiosity là robot phức tạp nhất NASA từng gửi đến Sao Hỏa. Nó tìm kiếm dấu hiệu của sự sống cổ đại, mang lại dữ liệu vô giá về địa chất và khí quyển của Hành tinh Đỏ."></p>
-                            </div>
-                        </div>
-
-                        <div class="timeline-item left" data-aos="fade-right">
-                            <div class="timeline-dot"></div>
-                            <div class="timeline-content glass-card hover-glow interaction-card">
-                                <h3 class="timeline-date">2021</h3>
-                                <h4 class="timeline-title">James Webb (JWST)</h4>
-                                <p>Mắt thần nhìn về thuở bình minh vũ trụ.</p>
-                                <button class="expand-btn">Xem chi tiết &#10095;</button>
-                            </div>
-
-                            <div class="detail-card glass-card hover-glow cinematic-popup">
-                                <button class="close-detail-btn">&times;</button>
-                                <div class="detail-branch-line"></div>
-                                <h3 class="detail-title">Kính James Webb (JWST)</h3>
-                                <img src="Images/James webb.webp" alt="JWST" class="detail-img glow-img">
-                                <p class="detail-text typewriter" data-text="Sử dụng tia hồng ngoại, Webb có thể nhìn xuyên qua các đám mây bụi để quan sát những ngôi sao đầu tiên được hình thành ngay sau Vụ nổ lớn (Big Bang)."></p>
-                            </div>
-                        </div>
-
-                        <div class="timeline-item right" data-aos="fade-left">
-                            <div class="timeline-dot"></div>
-                            <div class="timeline-content glass-card hover-glow interaction-card" style="border-color: rgba(222, 193, 149, 0.35); box-shadow: 0 0 15px rgba(222, 193, 149, 0.2);">
-                                <h3 class="timeline-date" style="color: #DEC195; text-shadow: 0 0 20px rgba(222, 193, 149, 0.4);">20??...</h3>
-                                <h4 class="timeline-title">Chân Trời Tiếp Theo ?</h4>
-                                <p>Đâu là cột mốc vĩ đại tiếp theo của nhân loại ?</p>
-                                <button class="expand-btn" style="color: #DEC195; text-shadow: 0 0 10px rgba(222, 193, 149, 0.3);">Xem chi tiết &#10095;</button>
-                            </div>
-
-                            <div class="detail-card glass-card hover-glow cinematic-popup" style="border-color: rgba(222, 193, 149, 0.4);">
-                                <button class="close-detail-btn" style="color: #DEC195;">&times;</button>
-                                <div class="detail-branch-line" style="background: rgba(222, 193, 149, 0.4); box-shadow: 0 0 10px rgba(222, 193, 149, 0.3);"></div>
-                                <h3 class="detail-title" style="color: #DEC195; text-shadow: 0 0 20px rgba(222, 193, 149, 0.4);">Tương Lai Nằm Trong Tay Bạn... ?</h3>
-                                <img src="https://images.openai.com/static-rsc-4/TiGG8CHwejIn7fB7oA1B5ofHiWeChH11wqYr44Vgh-sSbd-tGGSFbSb9wo0OWRKEi08Kv3-J43Ifn0mkUimpwni3dZdpaKE2PmLCEemerpnKjSpqpLpJDUig5rwGAnoIslkb9ADs28psgk2uPnHx-W-dzOBg9EouQpmso6WUhJM-42nOILD2ncbIbfXUbfSp?purpose=fullsize" alt="Future Mars Colony" class="detail-img glow-img" style="border-color: rgba(222, 193, 149, 0.3);">
-                                <p class="detail-text typewriter" data-text="Cơ sở của nhân loại trên Sao Hỏa... ? Sứ mệnh Interstellar... ? Tìm thấy sự sống ngoài Trái Đất... ? Tương Lai... luôn chứa đựng những bí ẩn và nằm trong tầm tay của chúng ta... ?"></p>
-                            </div>
+                            <button type="button" class="close-detail-btn">Thu gọn câu chuyện <span aria-hidden="true">↑</span></button>
                         </div>
                     </div>
-                </div>
-            </div>
+                </li>
+
+                <li class="timeline-item">
+                    <span class="timeline-date">1969</span>
+                    <span class="timeline-dot" aria-hidden="true"></span>
+                    <div class="timeline-content">
+                        <p class="timeline-kicker">Apollo 11 · Mặt Trăng</p>
+                        <h3 class="timeline-title">Một bước chân, một chân trời mới</h3>
+                        <p class="timeline-summary">Lần đầu tiên, con người đặt chân lên một thế giới khác.</p>
+                        <button type="button" class="expand-btn" aria-expanded="false" aria-controls="timeline-detail-2">Khám phá câu chuyện <span aria-hidden="true">↗</span></button>
+                    </div>
+                    <img class="timeline-thumbnail" src="Images/Sứ Mệnh Apollo 11.webp" alt="Sứ mệnh Apollo 11" width="240" height="160" loading="lazy">
+                    <div id="timeline-detail-2" class="detail-card" role="region" aria-labelledby="timeline-detail-title-2" hidden>
+                        <img class="detail-img" src="Images/Sứ Mệnh Apollo 11.webp" alt="Sứ mệnh Apollo 11" width="480" height="320" loading="lazy">
+                        <div class="timeline-detail-copy">
+                            <h4 class="detail-title" id="timeline-detail-title-2">Sứ mệnh Apollo 11</h4>
+                            <p class="detail-text">Apollo 11 đưa Neil Armstrong và Buzz Aldrin xuống bề mặt Mặt Trăng, trong khi Michael Collins ở lại trên quỹ đạo. Một chuyến đi đã trở thành ký ức chung của nhân loại.</p>
+
+                            <button type="button" class="close-detail-btn">Thu gọn câu chuyện <span aria-hidden="true">↑</span></button>
+                        </div>
+                    </div>
+                </li>
+
+                <li class="timeline-item">
+                    <span class="timeline-date">1990</span>
+                    <span class="timeline-dot" aria-hidden="true"></span>
+                    <div class="timeline-content">
+                        <p class="timeline-kicker">Hubble · Quỹ đạo Trái Đất</p>
+                        <h3 class="timeline-title">Một ô cửa mở vào vũ trụ</h3>
+                        <p class="timeline-summary">Từ bên ngoài bầu khí quyển, Hubble mở rộng tầm nhìn của chúng ta.</p>
+                        <button type="button" class="expand-btn" aria-expanded="false" aria-controls="timeline-detail-3">Khám phá câu chuyện <span aria-hidden="true">↗</span></button>
+                    </div>
+                    <img class="timeline-thumbnail" src="Images/Kính Hubble.jpeg" alt="Kính viễn vọng Hubble" width="240" height="160" loading="lazy">
+                    <div id="timeline-detail-3" class="detail-card" role="region" aria-labelledby="timeline-detail-title-3" hidden>
+                        <img class="detail-img" src="Images/Kính Hubble.jpeg" alt="Kính viễn vọng Hubble" width="480" height="320" loading="lazy">
+                        <div class="timeline-detail-copy">
+                            <h4 class="detail-title" id="timeline-detail-title-3">Kính viễn vọng Hubble</h4>
+                            <p class="detail-text">Được đưa lên quỹ đạo năm 1990, Hubble quan sát phía trên phần lớn bầu khí quyển Trái Đất. Những hình ảnh về tinh vân và thiên hà xa xôi giúp thay đổi cách chúng ta hiểu về vũ trụ.</p>
+
+                            <button type="button" class="close-detail-btn">Thu gọn câu chuyện <span aria-hidden="true">↑</span></button>
+                        </div>
+                    </div>
+                </li>
+
+                <li class="timeline-item">
+                    <span class="timeline-date">2012</span>
+                    <span class="timeline-dot" aria-hidden="true"></span>
+                    <div class="timeline-content">
+                        <p class="timeline-kicker">Curiosity · Sao Hỏa</p>
+                        <h3 class="timeline-title">Lần theo dấu một thế giới xưa</h3>
+                        <p class="timeline-summary">Trên nền đất đỏ, Curiosity tìm hiểu liệu Sao Hỏa từng có môi trường phù hợp cho sự sống.</p>
+                        <button type="button" class="expand-btn" aria-expanded="false" aria-controls="timeline-detail-4">Khám phá câu chuyện <span aria-hidden="true">↗</span></button>
+                    </div>
+                    <img class="timeline-thumbnail" src="Images/Robot Curiosity.jpg" alt="Robot tự hành Curiosity" width="240" height="160" loading="lazy">
+                    <div id="timeline-detail-4" class="detail-card" role="region" aria-labelledby="timeline-detail-title-4" hidden>
+                        <img class="detail-img" src="Images/Robot Curiosity.jpg" alt="Robot tự hành Curiosity" width="480" height="320" loading="lazy">
+                        <div class="timeline-detail-copy">
+                            <h4 class="detail-title" id="timeline-detail-title-4">Robot tự hành Curiosity</h4>
+                            <p class="detail-text">Curiosity hạ cánh tại miệng hố Gale năm 2012. Qua việc phân tích đá và đất, robot tìm thấy bằng chứng về những môi trường cổ đại từng có điều kiện phù hợp cho sự sống vi sinh.</p>
+                            <a class="timeline-source" href="https://science.nasa.gov/mission/msl-curiosity/science/" target="_blank" rel="noopener noreferrer">NASA · Khoa học của Curiosity ↗</a>
+                            <button type="button" class="close-detail-btn">Thu gọn câu chuyện <span aria-hidden="true">↑</span></button>
+                        </div>
+                    </div>
+                </li>
+
+                <li class="timeline-item">
+                    <span class="timeline-date">2021</span>
+                    <span class="timeline-dot" aria-hidden="true"></span>
+                    <div class="timeline-content">
+                        <p class="timeline-kicker">James Webb · Vũ trụ sơ khai</p>
+                        <h3 class="timeline-title">Nhìn xa hơn, về thuở ban đầu</h3>
+                        <p class="timeline-summary">Được phóng năm 2021, Webb mang theo câu hỏi về những thiên hà sớm nhất.</p>
+                        <button type="button" class="expand-btn" aria-expanded="false" aria-controls="timeline-detail-5">Khám phá câu chuyện <span aria-hidden="true">↗</span></button>
+                    </div>
+                    <img class="timeline-thumbnail" src="Images/James webb.webp" alt="Kính viễn vọng James Webb" width="240" height="160" loading="lazy">
+                    <div id="timeline-detail-5" class="detail-card" role="region" aria-labelledby="timeline-detail-title-5" hidden>
+                        <img class="detail-img" src="Images/James webb.webp" alt="Kính viễn vọng James Webb" width="480" height="320" loading="lazy">
+                        <div class="timeline-detail-copy">
+                            <h4 class="detail-title" id="timeline-detail-title-5">Kính viễn vọng James Webb</h4>
+                            <p class="detail-text">Webb quan sát bằng ánh sáng hồng ngoại để nghiên cứu những thiên hà trong vũ trụ sơ khai và các vùng sao đang hình thành. Ánh sáng từ những thiên hà xa xôi đã đi qua hàng tỷ năm để đến với chúng ta.</p>
+                            <a class="timeline-source" href="https://science.nasa.gov/mission/webb/early-universe/" target="_blank" rel="noopener noreferrer">NASA · Webb và vũ trụ sơ khai ↗</a>
+                            <button type="button" class="close-detail-btn">Thu gọn câu chuyện <span aria-hidden="true">↑</span></button>
+                        </div>
+                    </div>
+                </li>
+
+                <li class="timeline-item timeline-future">
+                    <span class="timeline-date">20??</span>
+                    <span class="timeline-dot" aria-hidden="true"></span>
+                    <div class="timeline-content">
+                        <p class="timeline-kicker">Chặng đường còn mở</p>
+                        <h3 class="timeline-title">Chân trời tiếp theo</h3>
+                        <p class="timeline-summary">Có thể là Sao Hỏa. Có thể là một câu hỏi chúng ta chưa biết cách đặt ra.</p>
+                        <button type="button" class="expand-btn" aria-expanded="false" aria-controls="timeline-detail-6">Khám phá câu chuyện <span aria-hidden="true">↗</span></button>
+                    </div>
+                    <span class="timeline-horizon" aria-hidden="true">Hành trình<br>còn ở phía trước.</span>
+                    <div id="timeline-detail-6" class="detail-card" role="region" aria-labelledby="timeline-detail-title-6" hidden>
+
+                        <div class="timeline-detail-copy">
+                            <h4 class="detail-title" id="timeline-detail-title-6">Hành trình vẫn đang tiếp diễn</h4>
+                            <p class="detail-text">Có thể là bước chân đầu tiên trên Sao Hỏa. Có thể là một khám phá từ đại dương dưới băng của Europa. Chúng ta chưa biết cột mốc tiếp theo sẽ là gì — và chính điều đó khiến hành trình này còn đáng mong chờ.</p>
+
+                            <button type="button" class="close-detail-btn">Thu gọn câu chuyện <span aria-hidden="true">↑</span></button>
+                        </div>
+                    </div>
+                </li>
+            </ol>
+            <p class="chronicle-epilogue">Bầu trời vẫn còn đó. Và chúng ta vẫn đang ngước nhìn.</p>
         </div>
     </section> <!-- end lich-su -->
 
@@ -960,16 +989,11 @@
                     <p style="color: var(--muted); line-height: 1.8; margin-bottom: 14px;">Đây là nơi khoa học gặp cảm xúc: một sa bàn để chạm vào những thế giới xa xôi, một câu chuyện để đi qua chúng, và một cuốn nhật ký để giữ lại điều khiến bạn ngước nhìn.</p>
                     <p class="about-built">Được xây thủ công bằng HTML, CSS, JavaScript và Three.js.</p>
                 </div>
-                <div class="about-people" aria-label="Những người thực hiện">
+                <div class="about-people" aria-label="Người thực hiện">
                     <article>
                         <span>CREATOR / DEVELOPER</span>
                         <h3>Lê Trọng Phúc</h3>
                         <p>Ý tưởng, thiết kế trải nghiệm và phát triển đài quan sát.</p>
-                    </article>
-                    <article>
-                        <span>CONTRIBUTOR</span>
-                        <h3>Nguyễn Chí Toàn</h3>
-                        <p>Đồng hành và đóng góp cho hành trình của project.</p>
                     </article>
                 </div>
             </div>
@@ -986,7 +1010,7 @@
                     <div><h3>Khoa học</h3><p>NASA Science, ESA và JPL là các nguồn tham khảo chính cho dữ liệu thiên văn.</p></div>
                     <div><h3>Hình ảnh</h3><p>NASA/Wikimedia Commons, Unsplash, Shutterstock và các ảnh được lưu cục bộ trong project.</p></div>
                     <div><h3>Công nghệ</h3><p>Three.js, AOS và Unity WebGL.</p></div>
-                    <div><h3>Project</h3><p>Thiết kế &amp; phát triển bởi Lê Trọng Phúc, với sự đóng góp của Nguyễn Chí Toàn.</p></div>
+                    <div><h3>Project</h3><p>Ý tưởng, thiết kế &amp; phát triển bởi Lê Trọng Phúc.</p></div>
                 </div>
             </details>
         </div>
@@ -1036,7 +1060,7 @@
     <div id="observer-hud" class="hidden-hud">
         <div class="hud-border">
             <div class="hud-header">
-                <span class="hud-target-lock">TARGET LOCKED</span>
+                <span class="hud-target-lock">ĐỐI TƯỢNG QUAN SÁT</span>
                 <h3 id="hud-planet-name">TÊN HÀNH TINH</h3>
             </div>
             
@@ -1048,13 +1072,23 @@
                 </div>
                 <p id="hud-desc" class="hud-desc">...</p>
                 <p id="hud-curiosity" class="hud-curiosity"></p>
-                <button id="save-observation" type="button" class="save-observation" aria-pressed="false">☆ Lưu vào sổ quan sát</button>
-                <p id="observation-count" class="model-note" aria-live="polite"></p>
+                <div class="observation-entry">
+                    <label for="observation-note">Ghi chú quan sát</label>
+                    <textarea id="observation-note" rows="3" maxlength="280" placeholder="Điều gì ở thế giới này khiến bạn muốn nhớ lại?"></textarea>
+                    <fieldset class="observation-methods">
+                        <legend>Quan sát bằng</legend>
+                        <label><input type="radio" name="observation-method" value="Sa bàn 3D" checked> Sa bàn 3D</label>
+                        <label><input type="radio" name="observation-method" value="Kính thiên văn"> Kính thiên văn</label>
+                        <label><input type="radio" name="observation-method" value="Mắt thường"> Mắt thường</label>
+                    </fieldset>
+                </div>
+                <button id="save-observation" type="button" class="save-observation" aria-pressed="false">☆ Ghi vào nhật ký</button>
+                <p id="hud-observation-count" class="model-note" aria-live="polite"></p>
             </div>
 
             <div class="hud-actions">
-                <button id="btn-scan" class="cyber-btn" onclick="toggleScanMode()">QUÉT CẤU TRÚC 🔬</button>
-                <button class="cyber-btn btn-close" onclick="closeObserverMode()">ĐÓNG [X]</button>
+                <button id="btn-scan" class="cyber-btn" onclick="toggleScanMode()">MỞ CẤU TRÚC</button>
+                <button class="cyber-btn btn-close" onclick="closeObserverMode()">ĐÓNG</button>
             </div>
             
             <div id="scan-layer" class="hidden-scan">
@@ -1088,11 +1122,12 @@
         <p>Một dự án học tập và trải nghiệm thiên văn học, được xây dựng từ sự tò mò và lòng say mê với bầu trời đêm.</p>
         <div class="footer-meta">
             <span>TH-THCS-THPT TÂN PHÚ · 2026</span>
-            <span>THỰC HIỆN BỞI PHÚC &amp; TOÀN</span>
+            <span>THỰC HIỆN BỞI LÊ TRỌNG PHÚC</span>
         </div>
     </footer>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="hero-celestial.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/renderers/CSS2DRenderer.js"></script>
     

@@ -1,14 +1,14 @@
 /* Small, local-only rituals around the observatory. No external media. */
 'use strict';
-window.createBlackHoleMoments = function ({ canvas, hideUI, requestRender, requestCapture, reducedMotion }) {
+window.createBlackHoleMoments = function ({ canvas, hideUI, requestRender, requestCapture, reducedMotion, getView, recallView, interrupt, resume, notifyHorizon }) {
     const $ = id => document.getElementById(id);
     const scene = $('experience');
     const overlay = $('light-trails');
     const ink = overlay.getContext('2d');
     let trails = false, quiet = false, horizon = false, armed = true;
     let oldHidden = false, timer, whisperTimer, trailTime = 0, orbit = 0, discovered = false;
-    let captureBusy = false;
     const soundscape = window.createBlackHoleAudio();
+    const keepsakes = window.createBlackHoleKeepsakes({ canvas, overlay, getView, recallView, requestCapture, interrupt, resume });
 
     function whisper(text, duration = 5500) {
         clearTimeout(whisperTimer);
@@ -37,7 +37,7 @@ window.createBlackHoleMoments = function ({ canvas, hideUI, requestRender, reque
         $('quiet-button').setAttribute('aria-pressed', String(quiet));
         $('show-ui').textContent = quiet ? 'Trở về từ khoảng lặng ↙' : 'Trở lại quan sát ↙';
         whisper(quiet ? 'Ở lại một chút. Không cần đi đâu cả.' : 'Từ đây, mọi con đường đều hướng vào trong.', 5000);
-        if (horizon) timer = setTimeout(() => leave(), 5200);
+        if (horizon) { timer = setTimeout(() => leave(), 5200); notifyHorizon(); }
         tuneSound();
         requestRender();
     }
@@ -47,66 +47,6 @@ window.createBlackHoleMoments = function ({ canvas, hideUI, requestRender, reque
         $('trails-button').setAttribute('aria-pressed', String(trails));
         requestRender();
     });
-    // Explicit save protects a half-written thought from accidental replacement.
-    const key = 'phuc.black-hole.journal.v1';
-    try {
-        const saved = JSON.parse(localStorage.getItem(key) || 'null');
-        if (saved && typeof saved.text === 'string') {
-            $('journal-note').value = saved.text.slice(0, 1200);
-            $('journal-status').textContent = 'Dòng bạn đã để lại vẫn ở đây.';
-        }
-    } catch { $('journal-status').textContent = 'Chưa đọc được ghi chép cũ trong trình duyệt này.'; }
-    $('journal-note').addEventListener('input', () => { $('journal-status').textContent = 'Dòng này chưa được lưu.'; });
-    $('journal-form').addEventListener('submit', event => {
-        event.preventDefault();
-        try {
-            const text = $('journal-note').value.trim();
-            if (text) localStorage.setItem(key, JSON.stringify({ text, at: new Date().toISOString() }));
-            else localStorage.removeItem(key);
-            $('journal-status').textContent = text ? 'Đã giữ lại, chỉ trong trình duyệt này.' : 'Trang giấy đã trống. Bạn có thể viết lại bất cứ lúc nào.';
-        } catch { $('journal-status').textContent = 'Trình duyệt chưa cho lưu. Hãy sao chép dòng này để giữ lại nhé.'; }
-    });
-    $('capture-button').addEventListener('click', () => {
-        if (captureBusy) return;
-        captureBusy = true;
-        $('capture-button').disabled = true;
-        $('capture-status').textContent = 'Đang giữ lại khoảnh khắc…';
-        requestCapture();
-    });
-    function captureFailed() {
-        captureBusy = false;
-        $('capture-button').disabled = false;
-        $('capture-status').textContent = 'Chưa chụp được khung cảnh. Hãy thử lại khi cảnh đã mở.';
-    }
-    function capture() {
-        // Called synchronously after WebGL draw, before its buffer is discarded.
-        try {
-            const photo = document.createElement('canvas');
-            photo.width = canvas.width; photo.height = canvas.height;
-            const context = photo.getContext('2d');
-            context.drawImage(canvas, 0, 0);
-            context.drawImage(overlay, 0, 0, photo.width, photo.height);
-            const size = Math.max(11, Math.round(photo.width / 95));
-            context.font = `${size}px "Segoe UI", sans-serif`;
-            const caption = `Đài quan sát của Phúc · ${new Date().toLocaleString('vi-VN', { hour: '2-digit', minute: '2-digit', day: '2-digit', month: '2-digit', year: 'numeric' })}`;
-            context.fillStyle = '#070b10b3';
-            context.fillRect(0, photo.height - size * 4, photo.width, size * 4);
-            context.fillStyle = '#dfc29a';
-            context.fillText(caption, size * 1.5, photo.height - size * 1.5, photo.width - size * 3);
-            photo.toBlob(blob => {
-                if (!blob) { captureFailed(); return; }
-                const url = URL.createObjectURL(blob);
-                const link = document.createElement('a');
-                link.href = url;
-                link.download = `dai-quan-sat-${Date.now()}.png`;
-                document.body.append(link); link.click(); link.remove();
-                setTimeout(() => URL.revokeObjectURL(url), 30000);
-                captureBusy = false;
-                $('capture-button').disabled = false;
-                $('capture-status').textContent = 'Ảnh PNG đã sẵn sàng tải xuống.';
-            }, 'image/png');
-        } catch { captureFailed(); }
-    }
     function draw(delta, camera, paused, shiftX, shiftY) {
         if (overlay.width !== canvas.width || overlay.height !== canvas.height) {
             overlay.width = canvas.width; overlay.height = canvas.height;
@@ -140,7 +80,9 @@ window.createBlackHoleMoments = function ({ canvas, hideUI, requestRender, reque
     });
     return {
         get pace() { return quiet || horizon ? .25 : 1; },
-        leave, draw, capture, captureFailed,
+        leave, draw, whisper, capture: keepsakes.capture, captureFailed: keepsakes.captureFailed,
+        soundView: soundscape.setView,
+        silenceWhisper() { clearTimeout(whisperTimer); $('scene-whisper').hidden = true; },
         checkDistance(distance, paused) {
             if (distance > 13) armed = true;
             if (distance < 10 && armed && !quiet && !horizon && !paused && !reducedMotion && !$('info-dialog').open && !notebookEditing()) {

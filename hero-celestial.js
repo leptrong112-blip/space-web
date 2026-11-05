@@ -534,6 +534,8 @@
         loadTexture(CELESTIAL_OBJECTS[currentIndex].texture).then(function (tex) {
             if (tex) {
                 applySurface(meshPrimary.material, tex, CELESTIAL_OBJECTS[currentIndex]);
+                const worldEl = container.closest('.hero-world');
+                if (worldEl) worldEl.classList.add('is-3d-ready');
             }
             preloadAdjacentTextures(currentIndex);
         });
@@ -724,9 +726,13 @@
             return;
         }
 
-        initThree(container);
-        setupInteractions();
-        startAnimation();
+        try {
+            initThree(container);
+            setupInteractions();
+            startAnimation();
+        } catch (err) {
+            console.warn('[HeroCelestial] Fallback to 2D portrait:', err);
+        }
     }
 
     if (document.readyState === 'loading') {

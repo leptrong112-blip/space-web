@@ -15,3 +15,8 @@
 # OS metadata
 .DS_Store
 Thumbs.db
+
+# Generated website and local review artifacts
+dist/
+output/
+node_modules/

@@ -2,73 +2,73 @@
 // 1. DỮ LIỆU ĐÃ ĐƯỢC GOM GỌN (CHỐT SỔ)
 // ==========================================
 const celestialData = {
-    mercury: { 
-        title: 'Sao Thủy', img: 'Images/sao thủy.jpg', 
-        desc: 'Hành tinh nhỏ nhất và gần Mặt Trời nhất.', 
-        type: 'Hành tinh đất đá', size: '4.880 km', dist: '58 triệu km', 
+    mercury: {
+        title: 'Sao Thủy', img: 'Images/sao thủy.jpg',
+        desc: 'Hành tinh nhỏ nhất và gần Mặt Trời nhất.',
+        type: 'Hành tinh đất đá', size: '4.880 km', dist: '58 triệu km',
         fun: 'Một ngày trên Sao Thủy dài bằng 176 ngày trên Trái Đất!',
         comp: ['Lõi sắt kim loại khổng lồ chiếm 85% bán kính', 'Lớp phủ manti bằng silicate dày ~400 km', 'Vỏ ngoài mỏng, hầu như không có khí quyển thực thụ']
     },
-    venus: { 
-        title: 'Sao Kim', img: 'Images/sao kim.jpg', 
-        desc: 'Hành tinh nóng nhất Hệ Mặt Trời.', 
-        type: 'Hành tinh đất đá', size: '12.104 km', dist: '108 triệu km', 
-        fun: 'Sao Kim quay ngược chiều kim đồng hồ, Mặt Trời mọc ở đằng Tây.',
+    venus: {
+        title: 'Sao Kim', img: 'Images/sao kim.jpg',
+        desc: 'Thế giới gần bằng Trái Đất nhưng chìm dưới hiệu ứng nhà kính khắc nghiệt.',
+        type: 'Hành tinh đất đá', size: '12.104 km', dist: '108 triệu km',
+        fun: 'Sao Kim tự quay nghịch hành (cùng chiều kim đồng hồ khi nhìn từ cực Bắc), nên ở đó Mặt Trời mọc đằng Tây và lặn đằng Đông.',
         comp: ['Khí quyển siêu đặc: 96.5% CO2 và mây axit sulfuric', 'Lớp vỏ đá bazơ basalt núi lửa dày 20-50 km', 'Lớp phủ silicate và lõi sắt-nikel tương tự Trái Đất']
     },
-    earth: { 
-        title: 'Trái Đất', img: 'Images/trái đất.jpg', 
-        desc: 'Ngôi nhà xanh của chúng ta.', 
-        type: 'Hành tinh đất đá', size: '12.742 km', dist: '150 triệu km', 
+    earth: {
+        title: 'Trái Đất', img: 'Images/trái đất.jpg',
+        desc: 'Ngôi nhà xanh của chúng ta.',
+        type: 'Hành tinh đất đá', size: '12.742 km', dist: '150 triệu km',
         fun: 'Đây là hành tinh duy nhất không được đặt tên theo thần thoại.',
         comp: ['Khí quyển bảo vệ: 78% Nitơ, 21% Oxy, 1% Argon và hơi nước', 'Lớp vỏ đá & lớp phủ manti giàu khoáng vật silicate', 'Lõi ngoài sắt lỏng sinh từ trường bảo vệ sự sống, lõi trong kim loại đặc']
     },
-    mars: { 
-        title: 'Sao Hỏa', img: 'Images/sao hỏa.jpg', 
-        desc: 'Hành tinh Đỏ mang nhiều bí ẩn.', 
-        type: 'Hành tinh đất đá', size: '6.779 km', dist: '227 triệu km', 
+    mars: {
+        title: 'Sao Hỏa', img: 'Images/sao hỏa.jpg',
+        desc: 'Hành tinh Đỏ mang nhiều bí ẩn.',
+        type: 'Hành tinh đất đá', size: '6.779 km', dist: '227 triệu km',
         fun: 'Sở hữu ngọn núi lửa Olympus Mons cao gấp 3 lần đỉnh Everest.',
         comp: ['Bề mặt phủ oxit sắt (bụi rỉ sét) tạo màu đỏ đặc trưng', 'Khí quyển mỏng: 95% Carbon dioxide, 2.6% Nitơ', 'Lớp vỏ basalt dày 50 km, hai cực có chỏm băng vĩnh cửu']
     },
-    jupiter: { 
-        title: 'Sao Mộc', img: 'Images/sao mộc.jpg', 
-        desc: 'Gã khổng lồ khí bảo vệ Hệ Mặt Trời.', 
-        type: 'Hành tinh khí', size: '139.820 km', dist: '778 triệu km', 
-        fun: 'Cơn bão "Vết Đỏ Lớn" đủ kích thước để nuốt trọn cả Trái Đất.',
+    jupiter: {
+        title: 'Sao Mộc', img: 'Images/sao mộc.jpg',
+        desc: 'Hành tinh lớn nhất Hệ Mặt Trời, có ảnh hưởng mạnh tới động lực học các vật thể nhỏ.',
+        type: 'Hành tinh khí', size: '139.820 km', dist: '778 triệu km',
+        fun: 'Cơn bão "Vết Đỏ Lớn" rộng hơn cả Trái Đất và đã tồn tại qua nhiều thế kỷ quan sát của con người.',
         comp: ['Khí quyển ngoài: 90% Hydro, 10% Heli, vết mêtan và amoniac', 'Tầng sâu: đại dương Hydro kim loại lỏng chịu áp suất cực cao', 'Lõi trung tâm dày đặc bằng đá và kim loại nặng']
     },
-    saturn: { 
-        title: 'Sao Thổ', img: 'Images/sao thổ.jpg', 
-        desc: 'Tuyệt tác với hệ thống vành đai lộng lẫy.', 
-        type: 'Hành tinh khí', size: '116.460 km', dist: '1.4 tỷ km', 
+    saturn: {
+        title: 'Sao Thổ', img: 'Images/sao thổ.jpg',
+        desc: 'Tuyệt tác với hệ thống vành đai lộng lẫy.',
+        type: 'Hành tinh khí', size: '116.460 km', dist: '1.4 tỷ km',
         fun: 'Mật độ của Sao Thổ nhẹ đến mức nó có thể nổi trên mặt nước!',
         comp: ['Khí quyển: 96% Hydro, 3% Heli, mây amoniac trên cao', 'Vành đai: 99% hạt băng nước tinh khiết từ hạt bụi đến tảng đá lớn', 'Lõi đá và hợp kim sắt bao bọc bởi hydro kim loại lỏng']
     },
-    uranus: { 
-        title: 'Sao Thiên Vương', img: 'Images/sao thiên vương.jpg', 
-        desc: 'Hành tinh băng giá màu xanh lam.', 
-        type: 'Hành tinh băng', size: '50.724 km', dist: '2.9 tỷ km', 
+    uranus: {
+        title: 'Sao Thiên Vương', img: 'Images/sao thiên vương.jpg',
+        desc: 'Hành tinh băng giá màu xanh lam.',
+        type: 'Hành tinh băng', size: '50.724 km', dist: '2.9 tỷ km',
         fun: 'Trục bị nghiêng 98 độ khiến nó lăn tròn trên quỹ đạo.',
-        comp: ['Lõi đá silicate cỡ Trái Đất', 'Lớp phủ băng amoniac, nước, mêtan siêu nén', 'Khí quyển ngoài cùng hydro, heli và mêtan (tạo màu xanh lam)'] 
+        comp: ['Lõi đá silicate cỡ Trái Đất', 'Lớp phủ băng amoniac, nước, mêtan siêu nén', 'Khí quyển ngoài cùng hydro, heli và mêtan (tạo màu xanh lam)']
     },
-    neptune: { 
-        title: 'Sao Hải Vương', img: 'Images/sao hải vương.jpg', 
-        desc: 'Hành tinh xa xôi chìm trong bão tố.', 
-        type: 'Hành tinh băng', size: '49.244 km', dist: '4.5 tỷ km', 
+    neptune: {
+        title: 'Sao Hải Vương', img: 'Images/sao hải vương.jpg',
+        desc: 'Hành tinh xa xôi chìm trong bão tố.',
+        type: 'Hành tinh băng', size: '49.244 km', dist: '4.5 tỷ km',
         fun: 'Gió trên đây đạt tốc độ 2.000 km/h, nhanh hơn cả âm thanh.',
         comp: ['Lõi đá silicate và kim loại nóng xấp xỉ khối lượng Trái Đất', 'Lớp phủ chất lỏng siêu đặc gồm nước, amoniac và băng metan', 'Khí quyển trên cao chứa 80% Hydro, 19% Heli và 1.5% Mêtan']
     },
-    sun: { 
-        title: 'Mặt Trời', img: 'Images/mặt trời.jpg', 
-        desc: 'Ngôi sao trung tâm của chúng ta.', 
-        type: 'Sao lùn vàng', size: '1.39 triệu km', dist: '0 km', 
+    sun: {
+        title: 'Mặt Trời', img: 'Images/mặt trời.jpg',
+        desc: 'Ngôi sao trung tâm của chúng ta.',
+        type: 'Sao lùn vàng', size: '1.39 triệu km', dist: '0 km',
         fun: 'Nó chiếm tới 99,86% tổng khối lượng của toàn bộ Hệ Mặt Trời.',
         comp: ['Lõi nhiệt hạch: 15 triệu °C, biến 600 triệu tấn Hydro thành Heli mỗi giây', 'Vùng bức xạ & đối lưu vận chuyển năng lượng ra bề mặt', 'Quang cầu: 73% Hydro, 25% Heli và 2% nguyên tố nặng (Oxy, Carbon, Sắt)']
     },
-    moon: { 
-        title: 'Mặt Trăng', img: 'Images/mặt trăng.jpg', 
-        desc: 'Vệ tinh tự nhiên của Trái Đất.', 
-        type: 'Vệ tinh tự nhiên', size: '3.474 km', dist: '384.400 km', 
+    moon: {
+        title: 'Mặt Trăng', img: 'Images/mặt trăng.jpg',
+        desc: 'Vệ tinh tự nhiên của Trái Đất.',
+        type: 'Vệ tinh tự nhiên', size: '3.474 km', dist: '384.400 km',
         fun: 'Do khóa thủy triều, Mặt Trăng chỉ quay đúng một mặt về phía chúng ta.',
         comp: ['Bề mặt phủ lớp đất đá vụn regolith giàu silicate', 'Lớp vỏ anorthosite và basalt xốp do dung nham nguội cổ đại', 'Lớp manti giàu olivine/pyroxene và lõi kim loại sắt nhỏ (~20% bán kính)']
     },
@@ -78,7 +78,7 @@ const celestialData = {
     orion: { title: 'Tinh Vân Lạp Hộ (Orion)', img: 'https://images.unsplash.com/photo-1462331940025-496dfbfc7564?w=800&q=80', desc: 'Nằm cách Trái Đất khoảng 1.344 năm ánh sáng. Một "vườn ươm sao" khổng lồ.', type: 'Tinh vân phát xạ', size: '24 năm ánh sáng', dist: '1.344 năm ánh sáng', fun: 'Nó sáng đến mức bạn có thể nhìn thấy nó bằng mắt thường trên bầu trời đêm.' },
     crab: { title: 'Tinh Vân Cua (Crab Nebula)', img: 'https://upload.wikimedia.org/wikipedia/commons/0/00/Crab_Nebula.jpg', desc: 'Tàn tích của một vụ nổ siêu tân tinh (Supernova) được ghi nhận vào năm 1054.', type: 'Tàn tích siêu tân tinh', size: '11 năm ánh sáng', dist: '6.500 năm ánh sáng', fun: 'Ở trung tâm của nó là một sao xung đang quay với tốc độ 30 vòng/giây.' },
     helix: { title: 'Tinh Vân Helix (Mắt Chúa)', img: 'https://upload.wikimedia.org/wikipedia/commons/b/b1/NGC7293_%282004%29.jpg', desc: 'Được mệnh danh là "Con mắt của Chúa". Đây là một tinh vân hành tinh.', type: 'Tinh vân hành tinh', size: '2.5 năm ánh sáng', dist: '650 năm ánh sáng', fun: 'Đây chính là hình ảnh tương lai của Mặt Trời khi nó chết đi sau 5 tỷ năm nữa.' },
-    pillars: { title: 'Cột Trụ Sáng Tạo', img: 'https://upload.wikimedia.org/wikipedia/commons/6/68/Pillars_of_creation_2014_HST_WFC3-UVIS_full-res_denoised.jpg', desc: 'Những ngón tay khí bụi khổng lồ vươn dài hàng năm ánh sáng.', type: 'Vùng hình thành sao', size: '4-5 năm ánh sáng', dist: '7.000 năm ánh sáng', fun: 'Có thể các cột trụ này đã bị phá hủy từ ngàn năm trước, nhưng ánh sáng chưa kịp truyền tới Trái Đất.' },
+    pillars: { title: 'Cột Trụ Sáng Tạo', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/68/Pillars_of_creation_2014_HST_WFC3-UVIS_full-res_denoised.jpg/960px-Pillars_of_creation_2014_HST_WFC3-UVIS_full-res_denoised.jpg', desc: 'Những cột khí và bụi liên sao khổng lồ vươn dài hàng năm ánh sáng trong Tinh vân Đại Bàng (M16).', type: 'Vùng hình thành sao', size: '4-5 năm ánh sáng', dist: '7.000 năm ánh sáng', fun: 'Bức xạ dữ dội từ các ngôi sao trẻ xung quanh đang vừa chậm rãi bào mòn những cột bụi này, vừa kích thích các ngôi sao mới hình thành bên trong.' },
     carina: { title: 'Tinh Vân Thuyền Để (Carina)', img: 'Images/tinh vân thuyền đế (Carina Nebula).png', desc: 'Bức tường núi lửa vũ trụ chứa những ngôi sao khổng lồ nhất dải Ngân Hà.', type: 'Tinh vân phát xạ', size: '460 năm ánh sáng', dist: '8.500 năm ánh sáng', fun: 'Nó chứa Eta Carinae - quả bom nổ chậm khổng lồ sắp biến thành siêu tân tinh.' },
     butterfly: { title: 'Tinh Vân Hồ Điệp (NGC 6302)', img: 'Images/Tinh vân Hồ Điệp (NGC 6302).jpg', desc: 'Đôi cánh bướm rực rỡ dệt bằng khí sôi sục.', type: 'Tinh vân hành tinh', size: '3 năm ánh sáng', dist: '3.400 năm ánh sáng', fun: 'Đôi cánh tuyệt đẹp đó thực chất là dòng khí 20.000 độ C bắn ra với tốc độ 960.000 km/h.' }
 };
@@ -90,6 +90,7 @@ const celestialData = {
 Object.assign(celestialData.blackhole, {
     desc: 'Một vùng không thời gian có chân trời sự kiện: ranh giới mà từ phía trong, ngay cả ánh sáng cũng không thể thoát ra.',
     type: 'Hố đen', size: 'Tùy khối lượng và độ quay', dist: 'Tùy hố đen được quan sát',
+    fun: 'Chênh lệch lực hấp dẫn cực lớn gần hố đen có thể kéo dãn vật chất theo phương dọc (hiệu ứng thủy triều hấp dẫn) và làm thời gian trôi chậm lại so với người quan sát ở xa.'
 });
 
 window.addEventListener('scroll', () => {
@@ -99,22 +100,22 @@ window.addEventListener('scroll', () => {
     });
     document.querySelectorAll('.nav-links a').forEach(a => {
         a.classList.remove('active');
-        if (current && a.getAttribute('href').includes(current)) a.classList.add('active');
+        if (current && a.getAttribute('href') === `#${current}`) a.classList.add('active');
     });
-});
+}, { passive: true });
 
 // ==========================================
 // 3. THREE.JS - SA BÀN 3D
 // ==========================================
 const container3D = document.getElementById('threejs-container');
-let targetPlanet = null; 
-let galaxyMesh = null; 
+let targetPlanet = null;
+let galaxyMesh = null;
 
 if (container3D && typeof THREE !== 'undefined') {
     container3D.innerHTML = '';
 
     const scene = new THREE.Scene();
-    scene.background = new THREE.Color(0x000000); 
+    scene.background = new THREE.Color(0x050910);
 
     const camera = new THREE.PerspectiveCamera(60, container3D.clientWidth / container3D.clientHeight, 0.1, 30000);
     camera.position.set(0, 50, 90);
@@ -124,15 +125,15 @@ if (container3D && typeof THREE !== 'undefined') {
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.shadowMap.enabled = true;
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-    renderer.toneMapping = THREE.ReinhardToneMapping; 
-    renderer.toneMappingExposure = 0.9;
+    renderer.toneMapping = THREE.ReinhardToneMapping;
+    renderer.toneMappingExposure = 0.95;
     container3D.appendChild(renderer.domElement);
 
     const renderScene = new THREE.RenderPass(scene, camera);
-    const bloomPass = new THREE.UnrealBloomPass(new THREE.Vector2(window.innerWidth, window.innerHeight), 1.2, 0.3, 0.2);
-    bloomPass.strength = 1.2; 
-    bloomPass.radius = 1.0;   
-    bloomPass.threshold = 0.2;
+    const bloomPass = new THREE.UnrealBloomPass(new THREE.Vector2(window.innerWidth, window.innerHeight), 0.85, 0.75, 0.35);
+    bloomPass.strength = 0.85;
+    bloomPass.radius = 0.75;
+    bloomPass.threshold = 0.35;
 
     const composer = new THREE.EffectComposer(renderer);
     composer.addPass(renderScene);
@@ -141,7 +142,7 @@ if (container3D && typeof THREE !== 'undefined') {
     const controls = new THREE.OrbitControls(camera, renderer.domElement);
     controls.enableDamping = true;
     controls.dampingFactor = 0.05;
-    controls.maxDistance = 5000; 
+    controls.maxDistance = 2800;
     controls.minDistance = 1;
 
     let isUserInteracting = false;
@@ -150,9 +151,9 @@ if (container3D && typeof THREE !== 'undefined') {
     window.startJourney = function() {
         const intro = document.getElementById('cinematic-intro');
         if (intro) {
-            intro.style.opacity = '0'; 
-            setTimeout(() => { 
-                intro.style.display = 'none'; 
+            intro.style.opacity = '0';
+            setTimeout(() => {
+                intro.style.display = 'none';
                 document.getElementById('trang-chu')?.scrollIntoView({ behavior: 'smooth' });
             }, 1500);
         }
@@ -161,35 +162,512 @@ if (container3D && typeof THREE !== 'undefined') {
     const textureLoader = new THREE.TextureLoader();
     textureLoader.crossOrigin = 'Anonymous';
 
-    const starGeometry = new THREE.BufferGeometry();
-    const starMaterial = new THREE.PointsMaterial({ color: 0xffffff, size: 1.5, transparent: true, opacity: 0.9, sizeAttenuation: true });
-    const starVertices = [];
-    for (let i = 0; i < 10000; i++) {
-        const radius = 1000; 
-        const theta = Math.random() * Math.PI * 2;
-        const phi = Math.acos((Math.random() * 2) - 1);
-        const r = radius * (0.3 + Math.random() * 0.7); 
-        starVertices.push(r * Math.sin(phi) * Math.cos(theta), r * Math.cos(phi), r * Math.sin(phi) * Math.sin(theta));
+    function createCelestialGlowTexture(coreColor = 'rgba(255,255,255,1)', midColor = 'rgba(255,248,236,0.75)', outerColor = 'rgba(165,207,213,0.18)') {
+        const canvas = document.createElement('canvas');
+        canvas.width = 64;
+        canvas.height = 64;
+        const ctx = canvas.getContext('2d');
+        const grad = ctx.createRadialGradient(32, 32, 0, 32, 32, 32);
+        grad.addColorStop(0, coreColor);
+        grad.addColorStop(0.2, midColor);
+        grad.addColorStop(0.5, outerColor);
+        grad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+        ctx.fillStyle = grad;
+        ctx.fillRect(0, 0, 64, 64);
+        return new THREE.CanvasTexture(canvas);
     }
-    starGeometry.setAttribute('position', new THREE.Float32BufferAttribute(starVertices, 3));
-    const starfield = new THREE.Points(starGeometry, starMaterial);
+
+    function createNebulaCloudTexture() {
+        const canvas = document.createElement('canvas');
+        canvas.width = 128;
+        canvas.height = 128;
+        const ctx = canvas.getContext('2d');
+        const grad = ctx.createRadialGradient(64, 64, 0, 64, 64, 64);
+        grad.addColorStop(0, 'rgba(255, 255, 255, 0.22)');
+        grad.addColorStop(0.35, 'rgba(255, 255, 255, 0.11)');
+        grad.addColorStop(0.7, 'rgba(255, 255, 255, 0.03)');
+        grad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+        ctx.fillStyle = grad;
+        ctx.fillRect(0, 0, 128, 128);
+        return new THREE.CanvasTexture(canvas);
+    }
+
+    function gaussianRand() {
+        let u = 0, v = 0;
+        while (u === 0) u = Math.random();
+        while (v === 0) v = Math.random();
+        return Math.sqrt(-2.0 * Math.log(u)) * Math.cos(2.0 * Math.PI * v);
+    }
+
+    const starGlowTexture = createCelestialGlowTexture('rgba(255,255,255,1)', 'rgba(245,248,255,0.85)', 'rgba(165,207,213,0.25)');
+    const warmGlowTexture = createCelestialGlowTexture('rgba(255,252,238,1)', 'rgba(222,193,149,0.78)', 'rgba(222,193,149,0.16)');
+    const nebulaCloudTexture = createNebulaCloudTexture();
+    const stellarPalette = [
+        new THREE.Color(0xeef1ec),
+        new THREE.Color(0xfff4e4),
+        new THREE.Color(0xa5cfd5),
+        new THREE.Color(0xdec195),
+        new THREE.Color(0xc9ddff),
+        new THREE.Color(0xffe0b2)
+    ];
+
+    function buildStarLayer(count, minRadius, maxRadius, pointSize, opacity) {
+        const geo = new THREE.BufferGeometry();
+        const positions = new Float32Array(count * 3);
+        const colors = new Float32Array(count * 3);
+        for (let i = 0; i < count; i++) {
+            const theta = Math.random() * Math.PI * 2;
+            const phi = Math.acos((Math.random() * 2) - 1);
+            const r = minRadius + Math.random() * (maxRadius - minRadius);
+            const idx = i * 3;
+            positions[idx] = r * Math.sin(phi) * Math.cos(theta);
+            positions[idx + 1] = r * Math.cos(phi);
+            positions[idx + 2] = r * Math.sin(phi) * Math.sin(theta);
+
+            const baseCol = stellarPalette[Math.floor(Math.random() * stellarPalette.length)];
+            const brightness = 0.7 + Math.random() * 0.3;
+            colors[idx] = baseCol.r * brightness;
+            colors[idx + 1] = baseCol.g * brightness;
+            colors[idx + 2] = baseCol.b * brightness;
+        }
+        geo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+        geo.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+        const mat = new THREE.PointsMaterial({
+            size: pointSize,
+            map: starGlowTexture,
+            vertexColors: true,
+            transparent: true,
+            opacity: opacity,
+            alphaTest: 0.01,
+            depthWrite: false,
+            blending: THREE.AdditiveBlending,
+            sizeAttenuation: true
+        });
+        return new THREE.Points(geo, mat);
+    }
+
+    // Lớp sao nền sâu (dày đặc bao quanh toàn bộ bầu trời 3D)
+    const starfield = buildStarLayer(14000, 1500, 11000, 36, 0.95);
     scene.add(starfield);
+
+    // Lớp sao sáng nổi bật tạo chiều sâu thị giác
+    const brightStarfield = buildStarLayer(1500, 1200, 9500, 68, 0.98);
+    scene.add(brightStarfield);
+
+    // Lớp sao thị sai gần Hệ Mặt Trời
+    const nearStarfield = buildStarLayer(3200, 200, 1250, 8.5, 0.85);
+    scene.add(nearStarfield);
+
+    // =========================================================
+    // DẢI NGÂN HÀ XOẮN ỐC CÓ THANH (BARRED SPIRAL MILKY WAY)
+    // Kết hợp Đĩa Thiên Hà độ phân giải cao (1024x1024: Thanh trung tâm vàng ấm,
+    // 4 nhánh xoắn ốc Scutum-Centaurus, Perseus, Sagittarius, Norma, giải bụi tối
+    // & tinh vân H-II hồng đỏ) + 40.000 ngôi sao 3D sắc nét (hạt nhỏ mịn, không bị nổ sáng)
+    // =========================================================
+    function createMilkyWayDiskTexture() {
+        const size = 1024;
+        const canvas = document.createElement('canvas');
+        canvas.width = size;
+        canvas.height = size;
+        const ctx = canvas.getContext('2d');
+        const cx = size / 2;
+        const cy = size / 2;
+
+        // 1. Quầng sáng đĩa nền thiên hà (Galactic Halo & Exponential Disk)
+        const bgGrad = ctx.createRadialGradient(cx, cy, 4, cx, cy, size * 0.48);
+        bgGrad.addColorStop(0, 'rgba(255, 238, 195, 0.72)');
+        bgGrad.addColorStop(0.12, 'rgba(235, 195, 135, 0.42)');
+        bgGrad.addColorStop(0.32, 'rgba(110, 155, 210, 0.16)');
+        bgGrad.addColorStop(0.65, 'rgba(65, 105, 165, 0.06)');
+        bgGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+        ctx.fillStyle = bgGrad;
+        ctx.fillRect(0, 0, size, size);
+
+        // Hàm vẽ nhánh xoắn ốc mượt mà (Logarithmic Spiral Ribbon)
+        function paintSpiralRibbon(startAngle, sweepAngle, widthScale, colorStops, rStart = 42, rEnd = 460, steps = 220) {
+            for (let s = 0; s <= steps; s++) {
+                const t = s / steps;
+                const theta = startAngle + t * sweepAngle;
+                const r = rStart + Math.pow(t, 1.12) * (rEnd - rStart);
+                const x = cx + Math.cos(theta) * r;
+                const y = cy + Math.sin(theta) * r;
+                const brushR = (18 + Math.sin(t * Math.PI) * 34 + (1 - t) * 14) * widthScale;
+                const fade = Math.sin(t * Math.PI);
+
+                const g = ctx.createRadialGradient(x, y, 0, x, y, brushR);
+                g.addColorStop(0, colorStops(fade * 0.12));
+                g.addColorStop(0.45, colorStops(fade * 0.055));
+                g.addColorStop(1, 'rgba(0,0,0,0)');
+                ctx.fillStyle = g;
+                ctx.beginPath();
+                ctx.arc(x, y, brushR, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        // 2. Bốn nhánh xoắn ốc chính + Nhánh Orion (Orion Spur)
+        const armConfigs = [
+            { offset: 0.0, sweep: Math.PI * 1.65, major: true },
+            { offset: Math.PI, sweep: Math.PI * 1.65, major: true },
+            { offset: Math.PI * 0.52, sweep: Math.PI * 1.45, major: false },
+            { offset: Math.PI * 1.52, sweep: Math.PI * 1.45, major: false }
+        ];
+
+        // Lớp sương sao xanh băng - trắng bạc dọc theo 4 nhánh xoắn ốc
+        armConfigs.forEach(arm => {
+            paintSpiralRibbon(
+                arm.offset,
+                arm.sweep,
+                arm.major ? 1.25 : 0.92,
+                a => `rgba(150, 205, 255, ${a.toFixed(4)})`,
+                46,
+                arm.major ? 465 : 420,
+                240
+            );
+            paintSpiralRibbon(
+                arm.offset + 0.06,
+                arm.sweep,
+                arm.major ? 0.72 : 0.55,
+                a => `rgba(235, 245, 255, ${(a * 1.15).toFixed(4)})`,
+                46,
+                arm.major ? 445 : 395,
+                200
+            );
+        });
+
+        // Nhánh phụ Orion (nơi Hệ Mặt Trời tọa lạc)
+        paintSpiralRibbon(0.58, Math.PI * 0.65, 0.78, a => `rgba(185, 225, 255, ${(a * 1.1).toFixed(4)})`, 145, 310, 110);
+
+        // 3. Giải bụi tối thiên hà (Dark Interstellar Dust Lanes) ôm sát mép trong các nhánh xoắn
+        ctx.save();
+        armConfigs.forEach(arm => {
+            paintSpiralRibbon(
+                arm.offset - 0.11,
+                arm.sweep * 0.92,
+                0.42,
+                a => `rgba(5, 9, 16, ${(a * 2.1).toFixed(4)})`,
+                52,
+                390,
+                180
+            );
+        });
+        ctx.restore();
+
+        // 4. Các vùng tạo sao H-II hồng ngọc (Orion / Carina / Lagoon Nebulae knots) dọc nhánh xoắn
+        armConfigs.forEach((arm, armIdx) => {
+            const knots = arm.major ? 28 : 18;
+            for (let k = 2; k < knots; k++) {
+                const t = (k / knots) * 0.86 + 0.08;
+                const theta = arm.offset + t * arm.sweep + Math.sin(k * 3.7 + armIdx) * 0.05;
+                const r = 52 + Math.pow(t, 1.12) * 395;
+                const x = cx + Math.cos(theta) * r;
+                const y = cy + Math.sin(theta) * r;
+                const knotR = 7 + (k % 4) * 4.5;
+                const g = ctx.createRadialGradient(x, y, 0, x, y, knotR);
+                g.addColorStop(0, 'rgba(245, 120, 165, 0.28)');
+                g.addColorStop(0.5, 'rgba(215, 85, 135, 0.1)');
+                g.addColorStop(1, 'rgba(0, 0, 0, 0)');
+                ctx.fillStyle = g;
+                ctx.beginPath();
+                ctx.arc(x, y, knotR, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        });
+
+        // 5. Thanh trung tâm Ngân Hà (Galactic Central Bar) & Nhân vàng ấm (không bị cháy trắng)
+        ctx.save();
+        ctx.translate(cx, cy);
+        ctx.rotate(0.22);
+        ctx.scale(2.15, 0.82);
+        const barGrad = ctx.createRadialGradient(0, 0, 2, 0, 0, 56);
+        barGrad.addColorStop(0, 'rgba(255, 246, 215, 0.78)');
+        barGrad.addColorStop(0.38, 'rgba(240, 200, 135, 0.48)');
+        barGrad.addColorStop(0.75, 'rgba(210, 165, 105, 0.14)');
+        barGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+        ctx.fillStyle = barGrad;
+        ctx.beginPath();
+        ctx.arc(0, 0, 56, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+
+        // Điểm nhân Sagittarius A* gọn và sắc nét ở chính tâm
+        const nucleusGrad = ctx.createRadialGradient(cx, cy, 0, cx, cy, 24);
+        nucleusGrad.addColorStop(0, 'rgba(255, 252, 240, 0.92)');
+        nucleusGrad.addColorStop(0.45, 'rgba(255, 222, 160, 0.45)');
+        nucleusGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+        ctx.fillStyle = nucleusGrad;
+        ctx.beginPath();
+        ctx.arc(cx, cy, 24, 0, Math.PI * 2);
+        ctx.fill();
+
+        return new THREE.CanvasTexture(canvas);
+    }
+
+    const spiralGalaxyGroup = new THREE.Group();
+    // Đặt Tâm Ngân Hà tại (-780, -30, -480) để Hệ Mặt Trời (0,0,0) nằm đúng trên Nhánh Orion cách tâm ~915 đơn vị
+    spiralGalaxyGroup.position.set(-780, -30, -480);
+    spiralGalaxyGroup.rotation.x = 0.14;
+    spiralGalaxyGroup.rotation.z = -0.06;
+    scene.add(spiralGalaxyGroup);
+
+    const milkyWayDiskTex = createMilkyWayDiskTexture();
+    const diskPlaneGeo = new THREE.PlaneGeometry(4600, 4600);
+    diskPlaneGeo.rotateX(-Math.PI / 2);
+    const galacticDiskMat = new THREE.MeshBasicMaterial({
+        map: milkyWayDiskTex,
+        transparent: true,
+        opacity: 0,
+        depthWrite: false,
+        side: THREE.DoubleSide,
+        blending: THREE.AdditiveBlending
+    });
+    const galacticDiskMesh = new THREE.Mesh(diskPlaneGeo, galacticDiskMat);
+    spiralGalaxyGroup.add(galacticDiskMesh);
+
+    const coreColor = new THREE.Color(0xffe9bf);
+    const bulgeGoldColor = new THREE.Color(0xdec195);
+    const armInnerColor = new THREE.Color(0xdbe9ff);
+    const armCyanColor = new THREE.Color(0x8ecaff);
+    const armOuterColor = new THREE.Color(0x6da4db);
+    const armEdgeColor = new THREE.Color(0x4b72a6);
+    const h2RoseColor = new THREE.Color(0xe57ba1);
+
+    // 1. Vùng nhân & thanh trung tâm 3D (8.000 ngôi sao mịn tạo khối 3D cho Thanh trung tâm, không bị cháy sáng)
+    const bulgeStarCount = 8000;
+    const bulgeGeo = new THREE.BufferGeometry();
+    const bulgePos = new Float32Array(bulgeStarCount * 3);
+    const bulgeCol = new Float32Array(bulgeStarCount * 3);
+    const barAngle = 0.22;
+    const cosBar = Math.cos(barAngle);
+    const sinBar = Math.sin(barAngle);
+
+    for (let i = 0; i < bulgeStarCount; i++) {
+        const idx = i * 3;
+        const spreadR = i < 3000 ? 130 : 320;
+        const lx = gaussianRand() * spreadR * 1.65;
+        const lz = gaussianRand() * spreadR * 0.72;
+        const ly = gaussianRand() * (i < 3000 ? 48 : 85);
+
+        bulgePos[idx] = lx * cosBar - lz * sinBar;
+        bulgePos[idx + 1] = ly;
+        bulgePos[idx + 2] = lx * sinBar + lz * cosBar;
+
+        const distNorm = Math.min(1, Math.hypot(lx, lz) / 480);
+        const c = coreColor.clone().lerp(bulgeGoldColor, distNorm);
+        const lum = 0.55 + Math.random() * 0.35;
+        bulgeCol[idx] = c.r * lum;
+        bulgeCol[idx + 1] = c.g * lum;
+        bulgeCol[idx + 2] = c.b * lum;
+    }
+    bulgeGeo.setAttribute('position', new THREE.BufferAttribute(bulgePos, 3));
+    bulgeGeo.setAttribute('color', new THREE.BufferAttribute(bulgeCol, 3));
+    const galacticBulgeMat = new THREE.PointsMaterial({
+        size: 7.5,
+        map: warmGlowTexture,
+        vertexColors: true,
+        transparent: true,
+        opacity: 0,
+        alphaTest: 0.01,
+        depthWrite: false,
+        blending: THREE.AdditiveBlending,
+        sizeAttenuation: true
+    });
+    const galacticBulgePoints = new THREE.Points(bulgeGeo, galacticBulgeMat);
+    spiralGalaxyGroup.add(galacticBulgePoints);
+
+    // Quầng sáng dịu ở nhân Ngân Hà (kiểm soát cường độ để không làm lóa mất cấu trúc xoắn ốc)
+    const coreGlowInnerMat = new THREE.SpriteMaterial({
+        map: warmGlowTexture,
+        color: 0xffe4ad,
+        transparent: true,
+        opacity: 0,
+        depthWrite: false,
+        blending: THREE.AdditiveBlending
+    });
+    const coreGlowInner = new THREE.Sprite(coreGlowInnerMat);
+    coreGlowInner.scale.set(320, 320, 1);
+    spiralGalaxyGroup.add(coreGlowInner);
+
+    const coreGlowOuterMat = new THREE.SpriteMaterial({
+        map: nebulaCloudTexture,
+        color: 0xdec195,
+        transparent: true,
+        opacity: 0,
+        depthWrite: false,
+        blending: THREE.AdditiveBlending
+    });
+    const coreGlowOuter = new THREE.Sprite(coreGlowOuterMat);
+    coreGlowOuter.scale.set(950, 950, 1);
+    spiralGalaxyGroup.add(coreGlowOuter);
+
+    // Nhãn Tâm Ngân Hà (Sagittarius A*)
+    const galacticCoreLabelDiv = document.createElement('div');
+    galacticCoreLabelDiv.className = 'planet-label label-faded';
+    galacticCoreLabelDiv.style.opacity = '0';
+    galacticCoreLabelDiv.innerHTML = `<div class="label-box"><span class="label-id">Cách Trái Đất ~26.000 năm ánh sáng</span><span class="label-name">Tâm Ngân Hà · Sagittarius A*</span></div><div class="label-line"></div>`;
+    const galacticCoreLabel = new THREE.CSS2DObject(galacticCoreLabelDiv);
+    galacticCoreLabel.position.set(0, 75, 0);
+    spiralGalaxyGroup.add(galacticCoreLabel);
+
+    // 2. 42.000 Ngôi sao 3D sắc mịn bám chuẩn theo 4 nhánh xoắn ốc (hạt nhỏ mịn như bụi kim cương, rõ hình xoắn ốc)
+    const galaxyStarCount = 42000;
+    const galaxyGeoPoints = new THREE.BufferGeometry();
+    const galaxyPositions = new Float32Array(galaxyStarCount * 3);
+    const galaxyColors = new Float32Array(galaxyStarCount * 3);
+    const spiralArmDefs = [
+        { offset: 0.0, sweep: Math.PI * 1.65, rMax: 2100, spread: 0.13 },
+        { offset: Math.PI, sweep: Math.PI * 1.65, rMax: 2100, spread: 0.13 },
+        { offset: Math.PI * 0.52, sweep: Math.PI * 1.45, rMax: 1900, spread: 0.15 },
+        { offset: Math.PI * 1.52, sweep: Math.PI * 1.45, rMax: 1900, spread: 0.15 }
+    ];
+
+    for (let i = 0; i < galaxyStarCount; i++) {
+        const idx = i * 3;
+        const isHaloStar = (i % 12) === 0; // 8% sao đĩa mờ tạo chiều sâu, 92% bám rõ theo nhánh xoắn ốc
+        const t = Math.pow(Math.random(), 0.92);
+        const arm = spiralArmDefs[i % 4];
+        const radius = 140 + Math.pow(t, 1.12) * (arm.rMax - 140);
+
+        let angle;
+        if (isHaloStar) {
+            angle = Math.random() * Math.PI * 2;
+        } else {
+            const baseTheta = arm.offset + t * arm.sweep;
+            // Giữ độ lệch góc hẹp (0.13 rad) để nhìn rõ 4 cánh tay xoắn ốc đặc trưng của Ngân Hà
+            angle = baseTheta + gaussianRand() * (arm.spread + t * 0.08);
+        }
+
+        const radialScatter = gaussianRand() * (22 + t * 58);
+        const finalR = Math.max(45, radius + radialScatter);
+        const thickness = Math.max(14, (1 - t * 0.72) * 95);
+        const randY = gaussianRand() * thickness * 0.42;
+
+        galaxyPositions[idx] = Math.cos(angle) * finalR;
+        galaxyPositions[idx + 1] = randY;
+        galaxyPositions[idx + 2] = Math.sin(angle) * finalR;
+
+        const mixedColor = coreColor.clone();
+        const colorRoll = Math.random();
+        if (t < 0.18) {
+            mixedColor.lerp(bulgeGoldColor, t / 0.18);
+        } else if (t < 0.68) {
+            const localT = (t - 0.18) / 0.5;
+            if (colorRoll < 0.48) {
+                mixedColor.copy(armInnerColor).lerp(armCyanColor, localT);
+            } else if (colorRoll < 0.55) {
+                mixedColor.copy(armCyanColor).lerp(h2RoseColor, 0.55);
+            } else {
+                mixedColor.copy(bulgeGoldColor).lerp(armInnerColor, localT);
+            }
+        } else {
+            mixedColor.copy(armCyanColor).lerp(armEdgeColor, (t - 0.68) / 0.32);
+        }
+        const lum = 0.65 + Math.random() * 0.35;
+        galaxyColors[idx] = mixedColor.r * lum;
+        galaxyColors[idx + 1] = mixedColor.g * lum;
+        galaxyColors[idx + 2] = mixedColor.b * lum;
+    }
+    galaxyGeoPoints.setAttribute('position', new THREE.BufferAttribute(galaxyPositions, 3));
+    galaxyGeoPoints.setAttribute('color', new THREE.BufferAttribute(galaxyColors, 3));
+    const spiralGalaxyMat = new THREE.PointsMaterial({
+        size: 6.8,
+        map: starGlowTexture,
+        vertexColors: true,
+        transparent: true,
+        opacity: 0,
+        alphaTest: 0.01,
+        depthWrite: false,
+        blending: THREE.AdditiveBlending,
+        sizeAttenuation: true
+    });
+    const spiralGalaxyPoints = new THREE.Points(galaxyGeoPoints, spiralGalaxyMat);
+    spiralGalaxyGroup.add(spiralGalaxyPoints);
+
+    // 3. Lớp mây tinh vân mỏng dọc nhánh xoắn (tăng chiều sâu 3D khi xoay nghiêng)
+    const nebulaCount = 420;
+    const nebulaGeo = new THREE.BufferGeometry();
+    const nebulaPos = new Float32Array(nebulaCount * 3);
+    const nebulaCol = new Float32Array(nebulaCount * 3);
+    for (let i = 0; i < nebulaCount; i++) {
+        const idx = i * 3;
+        const arm = spiralArmDefs[i % 4];
+        const t = 0.08 + Math.random() * 0.84;
+        const radius = 150 + Math.pow(t, 1.12) * (arm.rMax - 200);
+        const angle = arm.offset + t * arm.sweep + gaussianRand() * 0.09;
+        nebulaPos[idx] = Math.cos(angle) * radius;
+        nebulaPos[idx + 1] = gaussianRand() * 24;
+        nebulaPos[idx + 2] = Math.sin(angle) * radius;
+
+        const c = (i % 4 === 0) ? h2RoseColor : (t < 0.25 ? bulgeGoldColor : armCyanColor);
+        nebulaCol[idx] = c.r;
+        nebulaCol[idx + 1] = c.g;
+        nebulaCol[idx + 2] = c.b;
+    }
+    nebulaGeo.setAttribute('position', new THREE.BufferAttribute(nebulaPos, 3));
+    nebulaGeo.setAttribute('color', new THREE.BufferAttribute(nebulaCol, 3));
+    const nebulaCloudMat = new THREE.PointsMaterial({
+        size: 150,
+        map: nebulaCloudTexture,
+        vertexColors: true,
+        transparent: true,
+        opacity: 0,
+        depthWrite: false,
+        blending: THREE.AdditiveBlending,
+        sizeAttenuation: true
+    });
+    const nebulaCloudPoints = new THREE.Points(nebulaGeo, nebulaCloudMat);
+    spiralGalaxyGroup.add(nebulaCloudPoints);
+
+    // 4. Các cụm sao sáng điểm xuyết dọc nhánh xoắn (1.200 ngôi sao sáng vừa phải, sắc nét)
+    const clusterCount = 1200;
+    const clusterGeo = new THREE.BufferGeometry();
+    const clusterPos = new Float32Array(clusterCount * 3);
+    const clusterCol = new Float32Array(clusterCount * 3);
+    for (let i = 0; i < clusterCount; i++) {
+        const idx = i * 3;
+        const arm = spiralArmDefs[i % 4];
+        const t = Math.pow(Math.random(), 0.95);
+        const radius = 140 + Math.pow(t, 1.12) * (arm.rMax - 140);
+        const angle = arm.offset + t * arm.sweep + gaussianRand() * 0.12;
+        clusterPos[idx] = Math.cos(angle) * radius;
+        clusterPos[idx + 1] = gaussianRand() * 35;
+        clusterPos[idx + 2] = Math.sin(angle) * radius;
+        const c = t < 0.25 ? coreColor : (i % 3 === 0 ? armCyanColor : armInnerColor);
+        clusterCol[idx] = c.r;
+        clusterCol[idx + 1] = c.g;
+        clusterCol[idx + 2] = c.b;
+    }
+    clusterGeo.setAttribute('position', new THREE.BufferAttribute(clusterPos, 3));
+    clusterGeo.setAttribute('color', new THREE.BufferAttribute(clusterCol, 3));
+    const galaxyClusterMat = new THREE.PointsMaterial({
+        size: 15,
+        map: warmGlowTexture,
+        vertexColors: true,
+        transparent: true,
+        opacity: 0,
+        alphaTest: 0.01,
+        depthWrite: false,
+        blending: THREE.AdditiveBlending,
+        sizeAttenuation: true
+    });
+    const galaxyClusterPoints = new THREE.Points(clusterGeo, galaxyClusterMat);
+    spiralGalaxyGroup.add(galaxyClusterPoints);
 
     const shootingStars = [];
     for (let i = 0; i < 4; i++) {
         const ssGeo = new THREE.CylinderGeometry(0, 0.15, 12, 8);
-        ssGeo.rotateX(Math.PI / 2); 
+        ssGeo.rotateX(Math.PI / 2);
         const ssMat = new THREE.MeshBasicMaterial({ color: 0x7fe7ff, transparent: true, opacity: 0.95 });
         const ss = new THREE.Mesh(ssGeo, ssMat);
         ss.position.set((Math.random() - 0.5) * 240, (Math.random() - 0.5) * 120, -120 - Math.random() * 120);
-        ss.userData = { speed: Math.random() * 2 + 1 }; 
-        ss.scale.y = 1.5; 
+        ss.userData = { speed: Math.random() * 2 + 1 };
+        ss.scale.y = 1.5;
         scene.add(ss);
         shootingStars.push(ss);
     }
 
-    scene.add(new THREE.AmbientLight(0xffffff, 0.15)); 
-    const pointLight = new THREE.PointLight(0xffeedd, 1.3, 800);
+    scene.add(new THREE.AmbientLight(0xffffff, 0.18));
+    const pointLight = new THREE.PointLight(0xffeedd, 1.35, 800);
     pointLight.castShadow = true;
     pointLight.shadow.mapSize.width = 2048;
     pointLight.shadow.mapSize.height = 2048;
@@ -199,43 +677,73 @@ if (container3D && typeof THREE !== 'undefined') {
     const sunGeo = new THREE.SphereGeometry(6, 64, 64);
     const sunMat = new THREE.MeshBasicMaterial({ map: textureLoader.load(sunTextureLink), color: 0xffffff });
     const sun = new THREE.Mesh(sunGeo, sunMat);
-    sun.userData = { id: 'sun', radius: 6 }; 
+    sun.userData = { id: 'sun', radius: 6 };
     scene.add(sun);
-    
+
+    // Hào quang Mặt Trời (Corona Glow) giúp Mặt Trời tỏa sáng như một ngôi sao thực thụ khi zoom
+    const sunCoronaMat = new THREE.SpriteMaterial({
+        map: warmGlowTexture,
+        color: 0xffdd99,
+        transparent: true,
+        opacity: 0.75,
+        depthWrite: false,
+        blending: THREE.AdditiveBlending
+    });
+    const sunCoronaSprite = new THREE.Sprite(sunCoronaMat);
+    sunCoronaSprite.scale.set(28, 28, 1);
+    sun.add(sunCoronaSprite);
+
     const sunLabelDiv = document.createElement('div');
-    sunLabelDiv.className = 'planet-label'; 
+    sunLabelDiv.className = 'planet-label';
     sunLabelDiv.innerHTML = `<div class="label-box"><span class="label-id">Ngôi sao</span><span class="label-name">Mặt Trời</span></div><div class="label-line"></div>`;
     sunLabelDiv.addEventListener('click', (event) => { window.flyToPlanet('sun'); event.stopPropagation(); });
     const sunLabel = new THREE.CSS2DObject(sunLabelDiv);
-    sunLabel.position.set(0, 8, 0); 
-    sun.add(sunLabel); 
+    sunLabel.position.set(0, 8, 0);
+    sun.add(sunLabel);
 
-    const galaxyGeo = new THREE.SphereGeometry(20000, 64, 64); 
-    const galaxyMat = new THREE.MeshBasicMaterial({ 
+    // Nhãn tổng quan Hệ Mặt Trời khi zoom ra toàn cảnh Ngân Hà (thay cho 10 nhãn chồng chéo)
+    const galaxySystemLabelDiv = document.createElement('div');
+    galaxySystemLabelDiv.className = 'planet-label label-faded';
+    galaxySystemLabelDiv.style.opacity = '0';
+    galaxySystemLabelDiv.innerHTML = `<div class="label-box"><span class="label-id">Nhánh Orion · Ngân Hà</span><span class="label-name">Hệ Mặt Trời</span></div><div class="label-line"></div>`;
+    galaxySystemLabelDiv.addEventListener('click', (event) => {
+        window.resetCamera();
+        camera.position.set(0, 55, 105);
+        controls.target.set(0, 0, 0);
+        event.stopPropagation();
+    });
+    const galaxySystemLabel = new THREE.CSS2DObject(galaxySystemLabelDiv);
+    galaxySystemLabel.position.set(0, 14, 0);
+    sun.add(galaxySystemLabel);
+
+    const galaxyGeo = new THREE.SphereGeometry(20000, 64, 64);
+    const galaxyMat = new THREE.MeshBasicMaterial({
         map: textureLoader.load('Images/starfield bầu trời (story).jpg'),
         side: THREE.BackSide,
-        transparent: true, 
-        opacity: 0, 
-        depthWrite: false, 
-        color: 0xffffff 
+        transparent: true,
+        opacity: 0,
+        depthWrite: false,
+        color: 0xffffff
     });
-    
+
     galaxyMesh = new THREE.Mesh(galaxyGeo, galaxyMat);
-    galaxyMesh.rotation.z = Math.PI / 2; 
+    galaxyMesh.rotation.z = Math.PI / 2;
     scene.add(galaxyMesh);
 
     const planetsData3D = [
-        { id: 'mercury', name: 'Sao Thủy', radius: 0.6, distance: 14, speed: 0.04, color: 0xffffff, img: 'Images/sao thủy.jpg' },
-        { id: 'venus', name: 'Sao Kim', radius: 0.9, distance: 20, speed: 0.015, color: 0xffffff, img: 'Images/sao kim.jpg' },
-        { id: 'earth', name: 'Trái Đất', radius: 1.2, distance: 28, speed: 0.01, color: 0xffffff, img: 'Images/trái đất.jpg' },
-        { id: 'mars', name: 'Sao Hỏa', radius: 0.7, distance: 36, speed: 0.008, color: 0xffffff, img: 'Images/sao hỏa.jpg' },
-        { id: 'jupiter', name: 'Sao Mộc', radius: 2.8, distance: 50, speed: 0.002, color: 0xffffff, img: 'Images/sao mộc.jpg' },
-        { id: 'saturn', name: 'Sao Thổ', radius: 2.3, distance: 68, speed: 0.001, color: 0xffffff, img: 'Images/sao thổ.jpg', hasRing: true },
-        { id: 'uranus', name: 'Sao Thiên Vương', radius: 1.6, distance: 85, speed: 0.0007, color: 0xffffff, img: 'Images/sao thiên vương.jpg', hasRing: true }, 
-        { id: 'neptune', name: 'Sao Hải Vương', radius: 1.5, distance: 100, speed: 0.0004, color: 0xffffff, img: 'Images/sao hải vương.jpg' }
+        { id: 'mercury', name: 'Sao Thủy', radius: 0.6, distance: 14, speed: 0.04, color: 0xffffff, glowColor: 0xc9c2b8, img: 'Images/sao thủy.jpg' },
+        { id: 'venus', name: 'Sao Kim', radius: 0.9, distance: 20, speed: 0.015, color: 0xffffff, glowColor: 0xf2d399, img: 'Images/sao kim.jpg' },
+        { id: 'earth', name: 'Trái Đất', radius: 1.2, distance: 28, speed: 0.01, color: 0xffffff, glowColor: 0x6ec4ff, img: 'Images/trái đất.jpg' },
+        { id: 'mars', name: 'Sao Hỏa', radius: 0.7, distance: 36, speed: 0.008, color: 0xffffff, glowColor: 0xe87a5d, img: 'Images/sao hỏa.jpg' },
+        { id: 'jupiter', name: 'Sao Mộc', radius: 2.8, distance: 50, speed: 0.002, color: 0xffffff, glowColor: 0xe3ac72, img: 'Images/sao mộc.jpg' },
+        { id: 'saturn', name: 'Sao Thổ', radius: 2.3, distance: 68, speed: 0.001, color: 0xffffff, glowColor: 0xebd197, img: 'Images/sao thổ.jpg', hasRing: true },
+        { id: 'uranus', name: 'Sao Thiên Vương', radius: 1.6, distance: 85, speed: 0.0007, color: 0xffffff, glowColor: 0x8ce0f5, img: 'Images/sao thiên vương.jpg', hasRing: true },
+        { id: 'neptune', name: 'Sao Hải Vương', radius: 1.5, distance: 100, speed: 0.0004, color: 0xffffff, glowColor: 0x5c92ff, img: 'Images/sao hải vương.jpg' }
     ];
 
     const planets = [];
+    const planetLabelDivs = [sunLabelDiv];
+    let moonLabelElement = null;
     let earthMoon = null;
 
     planetsData3D.forEach(p => {
@@ -252,6 +760,19 @@ if (container3D && typeof THREE !== 'undefined') {
         mesh.castShadow = true; mesh.receiveShadow = true;
         mesh.userData = { id: p.id, name: p.name, radius: p.radius };
 
+        // Ánh sáng thiên thể (Celestial Halo/Beacon) giúp các hành tinh lấp lánh như các ngôi sao/hành tinh khi zoom
+        const beaconMat = new THREE.SpriteMaterial({
+            map: starGlowTexture,
+            color: p.glowColor || 0xffffff,
+            transparent: true,
+            opacity: 0.35,
+            depthWrite: false,
+            blending: THREE.AdditiveBlending
+        });
+        const beaconSprite = new THREE.Sprite(beaconMat);
+        beaconSprite.scale.set(p.radius * 3.4, p.radius * 3.4, 1);
+        mesh.add(beaconSprite);
+
         const pivot = new THREE.Object3D();
         pivot.add(mesh);
         scene.add(pivot);
@@ -260,7 +781,7 @@ if (container3D && typeof THREE !== 'undefined') {
 
         let moonPivot = null;
         if (p.id === 'earth') {
-            const moonGeo = new THREE.SphereGeometry(0.25, 32, 32); 
+            const moonGeo = new THREE.SphereGeometry(0.25, 32, 32);
             const moonMat = new THREE.MeshStandardMaterial({ color: 0xffffff, map: textureLoader.load('Images/mặt trăng.jpg'), roughness: 0.9 });
             const moonMesh = new THREE.Mesh(moonGeo, moonMat);
             earthMoon = moonMesh;
@@ -269,16 +790,17 @@ if (container3D && typeof THREE !== 'undefined') {
 
             moonPivot = new THREE.Object3D();
             moonPivot.add(moonMesh);
-            moonMesh.position.x = 2.2; 
-            mesh.add(moonPivot); 
-            
+            moonMesh.position.x = 2.2;
+            mesh.add(moonPivot);
+
             const moonLabelDiv = document.createElement('div');
-            moonLabelDiv.className = 'planet-label'; 
+            moonLabelDiv.className = 'planet-label';
             moonLabelDiv.innerHTML = `<div class="label-box"><span class="label-id">vệ tinh</span><span class="label-name">Mặt Trăng</span></div><div class="label-line"></div>`;
             moonLabelDiv.addEventListener('click', (event) => { window.flyToPlanet('moon', moonMesh); event.stopPropagation(); });
             const moonLabel = new THREE.CSS2DObject(moonLabelDiv);
-            moonLabel.position.set(0, 0.6, 0); 
-            moonMesh.add(moonLabel); 
+            moonLabel.position.set(0, 0.6, 0);
+            moonMesh.add(moonLabel);
+            moonLabelElement = moonLabelDiv;
         }
 
         if (p.hasRing) {
@@ -290,24 +812,25 @@ if (container3D && typeof THREE !== 'undefined') {
             ring.castShadow = false; ring.receiveShadow = false;
             mesh.add(ring);
         }
-        
+
         const planetLabelDiv = document.createElement('div');
-        planetLabelDiv.className = 'planet-label'; 
+        planetLabelDiv.className = 'planet-label';
         planetLabelDiv.innerHTML = `<div class="label-box"><span class="label-id">${p.id}</span><span class="label-name">${p.name}</span></div><div class="label-line"></div>`;
         planetLabelDiv.addEventListener('click', (event) => { window.flyToPlanet(p.id); event.stopPropagation(); });
 
         const planetLabel = new THREE.CSS2DObject(planetLabelDiv);
-        planetLabel.position.set(0, p.radius + 2, 0); 
-        mesh.add(planetLabel); 
+        planetLabel.position.set(0, p.radius + 2, 0);
+        mesh.add(planetLabel);
+        planetLabelDivs.push(planetLabelDiv);
 
-        planets.push({ pivot, mesh, speed: p.speed, moonPivot: moonPivot });
+        planets.push({ pivot, mesh, speed: p.speed, moonPivot: moonPivot, beaconSprite, radius: p.radius });
     });
 
     const labelRenderer = new THREE.CSS2DRenderer();
     labelRenderer.setSize(container3D.clientWidth, container3D.clientHeight);
     labelRenderer.domElement.style.position = 'absolute';
     labelRenderer.domElement.style.top = '0px';
-    labelRenderer.domElement.style.pointerEvents = 'none'; 
+    labelRenderer.domElement.style.pointerEvents = 'none';
     container3D.appendChild(labelRenderer.domElement);
 
     const raycaster = new THREE.Raycaster();
@@ -358,8 +881,8 @@ if (container3D && typeof THREE !== 'undefined') {
         targetPlanet = null;
         solarState.galaxy = true;
         isUserInteracting = false;
-        camera.position.lerp(new THREE.Vector3(0, 2000, 3000), 0.1);
-        controls.target.lerp(new THREE.Vector3(0, 0, 0), 0.1);
+        camera.position.lerp(new THREE.Vector3(-420, 1420, 1380), 0.1);
+        controls.target.lerp(new THREE.Vector3(-420, -15, -260), 0.1);
     };
 
     window.flyToPlanet = function(id, manualMesh = null) {
@@ -367,18 +890,18 @@ if (container3D && typeof THREE !== 'undefined') {
         solarState.galaxy = false;
         const viewport = container3D.getBoundingClientRect();
         if (viewport.top < 0 || viewport.bottom > window.innerHeight) container3D.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'center' });
-        
+
         if(id === 'sun') { targetPlanet = sun; }
         else if (id === 'moon') { targetPlanet = manualMesh || earthMoon; }
         else {
             const p = planets.find(item => item.mesh.userData.id === id);
             if (p) targetPlanet = p.mesh;
         }
-        
+
         if (typeof window.showObserverHUD === 'function') {
             window.showObserverHUD(id);
         }
-        
+
         isUserInteracting = false;
         document.dispatchEvent(new CustomEvent('planet-selected', { detail: id }));
     };
@@ -393,7 +916,7 @@ if (container3D && typeof THREE !== 'undefined') {
 
         raycaster.setFromCamera(mouse, camera);
         const intersects = raycaster.intersectObjects([sun, ...planets.map(p => p.mesh), earthMoon], false);
-        
+
         if (intersects.length) {
             window.flyToPlanet(intersects[0].object.userData.id, intersects[0].object);
         } else {
@@ -413,20 +936,63 @@ if (container3D && typeof THREE !== 'undefined') {
         time += 0.01 * step;
 
         sun.rotation.y += 0.002 * step;
-        
+
+        const camPos = camera.position;
+        const cameraDistance = Math.sqrt(camPos.x * camPos.x + camPos.y * camPos.y + camPos.z * camPos.z);
+
+        // Điều chỉnh quầng sáng Mặt Trời & Hành tinh theo khoảng cách zoom để luôn có cảm giác ngôi sao/hành tinh phát sáng
+        const sunScale = Math.max(28, Math.min(cameraDistance * 0.08, 110));
+        sunCoronaSprite.scale.set(sunScale, sunScale, 1);
+
         planets.forEach(p => {
             p.pivot.rotation.y += p.speed * step;
             p.mesh.rotation.y += 0.01 * step;
             if (p.moonPivot) p.moonPivot.rotation.y += 0.04 * step;
+            if (p.beaconSprite) {
+                const beaconScale = Math.max(p.radius * 3.4, Math.min(cameraDistance * 0.042, 18));
+                p.beaconSprite.scale.set(beaconScale, beaconScale, 1);
+                let beaconOpacity = 0.32;
+                if (cameraDistance > 130 && cameraDistance <= 650) {
+                    beaconOpacity = 0.32 + ((cameraDistance - 130) / 520) * 0.42;
+                } else if (cameraDistance > 650) {
+                    beaconOpacity = Math.max(0.08, 0.74 * (1 - (cameraDistance - 650) / 800));
+                }
+                p.beaconSprite.material.opacity = beaconOpacity;
+            }
         });
 
-        const camPos = camera.position;
-        const cameraDistance = Math.sqrt(camPos.x * camPos.x + camPos.y * camPos.y + camPos.z * camPos.z);
-        
-        const orbitFadeStart = 600; 
-        const orbitFadeEnd = 1500;  
-        let orbitOpacity = 0.15; 
-        
+        // Tự động làm mờ nhãn từng hành tinh khi zoom xa để không bị chồng đè
+        let planetLabelOpacity = 1;
+        if (cameraDistance > 280) {
+            planetLabelOpacity = Math.max(0, 1 - (cameraDistance - 280) / 180);
+        }
+        const hideIndividualLabels = planetLabelOpacity < 0.15;
+        planetLabelDivs.forEach(div => {
+            div.style.opacity = planetLabelOpacity.toFixed(2);
+            div.classList.toggle('label-faded', hideIndividualLabels);
+        });
+
+        if (moonLabelElement) {
+            const focusId = targetPlanet?.userData?.id;
+            const showMoonLabel = (cameraDistance < 68 || focusId === 'earth' || focusId === 'moon') && !hideIndividualLabels;
+            moonLabelElement.style.opacity = showMoonLabel ? '1' : '0';
+            moonLabelElement.classList.toggle('label-faded', !showMoonLabel);
+        }
+
+        // Hiển thị nhãn "Hệ Mặt Trời · Nhánh Orion" và "Tâm Ngân Hà · Sagittarius A*" khi zoom ra cấp độ Ngân Hà
+        let galaxyLabelOpacity = 0;
+        if (cameraDistance > 460) {
+            galaxyLabelOpacity = Math.min(1, (cameraDistance - 460) / 260);
+        }
+        galaxySystemLabelDiv.style.opacity = galaxyLabelOpacity.toFixed(2);
+        galaxySystemLabelDiv.classList.toggle('label-faded', galaxyLabelOpacity < 0.15);
+        galacticCoreLabelDiv.style.opacity = galaxyLabelOpacity.toFixed(2);
+        galacticCoreLabelDiv.classList.toggle('label-faded', galaxyLabelOpacity < 0.15);
+
+        const orbitFadeStart = 480;
+        const orbitFadeEnd = 1200;
+        let orbitOpacity = 0.15;
+
         if (cameraDistance > orbitFadeStart) {
             const factor = 1 - (cameraDistance - orbitFadeStart) / (orbitFadeEnd - orbitFadeStart);
             orbitOpacity = Math.max(0, 0.15 * factor);
@@ -439,22 +1005,49 @@ if (container3D && typeof THREE !== 'undefined') {
             }
         });
 
-        const galaxyFadeStart = 800;  
-        const galaxyFadeEnd = 3000;   
-        let galaxyOpacity = 0; 
-        
-        if (cameraDistance > galaxyFadeStart) {
-            const factor = (cameraDistance - galaxyFadeStart) / (galaxyFadeEnd - galaxyFadeStart);
-            galaxyOpacity = Math.min(0.8, 0.8 * factor); 
+        // Chuyển cảnh mượt mà sang Dải Ngân Hà xoắn ốc có thanh (Barred Spiral Milky Way)
+        const spiralFadeStart = 320;
+        const spiralFadeEnd = 1050;
+        let spiralOpacity = 0;
+        if (cameraDistance > spiralFadeStart) {
+            spiralOpacity = Math.min(0.95, ((cameraDistance - spiralFadeStart) / (spiralFadeEnd - spiralFadeStart)) * 0.95);
         }
-        
+        // Tự động hạ cường độ Bloom khi ra ngoài Ngân Hà để vùng tâm không bị cháy trắng (white blowout)
+        const galaxyFactor = Math.min(1, Math.max(0, (cameraDistance - 320) / 800));
+        bloomPass.strength = 0.82 - galaxyFactor * 0.6;
+        bloomPass.threshold = 0.35 + galaxyFactor * 0.28;
+
+        // Giữ kích thước hạt sao nhỏ mịn như bụi kim cương (6.8 -> 9.2), tuyệt đối không phóng to thành chấm thô
+        const zoomSizeBoost = Math.min(1.35, 1 + Math.max(0, cameraDistance - 500) / 4500);
+        galacticDiskMat.opacity = spiralOpacity * 0.92;
+        spiralGalaxyMat.opacity = spiralOpacity * 0.9;
+        spiralGalaxyMat.size = 6.8 * zoomSizeBoost;
+        galacticBulgeMat.opacity = spiralOpacity * 0.65;
+        galacticBulgeMat.size = 7.5 * zoomSizeBoost;
+        galaxyClusterMat.opacity = spiralOpacity * 0.78;
+        galaxyClusterMat.size = 15 * zoomSizeBoost;
+        nebulaCloudMat.opacity = spiralOpacity * 0.45;
+        coreGlowInnerMat.opacity = spiralOpacity * 0.42;
+        coreGlowOuterMat.opacity = spiralOpacity * 0.38;
+        spiralGalaxyGroup.rotation.y -= 0.00022 * step;
+
+        // Làm dịu lớp sao thị sai gần khi đã ở ngoài toàn cảnh Ngân Hà
+        if (nearStarfield && nearStarfield.material) {
+            const nearFade = cameraDistance > 360 ? Math.max(0.18, 0.85 * (1 - (cameraDistance - 360) / 800)) : 0.85;
+            nearStarfield.material.opacity = nearFade;
+            nearStarfield.rotation.y += 0.00018 * step;
+        }
+
+        // Giữ lớp ảnh cầu 2D ở mức cực nhẹ (tối đa 0.08) để không bị vỡ hạt mờ nhòe khi zoom hết cỡ
         if (galaxyMesh && galaxyMesh.material) {
-            galaxyMesh.material.opacity = galaxyOpacity;
+            const bgFactor = cameraDistance > 600 ? Math.min(0.08, ((cameraDistance - 600) / 1800) * 0.08) : 0;
+            galaxyMesh.material.opacity = bgFactor;
             galaxyMesh.rotation.y -= 0.00005 * step;
         }
-        
-        starfield.rotation.y += 0.00015 * step;
-        starfield.rotation.x += 0.00004 * step;
+
+        starfield.rotation.y += 0.00012 * step;
+        starfield.rotation.x += 0.00003 * step;
+        brightStarfield.rotation.y += 0.00015 * step;
 
         shootingStars.forEach(ss => {
             ss.position.x += ss.userData.speed * step;
@@ -469,9 +1062,9 @@ if (container3D && typeof THREE !== 'undefined') {
             targetPlanet.getWorldPosition(planetWorldPos);
 
             if (!isUserInteracting) {
-                const radius = targetPlanet.userData.radius || 2; 
+                const radius = targetPlanet.userData.radius || 2;
                 const offsetDist = radius * 6 + 3;
-                
+
                 lerpTargetPos.set(planetWorldPos.x + offsetDist, planetWorldPos.y + offsetDist * 0.5, planetWorldPos.z + offsetDist);
                 camera.position.lerp(lerpTargetPos, 0.18);
                 controls.target.lerp(planetWorldPos, 0.18);
@@ -482,8 +1075,8 @@ if (container3D && typeof THREE !== 'undefined') {
             }
         } else {
             if (solarState.galaxy && !isUserInteracting) {
-                camera.position.lerp(new THREE.Vector3(0, 2000, 3000), 0.04);
-                controls.target.lerp(new THREE.Vector3(0, 0, 0), 0.04);
+                camera.position.lerp(new THREE.Vector3(-420, 1420, 1380), 0.045);
+                controls.target.lerp(new THREE.Vector3(-420, -15, -260), 0.045);
             } else if (!isUserInteracting) {
                 const idleX = Math.sin(time * 0.1) * 110;
                 const idleZ = Math.cos(time * 0.1) * 110;
@@ -563,15 +1156,15 @@ window.showObserverHUD = function(id) {
         document.getElementById('hud-size').innerText = data.size || '...';
         document.getElementById('hud-dist').innerText = data.dist || '...';
         document.getElementById('hud-desc').innerText = data.desc || '';
-        
+
         const scanUl = document.getElementById('scan-details');
-        scanUl.innerHTML = ''; 
+        scanUl.innerHTML = '';
         if(data.comp && data.comp.length > 0) {
             data.comp.forEach(item => { scanUl.innerHTML += `<li>${item}</li>`; });
-            btnScan.style.display = 'inline-block'; 
+            btnScan.style.display = 'inline-block';
         } else {
             scanUl.innerHTML = '<li style="color: #ff3366;">Dữ liệu cấu trúc đang được mã hóa...</li>';
-            btnScan.style.display = 'none'; 
+            btnScan.style.display = 'none';
         }
         scanLayer.classList.remove('active-scan');
         observerHud.classList.add('active-hud');
@@ -589,7 +1182,7 @@ window.toggleScanMode = function() {
         if (window.SpaceAudio) {
             window.SpaceAudio.playScan();
         } else {
-            const scanAudio = new Audio('Audio/daviddumaisaudio-high-tech-spectral-creature-194036.mp3'); 
+            const scanAudio = new Audio('Audio/daviddumaisaudio-high-tech-spectral-creature-194036.mp3');
             scanAudio.volume = 0.3;
             scanAudio.play().catch(()=>console.log('Audio bị chặn'));
         }
@@ -602,7 +1195,7 @@ window.toggleScanMode = function() {
 document.addEventListener('click', function(e) {
     const ripple = document.createElement('div');
     ripple.className = 'ripple';
-    ripple.style.left = `${e.clientX - 10}px`; 
+    ripple.style.left = `${e.clientX - 10}px`;
     ripple.style.top = `${e.clientY - 10}px`;
     ripple.style.width = '20px';
     ripple.style.height = '20px';
@@ -623,7 +1216,7 @@ document.addEventListener('keydown', function(e) {
         const text2En = document.getElementById('ee-text-2-en');
         const text2Vn = document.getElementById('ee-text-2-vn');
         const eeSound = document.getElementById('ee-sound');
-        
+
         if(eeScreen) {
             eeScreen.classList.add('active');
             if (window.SpaceAudio) {
@@ -632,12 +1225,12 @@ document.addEventListener('keydown', function(e) {
                 eeSound.volume = 0.6;
                 eeSound.play().catch(err => console.log('Trình duyệt chặn autoplay âm thanh'));
             }
-            
-            setTimeout(() => { text1En.classList.add('visible'); }, 1500); 
-            setTimeout(() => { text1Vn.classList.add('visible'); }, 3000); 
-            setTimeout(() => { text2En.classList.add('visible'); }, 5500); 
-            setTimeout(() => { text2Vn.classList.add('visible'); }, 7000); 
-            
+
+            setTimeout(() => { text1En.classList.add('visible'); }, 1500);
+            setTimeout(() => { text1Vn.classList.add('visible'); }, 3000);
+            setTimeout(() => { text2En.classList.add('visible'); }, 5500);
+            setTimeout(() => { text2Vn.classList.add('visible'); }, 7000);
+
             setTimeout(() => {
                 eeScreen.classList.remove('active');
                 text1En.classList.remove('visible');
@@ -659,7 +1252,7 @@ let modalTrigger = null;
 window.openModal = function(id) {
     const data = celestialData[id];
     if (!data || !modal) return;
-    
+
     const titleEl = document.getElementById('modal-title');
     const imgEl = document.getElementById('modal-img');
     const descEl = document.getElementById('modal-desc');
@@ -667,7 +1260,7 @@ window.openModal = function(id) {
     const sizeEl = document.getElementById('modal-size');
     const distEl = document.getElementById('modal-dist');
     const funEl = document.getElementById('modal-fun');
-    
+
     if(titleEl) titleEl.innerText = data.title;
     if(imgEl) imgEl.src = data.img;
     if(descEl) descEl.innerText = data.desc;
@@ -675,7 +1268,7 @@ window.openModal = function(id) {
     if(sizeEl) sizeEl.innerText = data.size || 'Đang cập nhật...';
     if(distEl) distEl.innerText = data.dist || 'Đang cập nhật...';
     if(funEl) funEl.innerText = data.fun || 'Vũ trụ còn nhiều bí ẩn...';
-    
+
     modalTrigger = document.activeElement instanceof HTMLElement ? document.activeElement : null;
     modal.style.display = 'flex';
     modal.style.opacity = '0';
@@ -686,7 +1279,7 @@ window.openModal = function(id) {
     }, 10);
 };
 
-window.closeModal = function() { 
+window.closeModal = function() {
     if (modal) {
         modal.style.opacity = '0';
         setTimeout(() => {
@@ -697,8 +1290,8 @@ window.closeModal = function() {
     }
 };
 
-window.addEventListener('click', function (e) { 
-    if (e.target === modal) window.closeModal(); 
+window.addEventListener('click', function (e) {
+    if (e.target === modal) window.closeModal();
 });
 
 modal?.addEventListener('keydown', event => {
@@ -805,11 +1398,11 @@ startMeteorShower();
 // 9. LOGIC CHUYỂN CẢNH SANG STORY MODE
 // ==========================================
 window.transitionToStory = function(e) {
-    e.preventDefault(); 
+    e.preventDefault();
     const overlay = document.getElementById('story-transition-overlay');
     if (overlay) {
-        overlay.classList.add('active'); 
-        
+        overlay.classList.add('active');
+
         // 🎵 Âm thanh bẻ cong không-thời gian (Web Audio API / Offline fallback)
         if (window.SpaceAudio) {
             window.SpaceAudio.playWarp();
@@ -827,126 +1420,50 @@ window.transitionToStory = function(e) {
     }
 };
 // ==========================================
-// 10. LOGIC MỞ/ĐÓNG CHI TIẾT & SCROLL GLOW TIMELINE
+// 10. Timeline: inline stories, with one chapter open at a time.
 // ==========================================
 document.addEventListener('DOMContentLoaded', () => {
-    // 10.1. Logic Nút bấm Drill-down - GIỮ NGUYÊN GỐC FIX CŨ
-    const timelineItems = document.querySelectorAll('.timeline-item');
-    const detailCards = document.querySelectorAll('.detail-card');
-    let timelineTypingTimeout; 
+    const timeline = document.getElementById('lich-su');
+    if (!timeline) return;
 
-    function typeWriterTimeline(element, text, speed = 25) {
-        if (timelineTypingTimeout) clearTimeout(timelineTypingTimeout); 
-        let i = 0; let currentHTML = ""; let isTag = false;
-        function type() {
-            if (i < text.length) {
-                let char = text.charAt(i);
-                currentHTML += char; i++;
-                if (char === '<') isTag = true;
-                if (char === '>') isTag = false;
-                if (isTag) { type(); } else {
-                    element.innerHTML = currentHTML + '<span class="cursor">|</span>';
-                    timelineTypingTimeout = setTimeout(type, speed);
-                }
-            } else { element.innerHTML = text; }
-        }
-        type();
-    }
-
-    function setTimelineDetailState(card, open) {
-        if (!card) return;
-        const owner = card.closest('.timeline-item');
-        const trigger = owner?.querySelector('.expand-btn');
+    function setDetailState(item, open) {
+        const card = item.querySelector('.detail-card');
+        const trigger = item.querySelector('.expand-btn');
+        if (!card || !trigger) return;
+        card.hidden = !open;
         card.classList.toggle('open', open);
-        card.setAttribute('aria-hidden', String(!open));
-        trigger?.setAttribute('aria-expanded', String(open));
+        trigger.setAttribute('aria-expanded', String(open));
     }
 
-    timelineItems.forEach((item, index) => {
-        const expandBtn = item.querySelector('.expand-btn');
-        const detailCard = item.querySelector('.detail-card');
-        const closeBtn = item.querySelector('.close-detail-btn');
-
-        if (detailCard) {
-            detailCard.id ||= `timeline-detail-${index + 1}`;
-            detailCard.setAttribute('role', 'region');
-            detailCard.setAttribute('aria-hidden', 'true');
-        }
-        if (expandBtn && detailCard) {
-            expandBtn.setAttribute('aria-controls', detailCard.id);
-            expandBtn.setAttribute('aria-expanded', 'false');
-        }
-        if (closeBtn) {
-            closeBtn.type = 'button';
-            closeBtn.setAttribute('aria-label', 'Đóng bảng thông tin');
-        }
-
-        if (expandBtn && detailCard) {
-            expandBtn.onclick = (e) => {
-                e.preventDefault();
-                document.querySelectorAll('.detail-card.open').forEach(card => {
-                    if (card !== detailCard) setTimelineDetailState(card, false);
-                });
-
-                setTimelineDetailState(detailCard, true);
-                setTimeout(() => closeBtn?.focus(), 50);
-                
-                const pTag = detailCard.querySelector('.typewriter');
-                if (pTag) {
-                    const fullText = pTag.getAttribute('data-text');
-                    typeWriterTimeline(pTag, fullText);
-                }
-            };
-        }
-
-        if (closeBtn && detailCard) {
-            closeBtn.onclick = (e) => {
-                e.preventDefault();
-                setTimelineDetailState(detailCard, false);
-                if (timelineTypingTimeout) clearTimeout(timelineTypingTimeout);
-                expandBtn?.focus();
-            };
-        }
+    timeline.querySelectorAll('.timeline-item').forEach(item => {
+        const trigger = item.querySelector('.expand-btn');
+        const close = item.querySelector('.close-detail-btn');
+        trigger?.addEventListener('click', () => {
+            const open = trigger.getAttribute('aria-expanded') !== 'true';
+            timeline.querySelectorAll('.timeline-item').forEach(other => setDetailState(other, false));
+            setDetailState(item, open);
+        });
+        close?.addEventListener('click', () => {
+            setDetailState(item, false);
+            trigger?.focus({ preventScroll: true });
+        });
     });
 
     document.addEventListener('keydown', event => {
         if (event.key !== 'Escape') return;
-        const openDetail = document.querySelector('#lich-su .detail-card.open');
-        if (!openDetail) return;
-        const trigger = openDetail.closest('.timeline-item')?.querySelector('.expand-btn');
-        setTimelineDetailState(openDetail, false);
-        if (timelineTypingTimeout) clearTimeout(timelineTypingTimeout);
-        trigger?.focus();
+        const openCard = timeline.querySelector('.detail-card.open');
+        if (!openCard) return;
+        const item = openCard.closest('.timeline-item');
+        setDetailState(item, false);
+        item.querySelector('.expand-btn')?.focus({ preventScroll: true });
     });
-
-    // 10.2. Hiệu ứng Timeline "sống" sáng theo scroll (Gãi đúng chỗ ngứa Mục 1)
-    const timelineLineDynamic = document.getElementById('timeline-line-dynamic');
-    if (timelineLineDynamic) {
-        window.addEventListener('scroll', () => {
-            const container = document.querySelector('.timeline-container');
-            const rect = container.getBoundingClientRect();
-            
-            // Tính toán % người dùng đã scroll qua vùng timeline
-            const windowHeight = window.innerHeight;
-            const progress = (windowHeight - rect.top) / (rect.height + windowHeight * 0.2);
-            const scrollPercentage = Math.max(0, Math.min(1, progress));
-            
-            // Ép % đó vào chiều cao và độ sáng của đường kẻ
-            const dynamicHeight = scrollPercentage * 100;
-            const glowOpacity = 0.05 + 0.3 * scrollPercentage;
-            
-            timelineLineDynamic.style.height = `${dynamicHeight}%`;
-            timelineLineDynamic.style.background = `rgba(127, 231, 255, ${glowOpacity})`;
-            timelineLineDynamic.style.boxShadow = `0 0 15px rgba(127, 231, 255, ${glowOpacity * 2})`;
-        });
-    }
 });
 // ==========================================
 // 11. LOGIC CHUYỂN CẢNH SANG VR MODE (BẢN SONG NGỮ)
 // ==========================================
 window.transitionToVR = function(e) {
-    e.preventDefault(); 
-    const overlay = document.getElementById('story-transition-overlay'); 
+    e.preventDefault();
+    const overlay = document.getElementById('story-transition-overlay');
     const overlayText = document.querySelector('.transition-text');
 
     if (overlay && overlayText) {
@@ -958,25 +1475,25 @@ window.transitionToVR = function(e) {
             <span style='color: #00ffcc; display: block; margin-top: 15px;'>CALIBRATING STARFIELD...</span>
             <span style='font-size: 0.9rem; color: #00aa88; font-style: italic; display: block; margin-top: 5px;'>Đang hiệu chỉnh trường sao...</span>
         `;
-        
-        overlayText.style.color = "#00ffcc"; 
+
+        overlayText.style.color = "#00ffcc";
         overlayText.style.textShadow = "0 0 20px rgba(0, 255, 204, 0.6)";
 
-        overlay.classList.add('active'); 
-        
+        overlay.classList.add('active');
+
         // Âm thanh khởi động máy quét
         if (window.SpaceAudio) {
             window.SpaceAudio.playWarp();
         } else {
-            const scanSound = new Audio('Audio/daviddumaisaudio-high-tech-spectral-creature-194036.mp3'); 
-            scanSound.volume = 0.8; 
+            const scanSound = new Audio('Audio/daviddumaisaudio-high-tech-spectral-creature-194036.mp3');
+            scanSound.volume = 0.8;
             scanSound.play().catch(()=>console.log('Audio bị chặn'));
         }
 
         // Đợi 2.5 giây cho người ta kịp đọc chữ rồi mới búng qua trang VR
         setTimeout(() => {
             window.location.href = 'vr-mode.html';
-        }, 2500); 
+        }, 2500);
     } else {
         window.location.href = 'vr-mode.html';
     }
@@ -999,7 +1516,7 @@ let simCanvas, simCtx, simAnimId;
             simCanvas = document.getElementById('orbitCanvas');
             if (!simCanvas) return;
             simCtx = simCanvas.getContext('2d');
-            
+
             document.getElementById('velSlider').oninput = (e) => { document.getElementById('velValue').innerText = e.target.value; };
             document.getElementById('gravSlider').oninput = (e) => { document.getElementById('gravValue').innerText = e.target.value; };
             document.querySelectorAll('[data-orbit-speed]').forEach(button => button.addEventListener('click', () => {
@@ -1009,7 +1526,7 @@ let simCanvas, simCtx, simAnimId;
                 document.getElementById('gravValue').textContent = '5000';
                 window.resetSimulation();
             }));
-            
+
             resetSimulation();
         }
 
@@ -1017,14 +1534,14 @@ let simCanvas, simCtx, simAnimId;
             cancelAnimationFrame(simAnimId);
             let initialVel = parseFloat(document.getElementById('velSlider').value);
             simSun.mass = parseFloat(document.getElementById('gravSlider').value) || 5000;
-            
+
             simPath = [];
             document.getElementById('orbit-status').textContent = 'Đang quan sát. Đổi thanh trượt rồi bấm Làm lại để thử một quỹ đạo khác.';
             updatePhysics();
         };
 
         function drawArrow(fromX, fromY, toX, toY, color) {
-            let headlen = 10; 
+            let headlen = 10;
             let angle = Math.atan2(toY - fromY, toX - fromX);
             simCtx.beginPath(); simCtx.moveTo(fromX, fromY); simCtx.lineTo(toX, toY);
             simCtx.lineTo(toX - headlen * Math.cos(angle - Math.PI / 6), toY - headlen * Math.sin(angle - Math.PI / 6));
@@ -1035,7 +1552,7 @@ let simCanvas, simCtx, simAnimId;
 
         function updatePhysics() {
             simCtx.clearRect(0, 0, simCanvas.width, simCanvas.height);
-            
+
             // Draw subtle orbit coordinate grid
             simCtx.strokeStyle = 'rgba(157, 174, 185, 0.08)';
             simCtx.lineWidth = 1;
@@ -1056,15 +1573,15 @@ let simCanvas, simCtx, simAnimId;
             let dy = simSun.y - simPlanet.y;
             let distSq = dx*dx + dy*dy;
             let dist = Math.sqrt(distSq);
-            
+
             // Illustrative units: this factor puts circular and escape speeds inside the slider range.
             let force = simSun.mass * 0.05 / Math.max(distSq, 1);
-            let ax = force * (dx / dist); 
-            let ay = force * (dy / dist); 
+            let ax = force * (dx / dist);
+            let ay = force * (dy / dist);
 
             simPlanet.vx += ax; simPlanet.vy += ay;
             simPlanet.x += simPlanet.vx; simPlanet.y += simPlanet.vy;
-            
+
             simPath.push({x: simPlanet.x, y: simPlanet.y});
             if(simPath.length > 260) simPath.shift();
 
@@ -1096,7 +1613,7 @@ let simCanvas, simCtx, simAnimId;
                 simCtx.fillStyle = "#9DAEB9"; simCtx.font = "400 13px 'Plus Jakarta Sans', sans-serif";
                 simCtx.fillText("Thiên thể tiến vào vùng nhật quyển và bị hấp thụ.", simCanvas.width/2, simCanvas.height/2 + 14);
                 document.getElementById('orbit-status').textContent = 'Va chạm: Đường đi đưa thiên thể quá gần Mặt Trời. Hãy tăng vận tốc tiếp tuyến ban đầu.';
-                return; 
+                return;
             }
             if(simPlanet.x < -100 || simPlanet.x > simCanvas.width+100 || simPlanet.y < -100 || simPlanet.y > simCanvas.height+100) {
                 simCtx.fillStyle = "rgba(8, 13, 20, 0.9)"; simCtx.fillRect(0, 0, simCanvas.width, simCanvas.height);
@@ -1106,7 +1623,7 @@ let simCanvas, simCtx, simAnimId;
                 simCtx.fillText("Động năng vượt thắng trường hấp dẫn trung tâm.", simCanvas.width/2, simCanvas.height/2 + 14);
                 const energy = (simPlanet.vx ** 2 + simPlanet.vy ** 2) / 2 - simSun.mass * 0.05 / dist;
                 document.getElementById('orbit-status').textContent = energy >= 0 ? 'Thoát ly: Thiên thể có đủ năng lượng để vĩnh viễn rời khỏi trường hấp dẫn kín.' : 'Thiên thể tạm thời ra ngoài khung nhìn nhưng vẫn trên quỹ đạo elip liên kết.';
-                return; 
+                return;
             }
 
             simAnimId = requestAnimationFrame(updatePhysics);
@@ -1136,7 +1653,7 @@ function initTonightsSky() {
     const cycleMs = synodicMonth * 86400000;
     let remainderMs = diffMs % cycleMs;
     if (remainderMs < 0) remainderMs += cycleMs;
-    
+
     const ageDays = remainderMs / 86400000;
     const phaseFraction = ageDays / synodicMonth; // 0.0 to 1.0
     // Illumination: 0 at phase 0/1, 1 at phase 0.5
@@ -1302,7 +1819,7 @@ const ConstellationStudio = {
         } else {
             if (this.activeStar.id !== clicked.id) {
                 // Check if line already exists
-                const exists = this.lines.some(([a, b]) => 
+                const exists = this.lines.some(([a, b]) =>
                     (a === this.activeStar.id && b === clicked.id) || (a === clicked.id && b === this.activeStar.id)
                 );
                 if (!exists) {
@@ -1469,7 +1986,7 @@ const ConstellationStudio = {
         saved.forEach(item => {
             const card = document.createElement('div');
             card.className = 'saved-constellation-card';
-            
+
             const dateStr = new Intl.DateTimeFormat('vi-VN', { day: '2-digit', month: '2-digit', year: 'numeric' }).format(new Date(item.date));
 
             card.innerHTML = `
@@ -1778,6 +2295,8 @@ const WingTabsManager = {
                 // Specialized re-renders/adjustments on tab activation
                 if (targetTab === 'deck-3d') {
                     window.dispatchEvent(new Event('resize'));
+                } else if (targetTab === 'deck-sky' || targetTab === 'deck-journal') {
+                    document.getElementById('observer-hud')?.classList.remove('active-hud');
                 } else if (targetTab === 'lab-lookback') {
                     if (window.LookbackTime) LookbackTime.setStep(LookbackTime.currentStep);
                 } else if (targetTab === 'archive-studio') {

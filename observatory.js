@@ -141,7 +141,10 @@
                 const observe = document.createElement('button');
                 observe.type = 'button';
                 observe.textContent = 'Quan sát lại →';
-                observe.addEventListener('click', () => window.flyToPlanet?.(entry.id));
+                observe.addEventListener('click', () => {
+                    document.querySelector('.wing-tab-btn[data-wing-tab="deck-3d"]')?.click();
+                    window.flyToPlanet?.(entry.id);
+                });
 
                 const remove = document.createElement('button');
                 remove.type = 'button';
@@ -162,7 +165,7 @@
     }
 
     function setEntryFields(entry) {
-        noteInput.value = entry?.note || '';
+        if (noteInput) noteInput.value = entry?.note || '';
         const method = entry?.method || 'Sa bàn 3D';
         methodInputs.forEach(input => { input.checked = input.value === method; });
     }
@@ -170,22 +173,28 @@
     function updateSaved() {
         const entry = observations.find(item => item.id === selected);
         const hasSaved = Boolean(entry);
-        saveButton.disabled = !selected;
-        noteInput.disabled = !selected;
+        if (saveButton) {
+            saveButton.disabled = !selected;
+            saveButton.textContent = hasSaved ? '★ Cập nhật ghi chú' : '☆ Ghi vào nhật ký';
+            saveButton.setAttribute('aria-pressed', String(hasSaved));
+        }
+        if (noteInput) noteInput.disabled = !selected;
         methodInputs.forEach(input => { input.disabled = !selected; });
-        saveButton.textContent = hasSaved ? '★ Cập nhật ghi chú' : '☆ Ghi vào nhật ký';
-        saveButton.setAttribute('aria-pressed', String(hasSaved));
-        document.getElementById('observation-count').textContent = `${observations.length}/10 thiên thể trong nhật ký ${persistent ? 'trên trình duyệt này' : 'của phiên này'}.`;
+        const countText = `${observations.length}/10 thiên thể trong nhật ký ${persistent ? 'trên trình duyệt này' : 'của phiên này'}.`;
+        const countEl = document.getElementById('observation-count');
+        const hudCountEl = document.getElementById('hud-observation-count');
+        if (countEl) countEl.textContent = countText;
+        if (hudCountEl) hudCountEl.textContent = countText;
         picker.querySelectorAll('button').forEach(button => {
             const id = button.dataset.planet;
             button.textContent = `${observations.some(item => item.id === id) ? '★ ' : ''}${celestialData[id].title}`;
             button.setAttribute('aria-pressed', String(id === selected));
         });
     }
-    saveButton.addEventListener('click', () => {
+    saveButton?.addEventListener('click', () => {
         if (!selected) return;
         const method = methodInputs.find(input => input.checked)?.value || 'Sa bàn 3D';
-        const next = { id: selected, date: new Date().toISOString(), method, note: noteInput.value.trim() };
+        const next = { id: selected, date: new Date().toISOString(), method, note: noteInput ? noteInput.value.trim() : '' };
         const existingIndex = observations.findIndex(entry => entry.id === selected);
         if (existingIndex >= 0) observations[existingIndex] = next;
         else observations.push(next);

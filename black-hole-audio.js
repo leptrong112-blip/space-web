@@ -10,15 +10,17 @@ window.createBlackHoleAudio = function () {
     };
     const storageKey = 'phuc.black-hole.audio.v1';
     let enabled = false, volume = 35, style = 'deep', quiet = false, horizon = false;
-    let context, master, synth, fileGain, lfo, modulation, voices = [];
+    let context, master, synth, filter, fileGain, lfo, modulation, voices = [];
+    let reactive = true, proximity = 0, openness = 0, rotation = 0;
     let fileURL = '', fileName = '', revision = 0;
     try {
         const saved = JSON.parse(localStorage.getItem(storageKey) || 'null');
         if (saved && Number.isFinite(saved.volume)) volume = Math.max(0, Math.min(100, saved.volume));
         if (saved && Object.hasOwn(presets, saved.style)) style = saved.style;
+        if (saved && typeof saved.reactive === 'boolean') reactive = saved.reactive;
     } catch { /* Preferences are optional when storage is unavailable. */ }
     function save() {
-        try { localStorage.setItem(storageKey, JSON.stringify({ volume, style })); } catch { /* Keep working in memory. */ }
+        try { localStorage.setItem(storageKey, JSON.stringify({ volume, style, reactive })); } catch { /* Keep working in memory. */ }
     }
     function updateUI(message) {
         $('sound-button').setAttribute('aria-pressed', String(enabled));
@@ -26,6 +28,8 @@ window.createBlackHoleAudio = function () {
         $('sound-volume-value').value = `${volume}%`;
         $('sound-style').value = style;
         $('sound-style').disabled = Boolean(fileURL);
+        $('sound-reactive').checked = reactive;
+        $('sound-reactive').disabled = Boolean(fileURL);
         $('clear-sound-file').hidden = !fileURL;
         $('sound-description').textContent = fileURL ? 'Bản nhạc riêng của bạn, phát lặp lại.' : presets[style].description;
         $('sound-status').textContent = message || `${enabled ? (volume ? 'Đang phát' : 'Đã bật · âm lượng 0%') : 'Đang tắt'} · ${fileURL ? fileName : presets[style].name}`;
@@ -34,7 +38,9 @@ window.createBlackHoleAudio = function () {
         if (context) return;
         context = new (window.AudioContext || window.webkitAudioContext)();
         master = context.createGain(); master.gain.value = 0; master.connect(context.destination);
-        synth = context.createGain(); synth.gain.value = .32; synth.connect(master);
+        synth = context.createGain(); synth.gain.value = .32;
+        filter = context.createBiquadFilter(); filter.type = 'lowpass'; filter.Q.value = .4;
+        synth.connect(filter); filter.connect(master);
         fileGain = context.createGain(); fileGain.gain.value = 0; fileGain.connect(master);
         context.createMediaElementSource(media).connect(fileGain);
         voices = presets[style].notes.map((frequency, i) => {
@@ -54,8 +60,9 @@ window.createBlackHoleAudio = function () {
         synth.gain.setTargetAtTime(fileURL ? 0 : .32, now, .35);
         fileGain.gain.setTargetAtTime(fileURL ? 1 : 0, now, .2);
         modulation.gain.setTargetAtTime(fileURL ? 0 : preset.depth, now, .35);
-        lfo.frequency.setTargetAtTime(preset.rate * (quiet ? .6 : 1), now, .5);
-        voices.forEach((voice, i) => voice.frequency.setTargetAtTime(preset.notes[i] * (horizon ? .76 : 1), now, .6));
+        filter.frequency.setTargetAtTime(reactive ? 1100 - proximity * 850 + openness * 800 : 1100, now, .5);
+        lfo.frequency.setTargetAtTime(preset.rate * (quiet ? .6 : 1) * (reactive ? .85 + rotation * .8 : 1), now, .5);
+        voices.forEach((voice, i) => voice.frequency.setTargetAtTime(preset.notes[i] * (horizon ? .76 : 1) * (reactive ? 1 - proximity * .15 + openness * .05 : 1), now, .6));
     }
     async function syncPlayback() {
         const current = ++revision;
@@ -78,6 +85,7 @@ window.createBlackHoleAudio = function () {
     $('sound-button').addEventListener('click', () => { enabled = !enabled; syncPlayback(); });
     $('sound-volume').addEventListener('input', event => { volume = Number(event.target.value); tune(); updateUI(); save(); });
     $('sound-style').addEventListener('change', event => { style = event.target.value; tune(); updateUI(); save(); });
+    $('sound-reactive').addEventListener('change', event => { reactive = event.target.checked; tune(); save(); });
     $('sound-file').addEventListener('change', event => {
         const file = event.target.files[0];
         if (!file) return;
@@ -109,5 +117,13 @@ window.createBlackHoleAudio = function () {
     });
     window.addEventListener('pageshow', event => { if (event.persisted) syncPlayback(); });
     updateUI();
-    return { setMood(next) { quiet = next.quiet; horizon = next.horizon; tune(); } };
+    return {
+        setMood(next) { quiet = next.quiet; horizon = next.horizon; tune(); },
+        setView(view, angularSpeed) {
+            proximity = Math.max(0, Math.min(1, (26 - view.distance) / 18));
+            openness = Math.abs(Math.sin(view.pitch));
+            rotation = Math.min(1, Math.abs(angularSpeed) * 4);
+            if (enabled && reactive && !fileURL) tune();
+        }
+    };
 };
